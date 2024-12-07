@@ -1,4 +1,3 @@
-import React from 'react'
 import LoginComponent from '../../Components/LoginComponent'
 import * as Yup from 'yup';
 import { Formik } from 'formik';

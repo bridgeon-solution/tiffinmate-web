@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import SignupComponent from '../../Components/SignupComponent';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import axios from 'axios';
 import { Box, Modal, Typography } from '@mui/material';
 import OTPInput, { ResendOTP } from "otp-input-react";
 import SignupService, { ResendOtpService, VerifyOtpService } from '../../Services/SignupService';

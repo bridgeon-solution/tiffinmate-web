@@ -1,4 +1,3 @@
-import React from 'react'
 import LoginContainer from '../Containers/LoginContainer'
 
 function Login() {

@@ -1,5 +1,4 @@
 import { Box, Typography,Grid } from '@mui/material';
-import React from 'react';
 import authImage from '../../Assets/authimage.jpg';
 import InputField from '../../Atoms/Input';
 import StyledButton from '../../Atoms/Button';
