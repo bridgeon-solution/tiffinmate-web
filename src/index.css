@@ -16,4 +16,12 @@ button {
   .MuiTypography-root {
     font-size: 0.875rem;
   }
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'DM Sans', sans-serif;
+}
 }
