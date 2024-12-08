@@ -1,9 +1,8 @@
-import { BrowseMenu } from "../Components/BrowseMenu/Index";
-import { Footer } from "../Components/Footer/Index";
-import { HomeHero } from "../Components/HomeHero/Index";
+import { BrowseMenu } from "../Components/BrowseMenu";
+import { Footer } from "../Components/FooterComponent";
+import { HomeHero } from "../Components/HomeComponent";
 import Navbar from "../Components/Navbar";
-import SubscribeSection from "../Components/SubscribeSection/Index";
-
+import SubscribeSection from "../Components/SubscribeSection";
 
 export const Home = () => {
   return (

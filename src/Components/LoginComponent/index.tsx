@@ -6,7 +6,7 @@ import authImage from '../../Assets/authimage.jpg';
 
 function LoginComponent() {
   return (
-    <Grid container sx={{ minHeight: "100vh" }}>
+    <Grid container>
       <Grid item xs={12} md={6} sx={{ display: "flex",justifyContent: "center",p: { xs: "2rem", md: "8rem" }}}>
       <Box sx={{ width: "100%" }}>
         <Typography sx={{ fontSize:{ xs:"24px",md:"33px"}, fontWeight: 700 }}>Welcome back</Typography>
@@ -47,7 +47,7 @@ function LoginComponent() {
         <img
           src={authImage}
           alt="auth-image"
-          style={{ objectFit: "cover", width: "100%", minHeight: "100vh" }}
+          style={{ objectFit: "cover", width: "100%", maxHeight:"100vh" }}
         />
       </Grid>
     </Grid>
