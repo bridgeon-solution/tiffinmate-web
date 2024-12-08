@@ -1,3 +1,21 @@
+.errormessage {
+  color: red;
+  font-size: 0.875rem;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+button {
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .MuiTypography-root {
+    font-size: 0.875rem;
+  }
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
 
 * {
@@ -5,4 +23,5 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'DM Sans', sans-serif;
+}
 }
