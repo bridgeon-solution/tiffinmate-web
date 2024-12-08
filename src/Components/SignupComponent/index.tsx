@@ -8,7 +8,7 @@ import './index.css'
 function SignupComponent() {
 
   return (
-    <Grid container sx={{}}>
+    <Grid container>
       <Grid item xs={12} md={6} sx={{ display: "flex",justifyContent: "center",p: { xs: "2rem", md: "8rem" }}}>
      <Box sx={{ width: "100%" }}>
           <Typography sx={{ fontSize:{ xs:"24px",md:"33px"}, fontWeight: 700 }}>Get Started Now</Typography>
