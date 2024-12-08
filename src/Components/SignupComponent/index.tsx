@@ -1,5 +1,5 @@
 import { Box, Typography,Grid } from '@mui/material';
-import authImage from '../../Assets/authimage.jpg';
+import authImage from '../../Assets/authimage.jpg'
 import InputField from '../../Atoms/Input';
 import StyledButton from '../../Atoms/Button';
 import { Form, Field, ErrorMessage } from 'formik';
