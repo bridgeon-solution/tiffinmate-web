@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
-import heroImg from "../../assets/homeHero.png";
+import heroImg from "../../Assets/homeHero.png";
 
 export const HomeHero:React.FC = () => {
   return (
