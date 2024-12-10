@@ -2,6 +2,7 @@ import LoginComponent from '../../Components/LoginComponent'
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import LoginService from '../../Services/LoginService';
+import { useNavigate } from 'react-router-dom';
 
 interface loginValues{
   email:string;
@@ -15,17 +16,15 @@ const validationSchema = Yup.object({
 function LoginContainer() {
 
     const initialValues:loginValues={email:'',password:''}
-    
+    const navigate=useNavigate()
 
-    const handleSubmit = async(values: loginValues) => {
-  
-      const res=await LoginService(values)
-      console.log(res.data);
-      console.log("successfully loggined");     
+    const handleSubmit = async(values: loginValues) => { 
+      await LoginService(values)
+      navigate('/')
+         
     }
 
-  return (
-    
+  return (    
         <>
     <Formik<loginValues>
       initialValues={initialValues}
@@ -34,9 +33,7 @@ function LoginContainer() {
     
       {() => <LoginComponent />}
       </Formik>
-      </>
-
-    
+      </>   
   )
 }
 

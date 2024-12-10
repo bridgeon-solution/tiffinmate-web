@@ -2,9 +2,17 @@ import { Box, Grid, Typography } from '@mui/material';
 import { ErrorMessage, Field ,Form} from 'formik';
 import InputField from '../../Atoms/Input';
 import StyledButton from '../../Atoms/Button';
-import authImage from '../../Assets/authimage.jpg';
+import authImage from '../../Assets/authimage.webp';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function LoginComponent() {
+  const[passwordVisible,setPasswordVisible]=useState<boolean>(false)
+  const togglePasswordVisibility=()=>{
+    setPasswordVisible(!passwordVisible)
+  }
   return (
     <Grid container>
       <Grid item xs={12} md={6} sx={{ display: "flex",justifyContent: "center",p: { xs: "2rem", md: "8rem" }}}>
@@ -22,23 +30,41 @@ function LoginComponent() {
               variant="outlined"
             />
             <ErrorMessage name="email" component="div" className='errormessage' />
+            <Box sx={{textAlign:'end'}}>
+            <span style={{ textDecoration: 'none', color: '#e6852c',fontSize:'10px',cursor:'pointer' ,display:'inline'}}>Forgot Password</span>
+            </Box>
 
-            
+            <Box sx={{position:'relative'}}>
             <Field
               as={InputField}
               name="password"
               label="Password"
-              type="password"
+              type={passwordVisible?"text":"password"}
               variant="outlined"
+              fullWidth
             />
+            <Box sx={{position:'absolute',
+              top:'30%',
+              right:'10px',
+              cursor:'pointer'
+            }}
+            onClick={togglePasswordVisibility}            
+            >
+              {passwordVisible?(
+                <VisibilityOutlinedIcon/>):(<VisibilityOffOutlinedIcon/>)}
+              </Box>
             <ErrorMessage name="password" component="div" className='errormessage' />
+            
+              </Box>
 
             <StyledButton type="submit" variant="contained">
               Login
             </StyledButton>
-            <a style={{textAlign: 'end', fontSize: '10px' ,color:'#e6852c'}} onClick={()=>'clicked'}>
-                Forgot Password?
-              </a>
+           
+              <Typography sx={{ textAlign: 'center', mt: 1 }}>
+                Already have an account?{' '}
+                <Link to="/signup" style={{ textDecoration: 'none', color: '#e6852c' }}>Sign Up</Link>
+              </Typography>
           </Box>
         </Form>
       </Box>

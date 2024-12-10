@@ -4,7 +4,7 @@ import { HomeHero } from "../Components/HomeComponent";
 import Navbar from "../Components/Navbar";
 import SubscribeSection from "../Components/SubscribeSection";
 
-export const Home = () => {
+const Home = () => {
   return (
     <>
       <Navbar />
@@ -15,3 +15,4 @@ export const Home = () => {
     </>
   );
 };
+export default Home;
