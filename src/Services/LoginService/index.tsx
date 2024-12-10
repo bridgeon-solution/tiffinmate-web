@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const LoginService=async(values:{email:string,password:string})=> {
- const res=await axios.post("https://localhost:7009/api/Auth/login",values)
+ const res=await axios.post(`${import.meta.env.VITE_BASE_URL}/Auth/login`,values)
  return res
 }
 

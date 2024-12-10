@@ -6,18 +6,18 @@ interface formData{
     password:string
   }
 const SignupService=async(values:formData)=> {
- const res=await axios.post("https://localhost:7009/api/Auth/signup",values)
+ const res=await axios.post(`${import.meta.env.VITE_BASE_URL}/Auth/signup`,values)
  return res
 }
 
 export default SignupService
 
 export const ResendOtpService=async(phone:string)=> {
-    const res=await axios.post(`https://localhost:7009/api/Auth/resend-otp?phone=${phone}`)
+    const res=await axios.post(`${import.meta.env.VITE_BASE_URL}/Auth/resend-otp?phone=${phone}`)
     return res
    }
 export const VerifyOtpService=async(values:{phone:string,otp:string})=> {
-    const res=await axios.post("https://localhost:7009/api/Auth/verify-otp",values)
+    const res=await axios.post(`${import.meta.env.VITE_BASE_URL}/Auth/verify-otp`,values)
     return res
    }
    

@@ -1,11 +1,25 @@
 import { Box, Typography,Grid } from '@mui/material';
-import authImage from '../../Assets/authimage.jpg';
+import authImage from '../../Assets/authimage.webp'
 import InputField from '../../Atoms/Input';
 import StyledButton from '../../Atoms/Button';
 import { Form, Field, ErrorMessage } from 'formik';
 import './index.css'
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function SignupComponent() {
+  const[passwordVisible,setPasswordVisible]=useState<boolean>(false)
+  const[confirmpasswordVisible,setconfirmPasswordVisible]=useState<boolean>(false)
+  
+  const togglePasswordVisibility=()=>{
+    setPasswordVisible(!passwordVisible)
+  }
+
+  const toggleconfirmPasswordVisibility=()=>{
+    setconfirmPasswordVisible(!confirmpasswordVisible)
+  }
 
   return (
     <Grid container>
@@ -23,13 +37,61 @@ function SignupComponent() {
               <Field as={InputField} name="phone" label="Phone Number" variant="outlined" />
               <ErrorMessage name="phone" component="div" className='errormessage' />
 
-              <Field as={InputField} name="password" label="Password" type="password" variant="outlined" />
-              <ErrorMessage name="password" component="div" className='errormessage' />
+
+              <Box sx={{position:'relative'}}>
+            <Field
+              as={InputField}
+              name="password"
+              label="Password"
+              type={passwordVisible?"text":"password"}
+              variant="outlined"
+              fullWidth
+            />
+            <Box sx={{position:'absolute',
+              top:'30%',
+              right:'10px',
+              cursor:'pointer'
+            }}
+            onClick={togglePasswordVisibility}            
+            >
+              {passwordVisible?(
+                <VisibilityOutlinedIcon/>):(<VisibilityOffOutlinedIcon/>)}
+              </Box>
+            <ErrorMessage name="password" component="div" className='errormessage' />
+            
+              </Box>
+
+              <Box sx={{position:'relative'}}>
+            <Field
+              as={InputField}
+              name="confirmPassword"
+              label="confirm password"
+              type={confirmpasswordVisible?"text":"password"}
+              variant="outlined"
+              fullWidth
+            />
+            <Box sx={{position:'absolute',
+              top:'30%',
+              right:'10px',
+              cursor:'pointer'
+            }}
+            onClick={toggleconfirmPasswordVisibility}            
+            >
+              {confirmpasswordVisible?(
+                <VisibilityOutlinedIcon/>):(<VisibilityOffOutlinedIcon/>)}
+              </Box>
+            <ErrorMessage name="confirmPassword" component="div" className='errormessage' />
+            
+              </Box>
 
 
               <StyledButton type="submit" variant="contained" sx={{mt:2}}>
                 Submit
               </StyledButton>
+              <Typography sx={{ textAlign: 'center', mt: 1 }}>
+                Already have an account?{' '}
+                <Link to="/login" style={{ textDecoration: 'none', color: '#e6852c' }}>Sign In</Link>
+              </Typography>
             </Box>
           </Form>
         </Box>
