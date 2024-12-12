@@ -6,17 +6,18 @@ import authImage from '../../Assets/authimage.webp';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function LoginComponent() {
   const[passwordVisible,setPasswordVisible]=useState<boolean>(false)
+  const navigate=useNavigate()
   const togglePasswordVisibility=()=>{
     setPasswordVisible(!passwordVisible)
   }
   return (
     <Grid container>
       <Grid item xs={12} md={6} sx={{ display: "flex",justifyContent: "center",p: { xs: "2rem", md: "8rem" }}}>
-      <Box sx={{ width: "100%" }}>
+      <Box sx={{ width: "100%" }} mt={10}>
         <Typography sx={{ fontSize:{ xs:"24px",md:"33px"}, fontWeight: 700 }}>Welcome back</Typography>
         <Typography sx={{ fontSize:{ xs:"12px",md:"16px"}, fontWeight: 20 }}>Enter your Credentials to access your account</Typography>
         <Form>
@@ -31,7 +32,7 @@ function LoginComponent() {
             />
             <ErrorMessage name="email" component="div" className='errormessage' />
             <Box sx={{textAlign:'end'}}>
-            <span style={{ textDecoration: 'none', color: '#e6852c',fontSize:'10px',cursor:'pointer' ,display:'inline'}}>Forgot Password</span>
+            <span style={{ textDecoration: 'none', color: '#e6852c',fontSize:'10px',cursor:'pointer' ,display:'inline'}} onClick={()=>navigate('/forgotpassword')} >Forgot Password</span>
             </Box>
 
             <Box sx={{position:'relative'}}>
@@ -62,7 +63,7 @@ function LoginComponent() {
             </StyledButton>
            
               <Typography sx={{ textAlign: 'center', mt: 1 }}>
-                Already have an account?{' '}
+                Don't have an account?{' '}
                 <Link to="/signup" style={{ textDecoration: 'none', color: '#e6852c' }}>Sign Up</Link>
               </Typography>
           </Box>
