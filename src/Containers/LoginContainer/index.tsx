@@ -1,8 +1,8 @@
 import LoginComponent from '../../Components/LoginComponent'
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import LoginService from '../../Services/LoginService';
 import { useNavigate } from 'react-router-dom';
+import { LoginService } from '../../Services/AuthService';
 
 interface loginValues{
   email:string;

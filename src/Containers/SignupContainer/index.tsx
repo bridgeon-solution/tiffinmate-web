@@ -4,9 +4,9 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { Box, Modal, Typography } from '@mui/material';
 import OTPInput, { ResendOTP } from "otp-input-react";
-import SignupService, { ResendOtpService, VerifyOtpService } from '../../Services/SignupService';
 import StyledButton from '../../Atoms/Button';
 import { useNavigate } from 'react-router-dom';
+import { ResendOtpService, SignupService, VerifyOtpService } from '../../Services/AuthService';
 
 interface formData{
   name:string,
