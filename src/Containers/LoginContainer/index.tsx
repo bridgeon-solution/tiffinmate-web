@@ -1,8 +1,8 @@
 import LoginComponent from '../../Components/LoginComponent'
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import LoginService from '../../Services/LoginService';
 import { useNavigate } from 'react-router-dom';
+import { LoginService } from '../../Services/AuthService';
 
 interface loginValues{
   email:string;
@@ -19,9 +19,12 @@ function LoginContainer() {
     const navigate=useNavigate()
 
     const handleSubmit = async(values: loginValues) => { 
-      await LoginService(values)
-      navigate('/')
-         
+      const res=await LoginService(values)
+      if(res.data.status=="success"){
+        localStorage.setItem("id",res.data.result.id)
+        localStorage.setItem("token",res.data.result.token)
+        navigate('/')      
+      }        
     }
 
   return (    
