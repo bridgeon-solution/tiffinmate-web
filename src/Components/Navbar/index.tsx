@@ -13,7 +13,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { AccountCircle } from "@mui/icons-material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 interface Props {
   window?: () => Window;
@@ -29,6 +29,7 @@ const navItems = [
 export default function Navbar(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const navigate=useNavigate();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -121,7 +122,7 @@ export default function Navbar(props: Props) {
               ))}
             </Box>
             <Box>
-              <IconButton>
+              <IconButton onClick={()=>navigate('/profile')}>
                 <AccountCircle fontSize="large" sx={{ color: "black" }} />
               </IconButton>
             </Box>
