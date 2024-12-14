@@ -37,7 +37,7 @@ export default function Navbar(props: Props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        TiffinMate
+        TiffinMate Project
       </Typography>
       <Divider />
       <List>
@@ -90,7 +90,7 @@ export default function Navbar(props: Props) {
               fontFamily: "Playfair Display, serif",
             }}
           >
-            TiffinMate
+            TiffinMate Project
           </Typography>
           <Box
             sx={{
