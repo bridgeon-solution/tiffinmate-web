@@ -1,7 +1,7 @@
 // import { BrowseMenu } from "../Components/BrowseMenu";
-import { Footer } from "../Components/FooterComponent";
+import { Footer } from "../common/FooterComponent";
 import { HomeHero } from "../Components/HomeComponent";
-import Navbar from "../Components/Navbar";
+import Navbar from "../common/Navbar";
 import SubscribeSection from "../Components/SubscribeSection";
 
 const Home = () => {
