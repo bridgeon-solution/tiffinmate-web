@@ -1,9 +1,9 @@
 import React from "react";
-import { Box, Typography, Button, TextField } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 
 const SubscribeSection: React.FC = () => {
   return (
-    <Box sx={{ px: 10, py: 4 }}>
+     <Box sx={{ px: { xs: 2, sm: 4, md: 20}, py: { xs: 2, md: 4 } }}>
       <Box
         sx={{
           backgroundColor: "#FF8C34",
@@ -15,7 +15,7 @@ const SubscribeSection: React.FC = () => {
           boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
         }}
       >
-        <Box sx={{ flex: 1 }}>
+        <Box >
           <Typography variant="h4" sx={{ fontWeight: "bold", color: "#fff" }}>
             Subscribe For Get Offers
           </Typography>
@@ -25,15 +25,6 @@ const SubscribeSection: React.FC = () => {
           </Typography>
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <TextField
-            placeholder="Enter your email"
-            variant="outlined"
-            size="small"
-            sx={{
-              backgroundColor: "#fff",
-              borderRadius: "8px",
-            }}
-          />
           <Button
             variant="contained"
             sx={{

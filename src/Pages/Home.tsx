@@ -1,4 +1,4 @@
-import { BrowseMenu } from "../Components/BrowseMenu";
+// import { BrowseMenu } from "../Components/BrowseMenu";
 import { Footer } from "../Components/FooterComponent";
 import { HomeHero } from "../Components/HomeComponent";
 import Navbar from "../Components/Navbar";
@@ -9,7 +9,7 @@ const Home = () => {
     <>
       <Navbar />
       <HomeHero />
-      <BrowseMenu/>
+      {/* <BrowseMenu/> */}
       <SubscribeSection/>
       <Footer/>
     </>
