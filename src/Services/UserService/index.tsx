@@ -46,3 +46,10 @@ export const UploadProfileImage = async (FormData: FormData, id: string) => {
   );
   return res;
 };
+
+export const FetchMenuService = async () => {
+  const res = await axios.get(
+    `${import.meta.env.VITE_BASE_URL}/FoodItem/GetFoodItem`
+  );
+  return res;
+};
