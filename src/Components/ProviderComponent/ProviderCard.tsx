@@ -11,7 +11,7 @@ import { fetchApprovedProviderDetails } from "../../Services/ProviderService";
 import { Link } from "react-router-dom";
 
 interface provider {
-  providerId: string;
+  provider_id: string;
   image: string;
   resturent_name: string;
 }
@@ -34,8 +34,8 @@ export const ProviderCard = () => {
         sx={{ px: { xs: 2, md: 8 }, py: { xs: 2, md: 6 } }}
       >
         {providers.map((p) => (
-          <Grid item xs={6} sm={6} md={3} key={p.providerId}>
-            <Link to={`/provider/${p.providerId}`} style={{ textDecoration: "none" }}>
+          <Grid item xs={6} sm={6} md={3} key={p.provider_id}>
+            <Link to={`/provider/${p.provider_id}`} style={{ textDecoration: "none" }}>
               <Card sx={{ borderRadius: 4 }}>
                 <CardMedia
                   component="img"

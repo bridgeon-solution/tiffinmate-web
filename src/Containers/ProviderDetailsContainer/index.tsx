@@ -15,6 +15,5 @@ export const ProviderDetailsContainer = () => {
     };
     if (id) fetchProvider(id);
   }, [id]);
-  console.log(provider);
-  return <ProviderDetailsComponent provider={provider}  />;
+  return <ProviderDetailsComponent provider={provider} />;
 };
