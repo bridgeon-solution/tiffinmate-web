@@ -5,16 +5,9 @@ import BreakFast from "../../Assets/BreakFast.webp";
 import { Box, Typography, Grid } from "@mui/material";
 import StyledButton from "../../Atoms/Button";
 import { useNavigate } from "react-router-dom";
+import { MenuItem } from "./type";
 
-interface MenuItem {
-  day: string;
-  foodname: string;
-  description: string;
-  price: string;
-  categoryname: string;
-}
 const categories = ["BreakFast", "Lunch", "Dinner"];
-
 interface MenuComponentProps {
   handleCategory: (category: string) => void;
   menu: MenuItem[];

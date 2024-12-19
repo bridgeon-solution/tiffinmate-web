@@ -3,20 +3,13 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Field } from "formik";
 import { AccountCircle, Edit } from "@mui/icons-material";
 import { useRef } from "react";
-interface ProfileValues {
-  fullName: string;
-  phoneNumber: string;
-  email: string;
-  address: string;
-  city: string;
-  profileImage?: string;
-}
+import { ProfileValues } from "./type";
+
 interface ProfileProps {
   handleSubmit: () => void;
   values: ProfileValues;
   handleUploadImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
-
 function ProfileComponent({
   handleSubmit,
   values,
