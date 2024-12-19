@@ -857,7 +857,7 @@ chalk@^4.0.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-clsx@^2.1.0, clsx@^2.1.1:
+clsx@^2.1.1:
   version "2.1.1"
   resolved "https://registry.npmjs.org/clsx/-/clsx-2.1.1.tgz"
   integrity sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==
@@ -1690,13 +1690,6 @@ react-toast@^1.0.3:
   version "1.0.3"
   resolved "https://registry.npmjs.org/react-toast/-/react-toast-1.0.3.tgz"
   integrity sha512-gL3+O5hlLaoBmd36oXWKrjFeUyLCMQ04AIh48LrnUvdeg2vhJQ0E803TgVemgJvYUXKlutMVn9+/QS2DDnk26Q==
-
-react-toastify@^10.0.6:
-  version "10.0.6"
-  resolved "https://registry.npmjs.org/react-toastify/-/react-toastify-10.0.6.tgz"
-  integrity sha512-yYjp+omCDf9lhZcrZHKbSq7YMuK0zcYkDFTzfRFgTXkTFHZ1ToxwAonzA4JI5CxA91JpjFLmwEsZEgfYfOqI1A==
-  dependencies:
-    clsx "^2.1.0"
 
 react-transition-group@^4.4.5:
   version "4.4.5"

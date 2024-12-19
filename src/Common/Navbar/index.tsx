@@ -22,7 +22,7 @@ interface Props {
 const drawerWidth = 240;
 const navItems = [
   { name: "Home", path: "/" },
-  { name: "Restaurants", path: "restaurants" },
+  { name: "Restaurants", path: "/provider" },
   { name: "Register vendor", path: "register" },
 ];
 
@@ -69,7 +69,12 @@ export default function Navbar(props: Props) {
       <CssBaseline />
       <AppBar
         component="nav"
-        sx={{ bgcolor: "white", px: 4, boxShadow: "none" }}
+        sx={{
+          bgcolor: "white",
+          px: 4,
+          // boxShadow: "none",
+          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+        }}
       >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <IconButton
