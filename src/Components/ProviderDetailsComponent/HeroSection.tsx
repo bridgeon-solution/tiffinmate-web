@@ -1,8 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import { StyledMenuButton } from "../../Atoms/Button";
 import {  ProviderHomeProps } from "../../Containers/ProviderDetailsContainer/type";
+import { useNavigate } from "react-router-dom";
 
 export const HeroSection = ({ provider }: ProviderHomeProps) => {
+  const navigate=useNavigate()
   return (
     <Box
       sx={{
@@ -26,7 +28,7 @@ export const HeroSection = ({ provider }: ProviderHomeProps) => {
         <Typography variant="body2" sx={{ color: "gray", width: "400px" }}>
           {provider?.about}
         </Typography>
-        <StyledMenuButton>Menu</StyledMenuButton>
+        <StyledMenuButton onClick={()=>navigate('menu')}>Menu</StyledMenuButton>
       </Box>
       <Box
         component="img"

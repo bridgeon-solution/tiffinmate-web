@@ -215,7 +215,7 @@ function ProfileComponent({
                     <Typography sx={{ fontSize: "14px", fontWeight: 500 }}>
                       Email
                     </Typography>
-                    <Field
+                    <Field disabled
                       name="email"
                       as={TextField}
                       variant="filled"

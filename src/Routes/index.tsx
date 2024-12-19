@@ -1,12 +1,13 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import ForgotPasword from "../Pages/ForgotPasword";
-import ResetPassword from "../Pages/ResetPassword";
-import Profile from "../Pages/Profile";
 import { Provider } from "../Pages/Provider";
 import Navbar from "../Common/Navbar";
 import { Footer } from "../Common/FooterComponent";
 import { ProviderDetails } from "../Pages/ProviderDetails";
+const MenuDetails=lazy(()=>import("../Pages/MenuDetails"));
+const ForgotPasword=lazy(()=>import("../Pages/ForgotPasword"));
+const ResetPassword=lazy(()=>import("../Pages/ResetPassword"));
+const Profile=lazy(()=>import ("../Pages/Profile"));
 const Signup = lazy(() => import("../Pages/Signup"));
 const Menu = lazy(() => import("../Pages/Menu"));
 const Login = lazy(() => import("../Pages/Login"));
@@ -34,7 +35,8 @@ export const AppRoutes = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/provider" element={<Provider />} />
           <Route path="/provider/:id" element={<ProviderDetails />} />
-          <Route path="/menu" element={<Menu />} />
+          <Route path="/provider/:id/menu" element={<Menu/>}/>
+          <Route path="/provider/:id/menu/:id" element={<MenuDetails/>}/>
         </Routes>
       </Suspense>
       {!noNav.includes(location.pathname) && <Footer />}
