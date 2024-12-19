@@ -11,8 +11,10 @@ export const ReviewCard = () => {
   useEffect(() => {
     const fetchReviews = async (id: string) => {
       const res = await fetchReviewsOfProvider(id);
-      const data = await res.result;
-      setReviews(data.slice(0, 3));
+      if (res && res.result) {
+        const data = await res.result;
+        setReviews(data.slice(0, 3));
+      }
     };
     if (id) fetchReviews(id);
   }, [id]);

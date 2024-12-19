@@ -11,7 +11,6 @@ export const fetchApprovedProviderDetails = async () => {
 };
 export const fetchProviderDetails = async (providerId: string) => {
   const res = await api.get(`/Provider/${providerId}/details`);
-  console.log(res)
   return res.data;
 };
 
@@ -26,6 +25,5 @@ export const fetchProviderReview = async (providerId: string) => {
 
 export const provideReview = async (values: any) => {
   const res = await api.post(`/Provider/review`, values);
-  console.log(res.data);
   return res.data;
 };

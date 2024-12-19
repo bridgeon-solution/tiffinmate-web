@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import { useParams } from "react-router-dom";
 import { provideReview } from "../../Services/ProviderService";
+import { toast } from "react-toast";
 
 export const Feedback = () => {
   const userId = localStorage.getItem("id");
@@ -13,7 +14,6 @@ export const Feedback = () => {
   };
   const handleSubmit = async () => {
     try {
-      console.log("it is working");
       await provideReview({
         providerId: id,
         userId: userId,
@@ -21,7 +21,7 @@ export const Feedback = () => {
       });
       setReview("");
     } catch (error) {
-      console.error("Error submitting review:", error);
+      toast.error("Error submitting review")
     }
   };
   return (

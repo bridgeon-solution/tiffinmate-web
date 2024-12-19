@@ -21,7 +21,9 @@ export const ProviderCard = () => {
   useEffect(() => {
     async function fetchProviders() {
       const res = await fetchApprovedProviderDetails();
-      setProviders(res.result);
+      if (res && res.result) {
+        setProviders(res.result);
+      }
     }
     fetchProviders();
   }, []);
@@ -35,7 +37,10 @@ export const ProviderCard = () => {
       >
         {providers.map((p) => (
           <Grid item xs={6} sm={6} md={3} key={p.provider_id}>
-            <Link to={`/provider/${p.provider_id}`} style={{ textDecoration: "none" }}>
+            <Link
+              to={`/provider/${p.provider_id}`}
+              style={{ textDecoration: "none" }}
+            >
               <Card sx={{ borderRadius: 4 }}>
                 <CardMedia
                   component="img"

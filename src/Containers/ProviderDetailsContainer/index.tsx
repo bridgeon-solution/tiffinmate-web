@@ -11,7 +11,9 @@ export const ProviderDetailsContainer = () => {
   useEffect(() => {
     const fetchProvider = async (id: string) => {
       const res = await fetchProviderDetails(id);
-      setProvider(res.result);
+      if (res && res.result) {
+        setProvider(res.result);
+      }
     };
     if (id) fetchProvider(id);
   }, [id]);
