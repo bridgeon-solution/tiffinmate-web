@@ -8,6 +8,7 @@ import Navbar from "../Common/Navbar";
 import { Footer } from "../Common/FooterComponent";
 import { ProviderDetails } from "../Pages/ProviderDetails";
 const Signup = lazy(() => import("../Pages/Signup"));
+const Menu = lazy(() => import("../Pages/Menu"));
 const Login = lazy(() => import("../Pages/Login"));
 const Home = lazy(() => import("../Pages/Home"));
 
@@ -33,6 +34,7 @@ export const AppRoutes = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/provider" element={<Provider />} />
           <Route path="/provider/:id" element={<ProviderDetails />} />
+          <Route path="/menu" element={<Menu />} />
         </Routes>
       </Suspense>
       {!noNav.includes(location.pathname) && <Footer />}
