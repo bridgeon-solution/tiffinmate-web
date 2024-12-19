@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ProfileValues } from "../../Components/ProfileComponet/type";
 
 export const FetchProfileService = async (id: string | null) => {
   const res = await axios.get(
@@ -6,14 +7,6 @@ export const FetchProfileService = async (id: string | null) => {
   );
   return res;
 };
-interface ProfileValues {
-  fullName: string;
-  phoneNumber: string;
-  email: string;
-  address: string;
-  city: string;
-  profileImage: string;
-}
 
 export const UpdateProfileService = async (
   values: ProfileValues,
@@ -43,6 +36,13 @@ export const UploadProfileImage = async (FormData: FormData, id: string) => {
         "Content-Type": "multipart/form-data",
       },
     }
+  );
+  return res;
+};
+
+export const FetchMenuService = async () => {
+  const res = await axios.get(
+    `${import.meta.env.VITE_BASE_URL}/FoodItem/GetFoodItem`
   );
   return res;
 };

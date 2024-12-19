@@ -7,13 +7,8 @@ import OTPInput, { ResendOTP } from "otp-input-react";
 import StyledButton from '../../Atoms/Button';
 import { useNavigate } from 'react-router-dom';
 import { ResendOtpService, SignupService, VerifyOtpService } from '../../Services/AuthService';
+import { formData } from '../../Components/SignupComponent/type';
 
-interface formData{
-  name:string,
-  email:string,
-  phone:string,
-  password:string
-}
 const validationSchema = Yup.object({
     name: Yup.string().required('Name is required'),
     email: Yup.string().email('Invalid email address').required('Email is required'),
@@ -65,9 +60,7 @@ function SignupContainer() {
       onSubmit={handleSubmit}
     >
       {() => <SignupComponent />}
-    </Formik>
-    
-    
+    </Formik>  
      
     <Modal open={modal} onClose={handleClose} sx={backdropStyle}>
         <Box sx={style}>
@@ -96,7 +89,6 @@ function SignupContainer() {
               }}
             />
             <ResendOTP onResendClick={() => ResendOtpService(phone)} />
-
             <StyledButton type="submit" variant="contained" sx={{mt:2}} onClick={()=>{
               VerifyOtpService({phone,otp:OTP})
               navigate('/login')
@@ -105,10 +97,8 @@ function SignupContainer() {
               </StyledButton>
           </Box>
         </Box>
-      </Modal>
-       
-    </>
-    
+      </Modal>       
+    </>    
   );
 }
 

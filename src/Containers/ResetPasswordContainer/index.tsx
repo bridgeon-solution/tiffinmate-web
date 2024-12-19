@@ -7,14 +7,11 @@ import { ResetPasswordService } from '../../Services/AuthService';
 interface FormValues {
     password: string;
 }
-
 const validationSchema = Yup.object({
     password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
 });
 function ResetPasswordContainer() {
     const location = useLocation();
-
-
     const initialValues: FormValues = { password: '' }
     const navigate = useNavigate()
     const params = new URLSearchParams(location.search)

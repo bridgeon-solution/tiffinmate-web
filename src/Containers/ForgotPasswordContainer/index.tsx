@@ -7,10 +7,7 @@ import OTPInput, { ResendOTP } from "otp-input-react";
 import { useState } from 'react';
 import StyledButton from '../../Atoms/Button';
 import { ForgotPasswordService, ResendMailOtp, VerifyEmailOtp } from '../../Services/AuthService';
-
-interface FormValues {
-    email: string;
-}
+import { EmailValue } from './type';
 
 const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email address').required('Email is required'),
@@ -20,10 +17,10 @@ function ForgotPasswordContainer() {
     const [modal, setModal] = useState<boolean>(false)
     const [otp, setOtp] = useState('')
     const [email, setEmail] = useState<string>('');
-    const initialValues: FormValues = { email: '' }
+    const initialValues: EmailValue = { email: '' }
     const navigate = useNavigate()
 
-    const handleSubmit = async (values: FormValues) => {
+    const handleSubmit = async (values: EmailValue) => {
         await ForgotPasswordService(values)
         setEmail(values.email)
         setModal(true)
@@ -52,7 +49,7 @@ function ForgotPasswordContainer() {
 
     return (
         <>
-            <Formik<FormValues>
+            <Formik<EmailValue>
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}>
@@ -89,7 +86,7 @@ function ForgotPasswordContainer() {
                         <ResendOTP onResendClick={() => ResendMailOtp({email})} />
 
                         <StyledButton type="submit" variant="contained" sx={{ mt: 2 }} onClick={async() => {
-                            var res=await VerifyEmailOtp({ email, otp: otp })
+                            const res=await VerifyEmailOtp({ email, otp: otp })
                             if(res?.data?.status=="success"){
                                 navigate(`/resetpassword?email=${email}`)
                             }                          

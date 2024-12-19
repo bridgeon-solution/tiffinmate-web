@@ -8,14 +8,8 @@ import {
   UploadProfileImage,
 } from "../../Services/UserService";
 import ProfileComponent from "../../Components/ProfileComponet";
-interface ProfileValues {
-  fullName: string;
-  phoneNumber: string;
-  email: string;
-  address: string;
-  city: string;
-  profileImage: string;
-}
+import { ProfileValues } from "../../Components/ProfileComponet/type";
+
 const validationSchema = Yup.object({
   fullName: Yup.string().required("Full name is required"),
   phoneNumber: Yup.string().required("Phone number is required"),
