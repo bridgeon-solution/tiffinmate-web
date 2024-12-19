@@ -22,8 +22,6 @@ function LoginComponent() {
         <Typography sx={{ fontSize:{ xs:"12px",md:"16px"}, fontWeight: 20 }}>Enter your Credentials to access your account</Typography>
         <Form>
           <Box sx={{ display: 'flex', flexDirection: "column", gap: "1rem", marginTop: "2rem" }}>
-            
-
             <Field
               as={InputField}
               name="email"
@@ -31,10 +29,6 @@ function LoginComponent() {
               variant="outlined"
             />
             <ErrorMessage name="email" component="div" className='errormessage' />
-            <Box sx={{textAlign:'end'}}>
-            <span style={{ textDecoration: 'none', color: '#e6852c',fontSize:'10px',cursor:'pointer' ,display:'inline'}} onClick={()=>navigate('/forgotpassword')} >Forgot Password</span>
-            </Box>
-
             <Box sx={{position:'relative'}}>
             <Field
               as={InputField}
@@ -55,7 +49,9 @@ function LoginComponent() {
                 <VisibilityOutlinedIcon/>):(<VisibilityOffOutlinedIcon/>)}
               </Box>
             <ErrorMessage name="password" component="div" className='errormessage' />
-            
+            <Box sx={{textAlign:'end'}}>
+            <span style={{ textDecoration: 'none', color: '#e6852c',fontSize:'10px',cursor:'pointer' ,display:'inline'}} onClick={()=>navigate('/forgotpassword')} >Forgot Password</span>
+            </Box>
               </Box>
 
             <StyledButton type="submit" variant="contained">

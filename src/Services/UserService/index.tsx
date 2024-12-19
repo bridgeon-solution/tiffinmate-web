@@ -46,3 +46,8 @@ export const FetchMenuService = async () => {
   );
   return res;
 };
+
+export const FetchMenu = async () => {
+  const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/Menu`);
+  return res;
+};

@@ -1,5 +1,7 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
+import { BrowseMenu } from "../Components/BrowseMenu";
+import MenuType from "../Pages/MenuType";
 const ForgotPasword=lazy(()=>import("../Pages/ForgotPasword"));
 const ResetPassword=lazy(()=>import("../Pages/ResetPassword"));
 const Profile=lazy(()=>import ("../Pages/Profile"));
@@ -19,6 +21,7 @@ export const AppRoutes = () => {
       <Route path="/resetpassword" element={<ResetPassword/>}/>
       <Route path="/profile" element={<Profile/>}/>
       <Route path="/menu" element={<Menu/>}/>
+      <Route path="/menutype" element={<MenuType/>}/>
     </Routes>
     </Suspense>
   );
