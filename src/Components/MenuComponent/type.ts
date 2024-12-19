@@ -1,7 +1,5 @@
-export interface MenuItem {
-    day: string;
-    foodname: string;
-    description: string;
-    price: string;
-    categoryname: string;
-  }
+export interface MenuCard {
+  image: string;
+  title: string;
+  description: string;
+}

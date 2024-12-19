@@ -1,125 +1,90 @@
 import React from "react";
-import Lunch from "../../Assets/Lunch.webp";
-import Dinner from "../../Assets/Dinner.webp";
-import BreakFast from "../../Assets/BreakFast.webp";
-import { Box, Typography, Grid } from "@mui/material";
-import StyledButton from "../../Atoms/Button";
+import {
+  Box,
+  Card,
+  CardContent,
+  CardMedia,
+  Grid,
+  Typography,
+} from "@mui/material";
+import { MenuCard } from "./type";
 import { useNavigate } from "react-router-dom";
-import { MenuItem } from "./type";
 
-const categories = ["BreakFast", "Lunch", "Dinner"];
-interface MenuComponentProps {
-  handleCategory: (category: string) => void;
-  menu: MenuItem[];
+interface MenuTypeComponentProps {
+  categories: MenuCard[];
 }
-const MenuComponent: React.FC<MenuComponentProps> = ({
-  handleCategory,
-  menu,
-}) => {
+const MenuComponent: React.FC<MenuTypeComponentProps> = ({ categories }) => {
   const navigate = useNavigate();
   return (
-    <Box p={4}>
-      <Typography variant="subtitle1" align="center" color="#e6852c" fontWeight='bold'>
-        Menu
-      </Typography>
-      <Typography variant="h3" align="center" fontWeight="bold">
-        Explore Our Menu
-      </Typography>
-      <Grid container spacing={6} justifyContent="center" mb={4} mt={2}>
-        {categories.map((category, index) => (
-          <Grid item xs={12} md={4} key={index}>
-            <Box sx={{ width: "100%" }}>
-              <Box
-                component="img"
-                src={
-                  category === "BreakFast"
-                    ? BreakFast
-                    : category === "Lunch"
-                    ? Lunch
-                    : Dinner
-                }
-                sx={{ width: "100%", height: "200px", objectFit: "cover" }}
-              />
-              <Box
-                onClick={() => handleCategory(category)}
-                sx={{
-                  cursor: "pointer",
-                }}
-              >
-                <Typography
-                  variant="subtitle2"
-                  color="#e6852c"
+    <Box mt={6}>
+      <Box sx={{ background: "black" }}>
+        <Box
+          sx={{
+            backgroundImage: `url(${categories[0].image})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            padding: "80px 20px",
+            textAlign: "center",
+            color: "white",
+          }}
+        >
+          <Typography variant="h3" fontWeight="bold">
+            We Offer the Best for You
+          </Typography>
+          <Typography variant="h6">
+            Explore a variety of Veg, Non-Veg, and Premium dining options
+            tailored for your taste.
+          </Typography>
+        </Box>
+      </Box>
+      <Box sx={{ padding: 4, mt: 6 }}>
+        <Grid container spacing={4} justifyContent="center" alignItems="center">
+          {categories.map((category, index) => (
+            <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
+              <Card sx={{ borderRadius: 4, textAlign: "center" }}>
+                <CardMedia
+                  component="img"
+                  height="200"
+                  image={category.image}
+                  alt={category.title}
                   sx={{
-                    cursor: "pointer",
-                    "&:hover": { textDecoration: "underline" },
+                    borderRadius: "50%",
+                    width: 150,
+                    height: 150,
+                    margin: "auto",
+                    mt: 2,
                   }}
-                >
-                  {category}
-                </Typography>
-                <Box sx={{ borderBottom: "2px solid #ddd", mb: 2, mt: 2 }} />
-                <Typography variant="body1" fontWeight="bold">
-                  {category === "Breakfast"
-                    ? "Morning Glory: A Feast to Jumpstart Your Day,A Feast to Jumpstart Your Day"
-                    : category === "Lunch"
-                    ? "Midday Marvels: Lunchtime Delights Await,A Feast to Jumpstart Your Day"
-                    : category === "Dinner"
-                    ? "Dinner Delights: An Evening of Culinary Elegance ,A Feast to Jumpstart Your Day"
-                    : "Insights: A Journey Through Gastronomic Pleasures, A Feast to Jumpstart Your Day"}
-                </Typography>
-              </Box>
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
-
-      <Grid container spacing={4} mt={6} p={1}>
-        {menu.map((item, index) => (
-          <Grid item xs={12} md={6} key={index}>
-            <Box
-              display="flex"
-              justifyContent="space-around"
-              alignItems="center"
-              borderBottom="1px solid #ddd"
-              pb={2}
-              mb={2}
-            >
-              <Box>
-                <Typography
-                  variant="subtitle1"
-                  fontWeight="bold"
-                  color="#e6852c"
-                >
-                  {item.day}
-                </Typography>
-                <Typography variant="body1" fontWeight="bold">
-                  {item.foodname}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  {item.description}
-                </Typography>
-              </Box>
-              <Typography variant="h6" fontWeight="bold" color="#e6852c">
-                ${item.price}.00
-              </Typography>
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
-      <Box mt={6} textAlign="end">
-        <StyledButton
-          onClick={() => navigate("daily")}
-          variant="contained"
-          sx={{ mr: 2, width: { xs: "100%", sm: 230 }, mt: 2 }}
-        >
-          GET DAILY PLAN
-        </StyledButton>
-        <StyledButton
-          onClick={() => navigate("subscription")}
-          variant="contained"
-          sx={{ width: { xs: "100%", sm: 230 }, mt: 2 }}
-        >
-          GET SUBSCRIPTION PLAN
-        </StyledButton>
+                />
+                <CardContent>
+                  <Typography variant="h6" fontWeight="bold" gutterBottom>
+                    {category.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" mb={2}>
+                    {category.description}
+                  </Typography>
+                  <Box
+                    onClick={() => navigate(":id")}
+                    sx={{
+                      cursor: "pointer",
+                    }}
+                  >
+                    <Typography
+                      variant="subtitle2"
+                      color="#e6852c"
+                      fontWeight="bold"
+                      sx={{
+                        cursor: "pointer",
+                        "&:hover": { textDecoration: "underline" },
+                      }}
+                    >
+                      Explore {category.title.split(" ")[0]}
+                    </Typography>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
       </Box>
     </Box>
   );
