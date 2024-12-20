@@ -4,6 +4,10 @@ FROM node:18 AS build
 # Set working directory
 WORKDIR /app
 
+#set env's
+ARG VITE_BASE_URL
+ENV VITE_BASE_URL=${VITE_BASE_URL}
+
 # Install dependencies
 COPY package*.json ./
 COPY tsconfig*.json ./

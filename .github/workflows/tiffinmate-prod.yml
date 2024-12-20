@@ -14,7 +14,9 @@ jobs:
       - name: Login to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build Docker Image
-        run: docker build -t fathimathusuhaila123/tiffinmate-prod .
+        run: docker build \
+            --build-arg VITE_BASE_URL="${{ secrets.VITE_BASE_URL }}" \
+            -t fathimathusuhaila123/tiffinmate-prod .
       - name: Publish image to docker hub
         run: docker push fathimathusuhaila123/tiffinmate-prod:latest   
 
@@ -27,4 +29,6 @@ jobs:
       - name: Delete Old Container
         run: docker rm -f reactContainer
       - name: Run docker container
-        run: docker run -d -p 3000:80 --name reactContainer fathimathusuhaila123/tiffinmate-prod 
+        run: docker run -d -p 3000:80 \
+            -e VITE_BASE_URL="${{ secrets.VITE_BASE_URL }}" \
+            --name reactContainer fathimathusuhaila123/tiffinmate-prod 
