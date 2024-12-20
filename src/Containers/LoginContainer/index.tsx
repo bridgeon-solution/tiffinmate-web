@@ -3,21 +3,15 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { LoginService } from '../../Services/AuthService';
-
-interface loginValues{
-  email:string;
-  password:string;
-}
+import { loginValues } from '../../Components/LoginComponent/type';
 
 const validationSchema = Yup.object({  
     email: Yup.string().email('Invalid email address').required('Email is required'),
     password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
   });
 function LoginContainer() {
-
     const initialValues:loginValues={email:'',password:''}
     const navigate=useNavigate()
-
     const handleSubmit = async(values: loginValues) => { 
       const res=await LoginService(values)
       if(res.data.status=="success"){
@@ -26,7 +20,7 @@ function LoginContainer() {
         navigate('/')      
       }        
     }
-
+    
   return (    
         <>
     <Formik<loginValues>

@@ -5,16 +5,16 @@ import ResetPasswordComponent from '../../Components/ResetPasswordComponent';
 import { ResetPasswordService } from '../../Services/AuthService';
 
 interface FormValues {
-    password: string;
+    password: string
 }
-
 const validationSchema = Yup.object({
     password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+    confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password')], 'Passwords must match')
+    .required('Confirm password is required'),
 });
 function ResetPasswordContainer() {
     const location = useLocation();
-
-
     const initialValues: FormValues = { password: '' }
     const navigate = useNavigate()
     const params = new URLSearchParams(location.search)

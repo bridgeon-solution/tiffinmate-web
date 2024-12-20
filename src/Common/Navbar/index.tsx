@@ -22,14 +22,14 @@ interface Props {
 const drawerWidth = 240;
 const navItems = [
   { name: "Home", path: "/" },
-  { name: "Restaurants", path: "restaurants" },
+  { name: "Restaurants", path: "/provider" },
   { name: "Register vendor", path: "register" },
 ];
 
 export default function Navbar(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -69,7 +69,12 @@ export default function Navbar(props: Props) {
       <CssBaseline />
       <AppBar
         component="nav"
-        sx={{ bgcolor: "white", px: 12, boxShadow: "none" }}
+        sx={{
+          bgcolor: "white",
+          px: 4,
+          // boxShadow: "none",
+          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+        }}
       >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <IconButton
@@ -122,7 +127,7 @@ export default function Navbar(props: Props) {
               ))}
             </Box>
             <Box>
-              <IconButton onClick={()=>navigate('/profile')}>
+              <IconButton onClick={() => navigate("/profile")}>
                 <AccountCircle fontSize="large" sx={{ color: "black" }} />
               </IconButton>
             </Box>
