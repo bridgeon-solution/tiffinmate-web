@@ -13,7 +13,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { AccountCircle } from "@mui/icons-material";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 interface Props {
   window?: () => Window;
@@ -23,13 +23,14 @@ const drawerWidth = 240;
 const navItems = [
   { name: "Home", path: "/" },
   { name: "Restaurants", path: "/provider" },
-  { name: "Register vendor", path: "register" },
+  { name: "Register vendor", path: "/register" },
 ];
 
 export default function Navbar(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -46,10 +47,11 @@ export default function Navbar(props: Props) {
           <ListItem key={item.name} disablePadding>
             <NavLink
               to={item.path}
-              style={({ isActive }) => ({
+              end={item.path === "/"}
+              style={{
                 textDecoration: "none",
-                color: isActive ? "#FF9431" : "black",
-              })}
+                color: location.pathname === item.path ? "#FF9431" : "black",
+              }}
             >
               <ListItemButton sx={{ textAlign: "center" }}>
                 <ListItemText primary={item.name} />
@@ -111,16 +113,20 @@ export default function Navbar(props: Props) {
                 <NavLink
                   key={item.name}
                   to={item.path}
-                  style={({ isActive }) => ({
+                  end={item.path === "/"}
+                  style={{
                     textDecoration: "none",
-                    color: isActive ? "white" : "black",
-                    backgroundColor: isActive ? "#FF9431" : "none",
-                    fontWeight: isActive ? "none" : "bold",
+                    color: location.pathname === item.path ? "white" : "black",
+                    backgroundColor:
+                      location.pathname === item.path
+                        ? "#FF9431"
+                        : "transparent",
+                    fontWeight: "bold",
                     borderRadius: "20px",
                     padding: "8px 16px",
                     marginRight: "10px",
-                    textTransform: "none",
-                  })}
+                    display: "inline-block",
+                  }}
                 >
                   {item.name}
                 </NavLink>
