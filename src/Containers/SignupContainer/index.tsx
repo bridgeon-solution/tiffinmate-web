@@ -12,7 +12,6 @@ import {
   VerifyOtpService,
 } from "../../Services/AuthService";
 import { formData } from "../../Components/SignupComponent/type";
-import { toast } from "react-toast";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("Name is required"),
