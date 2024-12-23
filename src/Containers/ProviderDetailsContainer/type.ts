@@ -1,4 +1,4 @@
-export interface Provider {
+export interface ProviderDetails {
   about: string;
   address: string;
   image: string;
@@ -8,10 +8,10 @@ export interface Provider {
   resturent_name: string;
 }
 export interface ProviderDetailsComponentProps {
-  provider: Provider | undefined;
+  provider: ProviderDetails | undefined;
 }
 export interface ProviderHomeProps {
-  provider: Provider | undefined;
+  provider: ProviderDetails | undefined;
 }
 
 
@@ -23,4 +23,13 @@ export interface Review {
   review: string;
   userId: string;
   username: string;
+}
+
+export interface provider {
+  provider_id: string;
+  image: string;
+  resturent_name: string;
+}
+export interface providerDetailsProp{
+  providers:provider[]
 }
