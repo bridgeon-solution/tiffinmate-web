@@ -1,40 +1,48 @@
-import * as Yup from 'yup';
-import { Formik } from 'formik';
-import { useLocation, useNavigate} from 'react-router-dom';
-import ResetPasswordComponent from '../../Components/ResetPasswordComponent';
-import { ResetPasswordService } from '../../Services/AuthService';
+import * as Yup from "yup";
+import { Formik } from "formik";
+import { useLocation, useNavigate } from "react-router-dom";
+import ResetPasswordComponent from "../../Components/ResetPasswordComponent";
+import { ResetPasswordService } from "../../Services/AuthService";
+import { toast } from "react-toast";
 
 interface FormValues {
-    password: string
+  password: string;
 }
 const validationSchema = Yup.object({
-    password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
-    confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password')], 'Passwords must match')
-    .required('Confirm password is required'),
+  password: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password")], "Passwords must match")
+    .required("Confirm password is required"),
 });
 function ResetPasswordContainer() {
-    const location = useLocation();
-    const initialValues: FormValues = { password: '' }
-    const navigate = useNavigate()
-    const params = new URLSearchParams(location.search)
-    const email = params.get("email") as string
-    const handleSubmit = async (values: FormValues) => {
-        const data = { email, ...values }
-        await ResetPasswordService(data)
-        navigate('/login')
+  const location = useLocation();
+  const initialValues: FormValues = { password: "" };
+  const navigate = useNavigate();
+  const params = new URLSearchParams(location.search);
+  const email = params.get("email") as string;
+  const handleSubmit = async (values: FormValues) => {
+    const data = { email, ...values };
+    try {
+      await ResetPasswordService(data);
+      toast.success("Password succesfully updated");
+      navigate("/login");
+    } catch {
+      toast.error("Failed to update password");
     }
-    return (
-        <>
-            <Formik<FormValues>
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={handleSubmit}>
-
-                {() => <ResetPasswordComponent />}
-            </Formik>
-        </>
-    )
+  };
+  return (
+    <>
+      <Formik<FormValues>
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {() => <ResetPasswordComponent />}
+      </Formik>
+    </>
+  );
 }
 
-export default ResetPasswordContainer
+export default ResetPasswordContainer;

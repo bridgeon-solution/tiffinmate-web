@@ -1,6 +1,6 @@
 import { Box, Typography, Link, Divider, Grid } from "@mui/material";
 
-export const Footer = () => {
+const Footer = () => {
   return (
     <Box sx={{ backgroundColor: "#F5F8FD", mt: 12 }}>
       <Grid
@@ -27,8 +27,7 @@ export const Footer = () => {
               Trusted by Hostel Communities
             </Typography>
             <Typography sx={{ mt: 2, fontWeight: "bold" }}>
-              Serving fresh, healthy, and homely meals for students and
-              workers.
+              Serving fresh, healthy, and homely meals for students and workers.
             </Typography>
           </Box>
         </Grid>
@@ -92,3 +91,4 @@ export const Footer = () => {
     </Box>
   );
 };
+export default Footer;

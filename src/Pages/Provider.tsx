@@ -1,17 +1,11 @@
-import { useEffect } from "react";
-import { fetchProvider } from "../Services/ProviderService";
-import { ProviderComponent } from "../Components/ProviderComponent";
+import ProviderContainer from "../Containers/ProviderContainer";
 
-export const Provider = () => {
-  useEffect(() => {
-    const fetchProviders = async () => {
-      await fetchProvider();
-    };
-    fetchProviders();
-  }, []);
+const Provider = () => {
   return (
     <>
-      <ProviderComponent />
+      <ProviderContainer />
     </>
   );
 };
+
+export default Provider;

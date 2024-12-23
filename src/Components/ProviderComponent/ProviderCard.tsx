@@ -6,28 +6,10 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
-import { fetchApprovedProviderDetails } from "../../Services/ProviderService";
 import { Link } from "react-router-dom";
+import { providerDetailsProp } from "../../Containers/ProviderDetailsContainer/type";
 
-interface provider {
-  provider_id: string;
-  image: string;
-  resturent_name: string;
-}
-
-export const ProviderCard = () => {
-  const [providers, setProviders] = useState<provider[]>([]);
-  useEffect(() => {
-    async function fetchProviders() {
-      const res = await fetchApprovedProviderDetails();
-      if (res && res.result) {
-        setProviders(res.result);
-      }
-    }
-    fetchProviders();
-  }, []);
-
+export const ProviderCard = ({ providers }: providerDetailsProp) => {
   return (
     <>
       <Grid
