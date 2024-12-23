@@ -3,38 +3,46 @@ import heroImg from "../../Assets/homeHero.webp";
 
 export const HomeHero: React.FC = () => {
   return (
-    <Box sx={{ px: 2, py: 12, position: "relative" }}>
+    <Box sx={{ 
+      px: { xs: 1, sm: 2 }, 
+      py: { xs: 6, sm: 8, md: 12 }, 
+      position: "relative",
+      width: "100%"
+    }}>
       <Box
         component="img"
         src={heroImg}
-        alt="Hero Imager"
+        alt="Hero Image"
         sx={{
           width: "100%",
+          height: { xs: "60vh", sm: "70vh", md: "85vh" }, 
           maxHeight: "85vh",
           objectFit: "cover",
-          borderRadius: "12px",
+          borderRadius: { xs: "8px", sm: "12px" }, 
         }}
       />
 
       <Box
         sx={{
-          mt: 2,
           position: "absolute",
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
+          width: { xs: "90%", sm: "80%", md: "auto" }, 
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           textAlign: "center",
+          p: { xs: 1, sm: 2 }, 
         }}
       >
         <Typography
           variant="h2"
           sx={{
             fontFamily: "Playfair Display, serif",
-            fontSize: { xs: "2rem", sm: "3rem", md: "4rem" },
-            mb: 1,
+            fontSize: { xs: "1.75rem", sm: "2.5rem", md: "4rem" },
+            mb: { xs: 1, sm: 1.5, md: 2 }, 
+            wordBreak: "break-word", 
           }}
         >
           Best food for
@@ -42,8 +50,10 @@ export const HomeHero: React.FC = () => {
         </Typography>
         <Typography
           sx={{
-            fontSize: { xs: "0.9rem", sm: "1rem", md: "1.2rem" },
-            mb: { sm: 2 },
+            fontSize: { xs: "0.85rem", sm: "1rem", md: "1.2rem" },
+            mb: { xs: 1.5, sm: 2, md: 2.5 }, 
+            px: { xs: 1, sm: 2 }, 
+            maxWidth: { xs: "100%", sm: "90%", md: "800px" }, 
           }}
         >
           Discover delectable cuisine and unforgettable moments
