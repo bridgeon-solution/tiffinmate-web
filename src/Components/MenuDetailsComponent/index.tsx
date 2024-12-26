@@ -1,20 +1,19 @@
 import React from "react";
-import Lunch from "../../Assets/Lunch.webp";
-import Dinner from "../../Assets/Dinner.webp";
-import BreakFast from "../../Assets/BreakFast.webp";
 import { Box, Typography, Grid } from "@mui/material";
 import StyledButton from "../../Atoms/Button";
 import { useNavigate } from "react-router-dom";
-import { MenuItem } from "./type";
-
-const categories = ["BreakFast", "Lunch", "Dinner"];
+import { category, MenuItem } from "./type";
 interface MenuComponentProps {
+  categories: category[];
   handleCategory: (category: string) => void;
   menu: MenuItem[];
+  handleOpen: () => void;
 }
 const MenuDetailsComponent: React.FC<MenuComponentProps> = ({
   handleCategory,
   menu,
+  handleOpen,
+  categories,
 }) => {
   const navigate = useNavigate();
   return (
@@ -36,17 +35,11 @@ const MenuDetailsComponent: React.FC<MenuComponentProps> = ({
             <Box sx={{ width: "100%" }}>
               <Box
                 component="img"
-                src={
-                  category === "BreakFast"
-                    ? BreakFast
-                    : category === "Lunch"
-                    ? Lunch
-                    : Dinner
-                }
+                src={category.image}
                 sx={{ width: "100%", height: "200px", objectFit: "cover" }}
               />
               <Box
-                onClick={() => handleCategory(category)}
+                onClick={() => handleCategory(category.name)}
                 sx={{
                   cursor: "pointer",
                 }}
@@ -59,17 +52,11 @@ const MenuDetailsComponent: React.FC<MenuComponentProps> = ({
                     "&:hover": { textDecoration: "underline" },
                   }}
                 >
-                  {category}
+                  {category.name}
                 </Typography>
                 <Box sx={{ borderBottom: "2px solid #ddd", mb: 2, mt: 2 }} />
                 <Typography variant="body1" fontWeight="bold">
-                  {category === "Breakfast"
-                    ? "Morning Glory: A Feast to Jumpstart Your Day,A Feast to Jumpstart Your Day"
-                    : category === "Lunch"
-                    ? "Midday Marvels: Lunchtime Delights Await,A Feast to Jumpstart Your Day"
-                    : category === "Dinner"
-                    ? "Dinner Delights: An Evening of Culinary Elegance ,A Feast to Jumpstart Your Day"
-                    : "Insights: A Journey Through Gastronomic Pleasures, A Feast to Jumpstart Your Day"}
+                  {category.description}
                 </Typography>
               </Box>
             </Box>
@@ -97,7 +84,7 @@ const MenuDetailsComponent: React.FC<MenuComponentProps> = ({
                   {item.day}
                 </Typography>
                 <Typography variant="body1" fontWeight="bold">
-                  {item.foodname}
+                  {item.food_name}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
                   {item.description}
@@ -112,7 +99,7 @@ const MenuDetailsComponent: React.FC<MenuComponentProps> = ({
       </Grid>
       <Box mt={6} textAlign="end">
         <StyledButton
-          onClick={() => navigate("daily")}
+          onClick={handleOpen}
           variant="contained"
           sx={{ mr: 2, width: { xs: "100%", sm: 230 }, mt: 2 }}
         >
