@@ -63,7 +63,7 @@ function MenuDetailsContainer() {
   useEffect(() => {
     if (selectedDate && selectedCategories.length > 0) {
       CalculateTotal(selectedDate, selectedCategories).then((response) => {
-        setTotalAmount(response.data.totalAmount);
+        setTotalAmount(response.data.result);
       });
     }
   }, [selectedCategories, selectedDate]);
@@ -74,7 +74,7 @@ function MenuDetailsContainer() {
 
   const handleCategorySelect = async (id: string) => {
     const newSelectedCategories = selectedCategories.includes(id)
-      ? selectedCategories.filter((catId) => catId !== id)
+      ? selectedCategories.filter((categoryId) => categoryId !== id)
       : [...selectedCategories, id];
     setSelectedCategories(newSelectedCategories);
 
@@ -83,7 +83,7 @@ function MenuDetailsContainer() {
         selectedDate,
         newSelectedCategories
       );
-      setTotalAmount(response.data.totalAmount);
+      setTotalAmount(response.data.result);
     }
   };
 
