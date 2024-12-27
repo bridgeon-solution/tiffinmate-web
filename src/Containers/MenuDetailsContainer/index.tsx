@@ -9,12 +9,14 @@ import Dinner from "../../Assets/Dinner.webp";
 import BreakFast from "../../Assets/BreakFast.webp";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import SubscriptionPlanComponent from "../../Components/SubscriptionPlanComponent";
 
 function MenuDetailsContainer() {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<string>("BreakFast");
   const [menu, setMenu] = useState<MenuItem[]>([]);
   const [dailyModal, setDailyModal] = useState<boolean>(false);
+  const [subscriptionModal, setSubscriptionModal] = useState<boolean>(false);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [totalAmount, setTotalAmount] = useState<number>(0);
@@ -43,21 +45,24 @@ function MenuDetailsContainer() {
     },
   ];
 
-  const handlePay = () => {
+  const handlePay = (modalType:"daily"|"subscription") => {
     if (selectedCategories.length === 0) {
       toast.warn("Please select at least one category.");
       return;
     }
     navigate("order");
-    handleClose();
+    handleClose(modalType);
   };
 
-  const handleClose = () => {
-    setDailyModal(false);
-  };
-
-  const handleOpen = () => {
-    setDailyModal(true);
+  const handleClose = (modalType:"daily"|"subscription") => {
+    if(modalType==="daily"){
+      setDailyModal(false);
+    }else if(modalType==="subscription"){
+      setSubscriptionModal(false)
+    }
+    setSelectedCategories([]);
+  setSelectedDate("");
+  setTotalAmount(0);
   };
 
   useEffect(() => {
@@ -112,19 +117,34 @@ function MenuDetailsContainer() {
         categories={categories}
         handleCategory={handleCategory}
         menu={menu}
-        handleOpen={handleOpen}
+        setDailyModal={setDailyModal}
+        setSubscriptionModal={setSubscriptionModal}
+        
       />
       {dailyModal && (
         <DailyPlanComponent
           open={dailyModal}
-          handleClose={handleClose}
+          handleClose={() => handleClose("daily")}
           categories={categories}
           selectedCategories={selectedCategories}
           handleCategorySelect={handleCategorySelect}
           totalAmount={totalAmount}
           selectedDate={selectedDate}
-          handlePay={handlePay}
+          handlePay={() => handlePay("daily")}
           handleDateChange={handleDateChange}
+        />
+      )}
+      {subscriptionModal && (
+        <SubscriptionPlanComponent
+        open={subscriptionModal}
+        handleClose={() => handleClose("subscription")}
+        categories={categories}
+        selectedCategories={selectedCategories}
+        selectedDate={selectedDate}
+          handlePay={() => handlePay("subscription")}
+          handleDateChange={handleDateChange}
+          totalAmount={totalAmount}
+          handleCategorySelect={handleCategorySelect}
         />
       )}
     </>

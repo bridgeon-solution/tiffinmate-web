@@ -38,5 +38,7 @@ export const FetchMenuDetails = async () => {
 
 export const FetchMenu = async () => {
   const res = await api.get(`/FoodItem/menu`);
+  console.log(res);
+  
   return res;
 };
