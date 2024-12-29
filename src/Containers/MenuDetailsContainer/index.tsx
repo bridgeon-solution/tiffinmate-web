@@ -82,7 +82,9 @@ function MenuDetailsContainer() {
         menuid,
         is_subscription
       ).then((response) => {
-        setTotalAmount(response.data.result);
+        if (response && response.data && response.data.result) {
+          setTotalAmount(response.data.result);
+        }
       });
     }
   }, [selectedCategories, selectedDate, dailyModal, subscriptionModal]);
@@ -106,8 +108,9 @@ function MenuDetailsContainer() {
         menuid,
         is_subscription
       );
-      setTotalAmount(response.data.result);
-      console.log(response.data.result);
+      if (response?.data?.result) {
+        setTotalAmount(response.data.result);
+      }
     }
   };
 
