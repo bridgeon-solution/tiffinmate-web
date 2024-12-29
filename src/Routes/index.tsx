@@ -36,7 +36,7 @@ export const AppRoutes = () => {
           <Route path="/provider" element={<Provider />} />
           <Route path="/provider/:id" element={<ProviderDetails />} />
           <Route path="/provider/:id/menu" element={<Menu />} />
-          <Route path="/provider/:id/menu/:id" element={<MenuDetails />} />
+          <Route path="/provider/:id/menu/:menuId" element={<MenuDetails />} />
         </Routes>
       </Suspense>
       {!noNav.includes(location.pathname) && <Footer />}

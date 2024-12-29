@@ -20,7 +20,7 @@ const MenuComponent: React.FC<MenuTypeComponentProps> = ({ categories }) => {
       <Box sx={{ background: "black" }}>
         <Box
           sx={{
-            backgroundImage: `url(${categories[0].image})`,
+            backgroundImage: `url(${categories[2].image})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             padding: "80px 20px",
@@ -39,14 +39,14 @@ const MenuComponent: React.FC<MenuTypeComponentProps> = ({ categories }) => {
       </Box>
       <Box sx={{ padding: 4, mt: 6 }}>
         <Grid container spacing={4} justifyContent="center" alignItems="center">
-          {categories.map((category, index) => (
+          {categories?.map((category, index) => (
             <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
               <Card sx={{ borderRadius: 4, textAlign: "center" }}>
                 <CardMedia
                   component="img"
                   height="200"
                   image={category.image}
-                  alt={category.title}
+                  alt={category.name}
                   sx={{
                     borderRadius: "50%",
                     width: 150,
@@ -57,13 +57,13 @@ const MenuComponent: React.FC<MenuTypeComponentProps> = ({ categories }) => {
                 />
                 <CardContent>
                   <Typography variant="h6" fontWeight="bold" gutterBottom>
-                    {category.title}
+                    {category.name}
                   </Typography>
                   <Typography variant="body2" color="text.secondary" mb={2}>
                     {category.description}
                   </Typography>
                   <Box
-                    onClick={() => navigate(":id")}
+                    onClick={() => navigate(`${category.id}`)}
                     sx={{
                       cursor: "pointer",
                     }}
@@ -77,7 +77,7 @@ const MenuComponent: React.FC<MenuTypeComponentProps> = ({ categories }) => {
                         "&:hover": { textDecoration: "underline" },
                       }}
                     >
-                      Explore {category.title.split(" ")[0]}
+                      Explore {category.name.split(" ")[0]}
                     </Typography>
                   </Box>
                 </CardContent>

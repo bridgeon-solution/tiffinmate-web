@@ -8,12 +8,19 @@ import Lunch from "../../Assets/Lunch.webp";
 import Dinner from "../../Assets/Dinner.webp";
 import BreakFast from "../../Assets/BreakFast.webp";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SubscriptionPlanComponent from "../../Components/SubscriptionPlanComponent";
 
 function MenuDetailsContainer() {
+  type Params = {
+    id: string;
+    menuId: string;
+  };
+  const { id, menuId } = useParams<Params>();
+  const providerId = id || "";
+  const menuid = menuId || "";
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState<string>("BreakFast");
+  const [selectedCategory, setSelectedCategory] = useState<string>("Breakfast");
   const [menu, setMenu] = useState<MenuItem[]>([]);
   const [dailyModal, setDailyModal] = useState<boolean>(false);
   const [subscriptionModal, setSubscriptionModal] = useState<boolean>(false);
@@ -24,28 +31,28 @@ function MenuDetailsContainer() {
   const categories = [
     {
       id: "0193ce2c-ab58-7b6f-8470-7462704e8638",
-      name: "BREAKFAST",
+      name: "Breakfast",
       image: BreakFast,
       description:
         "Morning Glory: A Feast to Jumpstart Your Day,A Feast to Jumpstart Your Day",
     },
     {
       id: "0193ce2d-5a2b-7a4c-b75a-aeaa23f3e6b2",
-      name: "LUNCH",
+      name: "Lunch",
       image: Lunch,
       description:
         "Midday Marvels: Lunchtime Delights Await,A Feast to Jumpstart Your Day",
     },
     {
       id: "0193ce2d-862c-7c4f-b3c2-7ee4c8e7113e",
-      name: "DINNER",
+      name: "Dinner",
       image: Dinner,
       description:
         "Dinner Delights: An Evening of Culinary Elegance ,A Feast to Jumpstart Your Day",
     },
   ];
 
-  const handlePay = (modalType:"daily"|"subscription") => {
+  const handlePay = (modalType: "daily" | "subscription") => {
     if (selectedCategories.length === 0) {
       toast.warn("Please select at least one category.");
       return;
@@ -54,24 +61,31 @@ function MenuDetailsContainer() {
     handleClose(modalType);
   };
 
-  const handleClose = (modalType:"daily"|"subscription") => {
-    if(modalType==="daily"){
+  const handleClose = (modalType: "daily" | "subscription") => {
+    if (modalType === "daily") {
       setDailyModal(false);
-    }else if(modalType==="subscription"){
-      setSubscriptionModal(false)
+    } else if (modalType === "subscription") {
+      setSubscriptionModal(false);
     }
     setSelectedCategories([]);
-  setSelectedDate("");
-  setTotalAmount(0);
+    setSelectedDate("");
+    setTotalAmount(0);
   };
 
   useEffect(() => {
     if (selectedDate && selectedCategories.length > 0) {
-      CalculateTotal(selectedDate, selectedCategories).then((response) => {
+      const is_subscription = dailyModal ? false : true;
+      CalculateTotal(
+        selectedDate,
+        selectedCategories,
+        providerId,
+        menuid,
+        is_subscription
+      ).then((response) => {
         setTotalAmount(response.data.result);
       });
     }
-  }, [selectedCategories, selectedDate]);
+  }, [selectedCategories, selectedDate, dailyModal, subscriptionModal]);
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(e.target.value);
@@ -84,11 +98,16 @@ function MenuDetailsContainer() {
     setSelectedCategories(newSelectedCategories);
 
     if (selectedDate) {
+      const is_subscription = dailyModal ? false : true;
       const response = await CalculateTotal(
         selectedDate,
-        newSelectedCategories
+        newSelectedCategories,
+        providerId,
+        menuid,
+        is_subscription
       );
       setTotalAmount(response.data.result);
+      console.log(response.data.result);
     }
   };
 
@@ -97,7 +116,8 @@ function MenuDetailsContainer() {
   };
 
   const fetchMenu = async () => {
-    const res = await FetchMenuDetails();
+    const res = await FetchMenuDetails(providerId, menuid);
+
     if (res && res.data && res.data.result) {
       const result = res.data.result;
       setMenu(
@@ -107,6 +127,7 @@ function MenuDetailsContainer() {
       );
     }
   };
+
   useEffect(() => {
     fetchMenu();
   }, [selectedCategory]);
@@ -119,7 +140,6 @@ function MenuDetailsContainer() {
         menu={menu}
         setDailyModal={setDailyModal}
         setSubscriptionModal={setSubscriptionModal}
-        
       />
       {dailyModal && (
         <DailyPlanComponent
@@ -136,11 +156,11 @@ function MenuDetailsContainer() {
       )}
       {subscriptionModal && (
         <SubscriptionPlanComponent
-        open={subscriptionModal}
-        handleClose={() => handleClose("subscription")}
-        categories={categories}
-        selectedCategories={selectedCategories}
-        selectedDate={selectedDate}
+          open={subscriptionModal}
+          handleClose={() => handleClose("subscription")}
+          categories={categories}
+          selectedCategories={selectedCategories}
+          selectedDate={selectedDate}
           handlePay={() => handlePay("subscription")}
           handleDateChange={handleDateChange}
           totalAmount={totalAmount}
