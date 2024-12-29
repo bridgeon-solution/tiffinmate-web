@@ -1,21 +1,21 @@
 import React from "react";
 import { Box, Typography, Grid } from "@mui/material";
 import StyledButton from "../../Atoms/Button";
-import { useNavigate } from "react-router-dom";
 import { category, MenuItem } from "./type";
 interface MenuComponentProps {
   categories: category[];
   handleCategory: (category: string) => void;
   menu: MenuItem[];
-  handleOpen: () => void;
+  setDailyModal: (value: boolean) => void;
+  setSubscriptionModal: (value: boolean) => void;
 }
 const MenuDetailsComponent: React.FC<MenuComponentProps> = ({
   handleCategory,
   menu,
-  handleOpen,
   categories,
+  setDailyModal,
+  setSubscriptionModal,
 }) => {
-  const navigate = useNavigate();
   return (
     <Box p={4} mt={5}>
       <Typography
@@ -69,7 +69,7 @@ const MenuDetailsComponent: React.FC<MenuComponentProps> = ({
           <Grid item xs={12} md={6} key={index}>
             <Box
               display="flex"
-              justifyContent="space-around"
+              justifyContent="space-between"
               alignItems="center"
               borderBottom="1px solid #ddd"
               pb={2}
@@ -99,14 +99,14 @@ const MenuDetailsComponent: React.FC<MenuComponentProps> = ({
       </Grid>
       <Box mt={6} textAlign="end">
         <StyledButton
-          onClick={handleOpen}
+          onClick={() => setDailyModal(true)}
           variant="contained"
           sx={{ mr: 2, width: { xs: "100%", sm: 230 }, mt: 2 }}
         >
           GET DAILY PLAN
         </StyledButton>
         <StyledButton
-          onClick={() => navigate("subscription")}
+          onClick={() => setSubscriptionModal(true)}
           variant="contained"
           sx={{ width: { xs: "100%", sm: 230 }, mt: 2 }}
         >

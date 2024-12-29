@@ -1,43 +1,32 @@
-import React, { useEffect} from "react";
-import VegImage from "../../Assets/Lunch.webp";
-import NonVegImage from "../../Assets/BreakFast.webp";
-import PremiumImage from "../../Assets/Dinner.webp";
+import React, { useEffect, useState } from "react";
 import { FetchMenu } from "../../Services/UserService";
-// import { MenuCard } from "../../Components/MenuComponent/type";
 import MenuComponent from "../../Components/MenuComponent";
+import { useParams } from "react-router-dom";
+import { MenuCard } from "../../Components/MenuComponent/type";
 
 const MenuContainer: React.FC = () => {
-  // const [category, setCategory] = useState<MenuCard[]>([]);
-  const categories = [
-    {
-      image: VegImage,
-      title: "Veg Options",
-      description:
-        "Delicious vegetarian meals crafted with fresh and healthy ingredients.",
-    },
-    {
-      image: NonVegImage,
-      title: "Non-Veg Options",
-      description:
-        "Savor the finest non-vegetarian dishes cooked to perfection.",
-    },
-    {
-      image: PremiumImage,
-      title: "Premium Dining",
-      description:
-        "Experience luxury dining with our exclusive premium options.",
-    },
-  ];
+  const { id } = useParams();
+
+  const [category, setCategory] = useState<MenuCard[]>([]);
   const fetchMenuDetails = async () => {
-    const res = await FetchMenu();
-    // setCategory(res?.data?.result);
-    return res;
+    const providerId = id ?? "";
+    const res = await FetchMenu(providerId);
+    setCategory(res?.data?.result);
   };
+
   useEffect(() => {
     fetchMenuDetails();
-  }, []);
+  }, [id]);
 
-  return <MenuComponent categories={categories} />;
+  return (
+    <>
+      {category.length === 0 ? (
+        <p>Loading menu...</p>
+      ) : (
+        <MenuComponent categories={category} />
+      )}
+    </>
+  );
 };
 
 export default MenuContainer;
