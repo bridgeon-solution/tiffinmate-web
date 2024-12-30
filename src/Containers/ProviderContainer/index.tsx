@@ -10,6 +10,7 @@ const ProviderContainer = () => {
     async function fetchProviders() {
       try {
         const res = await fetchApprovedProviderDetails();
+        
         if (res && res.result) {
           setProviders(res.result);
         }
