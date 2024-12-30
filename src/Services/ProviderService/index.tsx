@@ -31,13 +31,12 @@ export const provideReview = async (values: any) => {
 export const CalculateTotal = async (
   date: string,
   categories: string[],
-  providerId: string,
   menuId: string,
   is_subscription: boolean
 ) => {
   const res = await api.post(
     `/FoodItem/total-amount?is_subscription=${is_subscription}`,
-    { date, providerId, menuId, categories }
+    { date, menuId, categories }
   );
   return res;
 };

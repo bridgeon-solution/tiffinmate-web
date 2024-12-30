@@ -39,7 +39,7 @@ const MenuDetailsComponent: React.FC<MenuComponentProps> = ({
                 sx={{ width: "100%", height: "200px", objectFit: "cover" }}
               />
               <Box
-                onClick={() => handleCategory(category.name)}
+                onClick={() => handleCategory(category.id)}
                 sx={{
                   cursor: "pointer",
                 }}
