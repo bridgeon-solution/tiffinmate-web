@@ -1,30 +1,30 @@
-import { Box,Modal, TextField, Typography } from "@mui/material";
+import { Box, Modal, TextField, Typography } from "@mui/material";
 import React from "react";
 import { category } from "../MenuDetailsComponent/type";
 import StyledButton from "../../Atoms/Button";
 
 const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-     width: "80%",
-    maxWidth: "600px",
-    bgcolor: "#fff",
-    borderRadius: "8px",
-    boxShadow: 24,
-    p: 4,
-  };
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "80%",
+  maxWidth: "600px",
+  bgcolor: "#fff",
+  borderRadius: "8px",
+  boxShadow: 24,
+  p: 4,
+};
 interface SubscriptionPlanComponentProps {
   open: boolean;
   handleClose: (modalType: "daily" | "subscription") => void;
   categories: category[];
   selectedCategories: string[];
-    selectedDate: string;
-    handlePay: (modalType: "daily" | "subscription") => void;
-    handleDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    totalAmount: number;
-    handleCategorySelect: (id: string) => void;
+  selectedDate: string;
+  handlePay: (modalType: "daily" | "subscription") => void;
+  handleDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  totalAmount: number;
+  handleCategorySelect: (id: string) => void;
 }
 const SubscriptionPlanComponent: React.FC<SubscriptionPlanComponentProps> = ({
   open,
@@ -35,7 +35,7 @@ const SubscriptionPlanComponent: React.FC<SubscriptionPlanComponentProps> = ({
   handlePay,
   handleDateChange,
   totalAmount,
-  handleCategorySelect
+  handleCategorySelect,
 }) => {
   return (
     <Modal
@@ -65,11 +65,16 @@ const SubscriptionPlanComponent: React.FC<SubscriptionPlanComponentProps> = ({
           </Typography>
           <TextField
             type="date"
-              value={selectedDate}
-              onChange={handleDateChange}
+            value={selectedDate}
+            onChange={handleDateChange}
             fullWidth
-            sx={{
-              "& .MuiInputBase-root": { fontSize: "16px" },
+            sx={{ "& .MuiInputBase-root": { fontSize: "16px" } }}
+            InputProps={{
+              inputProps: {
+                min: new Date(new Date().setDate(new Date().getDate() + 1))
+                  .toISOString()
+                  .split("T")[0],
+              },
             }}
           />
         </Box>
@@ -86,7 +91,7 @@ const SubscriptionPlanComponent: React.FC<SubscriptionPlanComponentProps> = ({
           {categories.map((category) => (
             <Box
               key={category.id}
-                onClick={() => handleCategorySelect(category.id)}
+              onClick={() => handleCategorySelect(category.id)}
               sx={{
                 cursor: "pointer",
                 textAlign: "center",
@@ -110,9 +115,9 @@ const SubscriptionPlanComponent: React.FC<SubscriptionPlanComponentProps> = ({
                 sx={{
                   fontWeight: "bold",
                   mb: 1,
-                    color: selectedCategories.includes(category.id)
-                      ? "#fff"
-                      : "#f68b1e",
+                  color: selectedCategories.includes(category.id)
+                    ? "#fff"
+                    : "#f68b1e",
                 }}
               >
                 {category.name}
@@ -132,10 +137,16 @@ const SubscriptionPlanComponent: React.FC<SubscriptionPlanComponentProps> = ({
           ))}
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}>
-          <StyledButton variant="outlined" onClick={() => handleClose("subscription")}>
+          <StyledButton
+            variant="outlined"
+            onClick={() => handleClose("subscription")}
+          >
             CANCEL
           </StyledButton>
-          <StyledButton variant="contained" onClick={() => handlePay("subscription")}>
+          <StyledButton
+            variant="contained"
+            onClick={() => handlePay("subscription")}
+          >
             PAY ${totalAmount}
           </StyledButton>
         </Box>

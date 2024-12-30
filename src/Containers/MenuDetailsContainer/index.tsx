@@ -54,6 +54,10 @@ function MenuDetailsContainer() {
       toast.warn("Please select at least one category.");
       return;
     }
+    if (!selectedDate) {
+      toast.warn("Please select a date.");
+      return;
+    }
     navigate("order");
     handleClose(modalType);
   };

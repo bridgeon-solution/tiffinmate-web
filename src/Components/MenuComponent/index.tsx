@@ -20,7 +20,7 @@ const MenuComponent: React.FC<MenuTypeComponentProps> = ({ categories }) => {
       <Box sx={{ background: "black" }}>
         <Box
           sx={{
-            backgroundImage: `url(${categories[2].image})`,
+            backgroundImage: `url(${categories[1]?categories[1].image:categories[0].image})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             padding: "80px 20px",
