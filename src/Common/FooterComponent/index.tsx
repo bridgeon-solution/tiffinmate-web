@@ -1,20 +1,43 @@
 import { Box, Typography, Link, Divider, Grid } from "@mui/material";
 
-export const Footer = () => {
+const Footer = () => {
   return (
-    <Box sx={{ backgroundColor: "#F5F8FD", mt: 12 }}>
+    <Box
+      sx={{
+        backgroundColor: "#F5F8FD",
+        mt: { xs: 6, sm: 8, md: 12 },
+      }}
+    >
       <Grid
         container
-        sx={{ px: { xs: 2, sm: 4, md: 18 }, py: { xs: 2, md: 4 } }}
-        spacing={8}
+        sx={{
+          px: { xs: 2, sm: 4, md: 8, lg: 18 },
+          py: { xs: 2, sm: 3, md: 4 },
+        }}
+        spacing={{ xs: 2, sm: 4, md: 6, lg: 8 }}
       >
-        <Grid item xs={12} sm={6} md={2.5}>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={2.5}
+          lg={2}
+          sx={{
+            minWidth: { xs: "100%", sm: "auto" },
+            maxWidth: { sm: "300px" },
+          }}
+        >
           <Box
             sx={{
               backgroundColor: "#FC8A06",
               color: "#fff",
-              p: 2,
+              p: { xs: 1.5, sm: 2 },
               borderRadius: 2,
+              height: "100%",
+              maxWidth: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
             }}
           >
             <Typography
@@ -27,8 +50,7 @@ export const Footer = () => {
               Trusted by Hostel Communities
             </Typography>
             <Typography sx={{ mt: 2, fontWeight: "bold" }}>
-              Serving fresh, healthy, and homely meals for students and
-              workers.
+              Serving fresh, healthy, and homely meals for students and workers.
             </Typography>
           </Box>
         </Grid>
@@ -92,3 +114,4 @@ export const Footer = () => {
     </Box>
   );
 };
+export default Footer;

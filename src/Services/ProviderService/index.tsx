@@ -27,3 +27,16 @@ export const provideReview = async (values: any) => {
   const res = await api.post(`/Provider/review`, values);
   return res.data;
 };
+
+export const CalculateTotal = async (
+  date: string,
+  categories: string[],
+  menuId: string,
+  is_subscription: boolean
+) => {
+  const res = await api.post(
+    `/FoodItem/total-amount?is_subscription=${is_subscription}`,
+    { date, menuId, categories }
+  );
+  return res;
+};

@@ -1,7 +1,8 @@
 import { Box, Typography } from "@mui/material";
 import { ProviderCard } from "./ProviderCard";
+import { providerDetailsProp } from "../../Containers/ProviderDetailsContainer/type";
 
-export const ProviderComponent = () => {
+export const ProviderComponent = ({ providers }: providerDetailsProp) => {
   return (
     <>
       <Box
@@ -33,7 +34,7 @@ export const ProviderComponent = () => {
           Providers
         </Typography>
       </Box>
-      <ProviderCard />
+      <ProviderCard providers={providers} />
     </>
   );
 };

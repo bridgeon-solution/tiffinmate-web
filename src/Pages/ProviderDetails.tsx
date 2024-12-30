@@ -1,9 +1,9 @@
 import { ProviderDetailsContainer } from "../Containers/ProviderDetailsContainer";
-
-export const ProviderDetails = () => {
+ const ProviderDetails = () => {
   return (
     <>
       <ProviderDetailsContainer />
     </>
   );
 };
+export default ProviderDetails

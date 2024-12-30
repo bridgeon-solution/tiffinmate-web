@@ -5,6 +5,16 @@ const StyledButton = styled(Button)`
   &.MuiButton-contained {
     background-color: #e6852c;
   }
+    
+     &.MuiButton-outlined {
+    border-color: #e6852c;
+    color: #e6852c;
+  }
+    &:hover {
+    background-color: #e6852c;
+    border-color: #e6852c;
+    color: #fff;
+  }
 `;
 export default StyledButton;
 
