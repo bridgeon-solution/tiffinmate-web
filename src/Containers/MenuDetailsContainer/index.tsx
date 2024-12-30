@@ -95,7 +95,6 @@ function MenuDetailsContainer() {
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(e.target.value);
   };
-
   const handleCategorySelect = async (id: string) => {
     const newSelectedCategories = selectedCategories.includes(id)
       ? selectedCategories.filter((categoryId) => categoryId !== id)
@@ -120,7 +119,6 @@ function MenuDetailsContainer() {
   const handleCategory = (category: string) => {
     setSelectedCategory(category);
   };
-
   const fetchMenu = async () => {
     const res = await FetchMenuDetails(menuid, selectedCategory);
 
@@ -128,7 +126,6 @@ function MenuDetailsContainer() {
       setMenu(res?.data?.result);
     }
   };
-
   useEffect(() => {
     fetchMenu();
   }, [selectedCategory]);
