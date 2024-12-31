@@ -1,6 +1,9 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+import ProfileSidebar from "../Atoms/ProfileSideBar";
 const Order=lazy(()=>import("../Pages/Order"))
+
+
 const Provider = lazy(() => import("../Pages/Provider"));
 const Navbar = lazy(() => import("../Common/Navbar"));
 const Footer = lazy(() => import("../Common/FooterComponent"));
@@ -33,7 +36,16 @@ export const AppRoutes = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/forgotpassword" element={<ForgotPasword />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/profile"
+            element={
+              <ProfileSidebar>
+                <Routes>
+                  <Route path="/" element={<Profile />} />
+                </Routes>
+              </ProfileSidebar>
+            }
+          />
           <Route path="/provider" element={<Provider />} />
           <Route path="/provider/:id" element={<ProviderDetails />} />
           <Route path="/provider/:id/menu" element={<Menu />} />

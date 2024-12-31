@@ -12,15 +12,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import SubscriptionPlanComponent from "../../Components/SubscriptionPlanComponent";
 
 function MenuDetailsContainer() {
-  type Params = {
-    id: string;
-    menuId: string;
-  };
-  const { id, menuId } = useParams<Params>();
-  const providerId = id || "";
+  const { menuId } = useParams();
   const menuid = menuId || "";
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState<string>("Breakfast");
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    "0193ce2c-ab58-7b6f-8470-7462704e8638"
+  );
   const [menu, setMenu] = useState<MenuItem[]>([]);
   const [dailyModal, setDailyModal] = useState<boolean>(false);
   const [subscriptionModal, setSubscriptionModal] = useState<boolean>(false);
@@ -57,7 +54,13 @@ function MenuDetailsContainer() {
       toast.warn("Please select at least one category.");
       return;
     }
+
     
+
+    if (!selectedDate) {
+      toast.warn("Please select a date.");
+      return;
+    }
     navigate("order");
     handleClose(modalType);
   };
@@ -76,24 +79,29 @@ function MenuDetailsContainer() {
   useEffect(() => {
     if (selectedDate && selectedCategories.length > 0) {
       const is_subscription = dailyModal ? false : true;
-      CalculateTotal(
-        selectedDate,
-        selectedCategories,
-        providerId,
-        menuid,
-        is_subscription
-      ).then((response) => {
-        if (response && response.data && response.data.result) {
-          setTotalAmount(response.data.result);
-        }
-      });
+      CalculateTotal(selectedDate, selectedCategories, menuid, is_subscription)
+        .then((response) => {
+          if (response && response.data && response.data.result) {
+            if (response.data.result === 0) {
+              setTotalAmount(0);
+            } else {
+              setTotalAmount(response.data.result);
+            }
+          } else {
+            setTotalAmount(0);
+          }
+        })
+        .catch(() => {
+          setTotalAmount(0);
+        });
+    } else {
+      setTotalAmount(0);
     }
   }, [selectedCategories, selectedDate, dailyModal, subscriptionModal]);
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(e.target.value);
   };
-
   const handleCategorySelect = async (id: string) => {
     const newSelectedCategories = selectedCategories.includes(id)
       ? selectedCategories.filter((categoryId) => categoryId !== id)
@@ -105,33 +113,26 @@ function MenuDetailsContainer() {
       const response = await CalculateTotal(
         selectedDate,
         newSelectedCategories,
-        providerId,
         menuid,
         is_subscription
       );
       if (response?.data?.result) {
         setTotalAmount(response.data.result);
+      } else {
+        setTotalAmount(0);
       }
     }
   };
-
   const handleCategory = (category: string) => {
     setSelectedCategory(category);
   };
-
   const fetchMenu = async () => {
-    const res = await FetchMenuDetails(providerId, menuid);
+    const res = await FetchMenuDetails(menuid, selectedCategory);
 
     if (res && res.data && res.data.result) {
-      const result = res.data.result;
-      setMenu(
-        result.filter(
-          (item: MenuItem) => item.category_name === selectedCategory
-        )
-      );
+      setMenu(res?.data?.result);
     }
   };
-
   useEffect(() => {
     fetchMenu();
   }, [selectedCategory]);

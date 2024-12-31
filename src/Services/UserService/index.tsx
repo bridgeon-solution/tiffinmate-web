@@ -31,9 +31,9 @@ export const UploadProfileImage = async (FormData: FormData, id: string) => {
   return res;
 };
 
-export const FetchMenuDetails = async (providerId: string, menuid: string) => {
+export const FetchMenuDetails = async (menuId: string, category_id: string) => {
   const res = await api.get(
-    `FoodItem/providerid/${providerId}?menuId=${menuid}`
+    `/FoodItem/fooditem?menuId=${menuId}&category_id=${category_id}`
   );
   return res;
 };
