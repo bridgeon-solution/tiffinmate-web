@@ -1,46 +1,41 @@
+import { Box,Modal, TextField, Typography } from "@mui/material";
 import React from "react";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import { TextField } from "@mui/material";
-import StyledButton from "../../Atoms/Button";
 import { category } from "../MenuDetailsComponent/type";
+import StyledButton from "../../Atoms/Button";
 
 const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-   width: "80%",
-  maxWidth: "600px",
-  bgcolor: "#fff",
-  borderRadius: "8px",
-  boxShadow: 24,
-  p: 4,
-};
-
-interface DailyPlanComponentProps {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+     width: "80%",
+    maxWidth: "600px",
+    bgcolor: "#fff",
+    borderRadius: "8px",
+    boxShadow: 24,
+    p: 4,
+  };
+interface SubscriptionPlanComponentProps {
   open: boolean;
   handleClose: (modalType: "daily" | "subscription") => void;
   categories: category[];
   selectedCategories: string[];
-  handleCategorySelect: (id: string) => void;
-  totalAmount: number;
-  selectedDate: string;
-  handlePay: (modalType: "daily" | "subscription") => void;
-  handleDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    selectedDate: string;
+    handlePay: (modalType: "daily" | "subscription") => void;
+    handleDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    totalAmount: number;
+    handleCategorySelect: (id: string) => void;
 }
-
-const DailyPlanComponent: React.FC<DailyPlanComponentProps> = ({
+const SubscriptionPlanComponent: React.FC<SubscriptionPlanComponentProps> = ({
   open,
   handleClose,
   categories,
   selectedCategories,
-  handleCategorySelect,
-  totalAmount,
   selectedDate,
   handlePay,
   handleDateChange,
+  totalAmount,
+  handleCategorySelect
 }) => {
   return (
     <Modal
@@ -63,14 +58,15 @@ const DailyPlanComponent: React.FC<DailyPlanComponentProps> = ({
         >
           Select Your Plan
         </Typography>
+
         <Box sx={{ mb: 3 }}>
           <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1 }}>
-            Select Date
+            Select Start Date
           </Typography>
           <TextField
             type="date"
-            value={selectedDate}
-            onChange={handleDateChange}
+              value={selectedDate}
+              onChange={handleDateChange}
             fullWidth
             sx={{
               "& .MuiInputBase-root": { fontSize: "16px" },
@@ -80,12 +76,17 @@ const DailyPlanComponent: React.FC<DailyPlanComponentProps> = ({
         <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1 }}>
           Select Category
         </Typography>
-
-        <Box sx={{ display:{ md:"flex",xs:'block'}, justifyContent: "space-between", mb: 4 }}>
+        <Box
+          sx={{
+            display: { md: "flex", xs: "block" },
+            justifyContent: "space-between",
+            mb: 4,
+          }}
+        >
           {categories.map((category) => (
             <Box
               key={category.id}
-              onClick={() => handleCategorySelect(category.id)}
+                onClick={() => handleCategorySelect(category.id)}
               sx={{
                 cursor: "pointer",
                 textAlign: "center",
@@ -109,9 +110,9 @@ const DailyPlanComponent: React.FC<DailyPlanComponentProps> = ({
                 sx={{
                   fontWeight: "bold",
                   mb: 1,
-                  color: selectedCategories.includes(category.id)
-                    ? "#fff"
-                    : "#f68b1e",
+                    color: selectedCategories.includes(category.id)
+                      ? "#fff"
+                      : "#f68b1e",
                 }}
               >
                 {category.name}
@@ -130,12 +131,11 @@ const DailyPlanComponent: React.FC<DailyPlanComponentProps> = ({
             </Box>
           ))}
         </Box>
-
         <Box sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}>
-          <StyledButton variant="outlined" onClick={() => handleClose("daily")}>
+          <StyledButton variant="outlined" onClick={() => handleClose("subscription")}>
             CANCEL
           </StyledButton>
-          <StyledButton variant="contained" onClick={() => handlePay("daily")}>
+          <StyledButton variant="contained" onClick={() => handlePay("subscription")}>
             PAY ${totalAmount}
           </StyledButton>
         </Box>
@@ -144,4 +144,4 @@ const DailyPlanComponent: React.FC<DailyPlanComponentProps> = ({
   );
 };
 
-export default DailyPlanComponent;
+export default SubscriptionPlanComponent;

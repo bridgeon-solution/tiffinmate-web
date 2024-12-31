@@ -1,8 +1,21 @@
 import React from 'react';
-import { Box, Typography, TextField, Button, Stepper, Step, StepLabel } from '@mui/material';
+import { Box, Typography, Button, } from '@mui/material';
 import InputField from '../../Atoms/Input';
+import { Form } from 'react-router-dom';
 
-const OrderComponent: React.FC = () => {
+
+interface OrderFormData{
+  formData:{
+    name:string;
+    address:string;
+    phnno:string;
+    city:string;
+  };
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const OrderComponent: React.FC<OrderFormData> = ({handleSubmit,handleChange}) => {
   return (
     <Box
       sx={{
@@ -25,23 +38,36 @@ const OrderComponent: React.FC = () => {
 
       {/* Form  */}
       <Box component="form" sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Form onSubmit={handleSubmit}>
         <InputField
           label="Full Name"
+          name="name"
+          onChange={handleChange}
+          required
           variant="outlined"
           fullWidth
         />
         <InputField
           label="Address"
+          name="address"
+          onChange={handleChange}
+          required
           variant="outlined"
           fullWidth
         />
         <InputField
           label="Current Location"
+          name="city"
+          onChange={handleChange}
+          required
           variant="outlined"
           fullWidth
         />
         <InputField
           label="Phone Number"
+          name="phnno"
+          onChange={handleChange}
+          required
           variant="outlined"
           fullWidth
         />
@@ -56,6 +82,7 @@ const OrderComponent: React.FC = () => {
         >
           Submit Details
         </Button>
+        </Form>
       </Box>
     </Box>
   );

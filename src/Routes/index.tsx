@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import Order from "../Pages/Order";
+const Order=lazy(()=>import("../Pages/Order"))
 const Provider = lazy(() => import("../Pages/Provider"));
 const Navbar = lazy(() => import("../Common/Navbar"));
 const Footer = lazy(() => import("../Common/FooterComponent"));
@@ -37,7 +37,7 @@ export const AppRoutes = () => {
           <Route path="/provider" element={<Provider />} />
           <Route path="/provider/:id" element={<ProviderDetails />} />
           <Route path="/provider/:id/menu" element={<Menu />} />
-          <Route path="/provider/:id/menu/:id" element={<MenuDetails />} />
+          <Route path="/provider/:id/menu/:menuId" element={<MenuDetails />} />
           <Route path="/provider/:id/menu/:id/order" element={<Order />} />
         </Routes>
       </Suspense>

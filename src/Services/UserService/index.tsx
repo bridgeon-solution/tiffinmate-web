@@ -31,12 +31,14 @@ export const UploadProfileImage = async (FormData: FormData, id: string) => {
   return res;
 };
 
-export const FetchMenuDetails = async () => {
-  const res = await api.get(`/FoodItem/fooditem`);
+export const FetchMenuDetails = async (providerId: string, menuid: string) => {
+  const res = await api.get(
+    `FoodItem/providerid/${providerId}?menuId=${menuid}`
+  );
   return res;
 };
 
-export const FetchMenu = async () => {
-  const res = await api.get(`/FoodItem/menu`);
+export const FetchMenu = async (providerId: string) => {
+  const res = await api.get(`/FoodItem/menu?providerId=${providerId}`);
   return res;
 };
