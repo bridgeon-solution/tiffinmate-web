@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { categories, MenuDay } from '../../Components/PlanComponent/type';
-import PlanComponent from '../../Components/PlanComponent';
+import { categories, MenuDay } from '../../Components/CurrentPlanComponent/type';
+import PlanComponent from '../../Components/CurrentPlanComponent';
 
 function PlanContainer() {
     const [isFlipped, setIsFlipped] = useState<boolean>(false);
