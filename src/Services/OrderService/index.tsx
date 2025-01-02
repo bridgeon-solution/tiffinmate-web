@@ -1,5 +1,5 @@
 import { OrderProp } from "../../Components/MenuDetailsComponent/type";
-import { OrderDtailsProps, RazorpayResponse } from "../../Components/Order/type";
+import { OrderDtailsProps } from "../../Components/Order/type";
 import api from "../api";
 
 
