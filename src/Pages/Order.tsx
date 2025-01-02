@@ -1,11 +1,10 @@
 import { Typography } from '@mui/material'
-import React from 'react'
-import OrderComponent from '../Components/Order'
+import OrderContainer from '../Containers/OrderContainer'
 
 const Order = () => {
   return (
     <div>
-    <OrderComponent/>
+    <OrderContainer/>
     </div>
   )
 }

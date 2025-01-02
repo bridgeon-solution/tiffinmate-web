@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import ProfileSidebar from "../Atoms/ProfileSideBar";
+
 const Order=lazy(()=>import("../Pages/Order"))
 
 
@@ -50,7 +51,7 @@ export const AppRoutes = () => {
           <Route path="/provider/:id" element={<ProviderDetails />} />
           <Route path="/provider/:id/menu" element={<Menu />} />
           <Route path="/provider/:id/menu/:menuId" element={<MenuDetails />} />
-          <Route path="/provider/:id/menu/:id/order" element={<Order />} />
+          <Route path="/provider/:id/menu/:menuId/order" element={<Order />} />
         </Routes>
       </Suspense>
       {!noNav.includes(location.pathname) && <Footer />}
