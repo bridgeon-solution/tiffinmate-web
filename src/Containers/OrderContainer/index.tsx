@@ -43,7 +43,6 @@ const OrderContainer: React.FC = () => {
         };
          await PostOrderDetails(orderId,orderDetailsData);
         setLoadnig(true);
-        console.log("order succesfully created")
       } catch (error) {
         
       } finally {

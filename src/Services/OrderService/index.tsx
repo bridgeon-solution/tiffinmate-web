@@ -23,7 +23,6 @@ export const PostOrder = async (orderData:OrderProp) => {
 
   export const PostOrderDetails = async (orderId:string|undefined,values:OrderDtailsProps) => {
     try {
-      console.log(values)
       const response = await api.post(
         `Order/details?orderid=${orderId}`,values
       );
