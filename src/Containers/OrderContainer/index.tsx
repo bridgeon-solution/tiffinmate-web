@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { toast } from "react-toastify";
 
 import OrderComponent from "../../Components/Order";
 import { PostOrderDetails } from "../../Services/OrderService";
@@ -14,7 +13,7 @@ const OrderContainer: React.FC = () => {
   const menuid=menuId||"";
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [orderId, setOrderId] = useState<string>();
-  const [loading, setLoadnig] = useState(false);
+  const [_, setLoadnig] = useState(false);
   const [date, setDate] = useState<string>();
 
   const formik = useFormik({
