@@ -65,28 +65,33 @@ function MenuDetailsContainer() {
       toast.warn("Please select a date.");
       return;
     }
-    try {
-      const orderData: OrderProp = {
-        date: selectedDate,
-        menu_id: menuid,
-        provider_id: providerId,
-        total_price: totalAmount,
-        user_id: userid,
-      };
-      const response = await PostOrder(orderData);
-
-      if (response.status == "success") {
-        handleClose(modalType);
-        navigate("order", {
-          state: {
-            orderId: response.result,
-            categories: selectedCategories,
-            date: selectedDate,
-          },
-        });
+    if(modalType==="daily"){
+      try {
+        const orderData: OrderProp = {
+          date: selectedDate,
+          menu_id: menuid,
+          provider_id: providerId,
+          total_price: totalAmount,
+          user_id: userid,
+        };
+        const response = await PostOrder(orderData);
+  
+        if (response.status == "success") {
+          handleClose(modalType);
+          navigate("order", {
+            state: {
+              orderId: response.result,
+              categories: selectedCategories,
+              date: selectedDate,
+            },
+          });
+        }
+      } catch (error) {
+        toast.error("error create order");
       }
-    } catch (error) {
-      toast.error("error create order");
+    }else if (modalType === "subscription") {
+      toast.info("Subscription payment process will be implemented here.");
+      
     }
   };
 
