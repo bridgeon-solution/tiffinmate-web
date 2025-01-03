@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+import { CircularProgress, Box } from "@mui/material";
 import ProfileSidebar from "../Atoms/ProfileSideBar";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -30,7 +31,16 @@ export const AppRoutes = () => {
   return (
     <>
       {!noNav.includes(location.pathname) && <Navbar />}
-      <Suspense fallback={<div>loading...</div>}>
+      <Suspense fallback={<Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100vh",
+            }}
+          >
+            <CircularProgress />
+          </Box>}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Signup />} />

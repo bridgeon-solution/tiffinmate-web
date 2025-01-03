@@ -9,11 +9,13 @@ interface ProfileProps {
   handleSubmit: () => void;
   values: ProfileValues;
   handleUploadImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  loading: boolean;
 }
 function ProfileComponent({
   handleSubmit,
   values,
   handleUploadImage,
+  loading,
 }: ProfileProps) {
   const inputFile = useRef<HTMLInputElement | null>(null);
   return (
@@ -215,7 +217,8 @@ function ProfileComponent({
                     <Typography sx={{ fontSize: "14px", fontWeight: 500 }}>
                       Email
                     </Typography>
-                    <Field disabled
+                    <Field
+                      disabled
                       name="email"
                       as={TextField}
                       variant="filled"
@@ -300,7 +303,7 @@ function ProfileComponent({
                         fontWeight: 500,
                       }}
                     >
-                      Edit
+                      {loading ? "Updating..." : "Update Profile"}
                     </button>
                   </Grid>
                 </Box>
