@@ -65,6 +65,7 @@ export default function Navbar(props: Props) {
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
+  const isLoggined = localStorage.getItem("id");
 
   return (
     <Box>
@@ -156,7 +157,15 @@ export default function Navbar(props: Props) {
               </Box>
             </Box>
             <Box>
-              <IconButton onClick={() => navigate("/profile")}>
+              <IconButton
+                onClick={() => {
+                  if (isLoggined) {
+                    navigate("/profile");
+                  } else {
+                    navigate("/login");
+                  }
+                }}
+              >
                 <AccountCircle fontSize="large" sx={{ color: "black" }} />
               </IconButton>
             </Box>

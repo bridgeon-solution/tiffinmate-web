@@ -1,6 +1,12 @@
 import { Box, Typography, Link, Divider, Grid } from "@mui/material";
 
 const Footer = () => {
+  const quickLinks = {
+    About: ["Top Rated", "Vendors", "Subscription", "Contact"],
+    Services: ["Meal Plans", "Special Diets", "Bulk Orders", "Catering"],
+    Help: ["FAQs", "Support", "Terms", "Privacy"],
+    Connect: ["Partners", "Careers", "Blog", "News"],
+  };
   return (
     <Box
       sx={{
@@ -12,16 +18,15 @@ const Footer = () => {
         container
         sx={{
           px: { xs: 2, sm: 4, md: 8, lg: 18 },
-          py: { xs: 2, sm: 3, md: 4 },
+          py: { xs: 2, sm: 4, md: 5 },
         }}
-        spacing={{ xs: 2, sm: 4, md: 6, lg: 8 }}
+        spacing={{ xs: 3, sm: 5, md: 6, lg: 8 }}
       >
         <Grid
           item
           xs={12}
           sm={6}
-          md={2.5}
-          lg={2}
+          md={3}
           sx={{
             minWidth: { xs: "100%", sm: "auto" },
             maxWidth: { sm: "300px" },
@@ -31,7 +36,7 @@ const Footer = () => {
             sx={{
               backgroundColor: "#FC8A06",
               color: "#fff",
-              p: { xs: 1.5, sm: 2 },
+              p: { xs: 2, sm: 3 },
               borderRadius: 2,
               height: "100%",
               maxWidth: "100%",
@@ -41,8 +46,12 @@ const Footer = () => {
             }}
           >
             <Typography
-              variant="h6"
-              sx={{ fontWeight: "bold", fontFamily: "Playfair" }}
+              variant="h5"
+              sx={{
+                fontWeight: "bold",
+                fontFamily: "Playfair",
+                letterSpacing: "0.5px",
+              }}
             >
               TiffinMate
             </Typography>
@@ -54,61 +63,76 @@ const Footer = () => {
             </Typography>
           </Box>
         </Grid>
-        <Grid item sm={2}>
-          <Typography
-            variant="h6"
-            sx={{ borderBottom: "2px solid orange", mb: 1 }}
-          >
-            About
-          </Typography>
-          {["Top Rated", "Vendors", "subscription", "Contact"].map(
-            (text, index) => (
-              <Typography key={index} sx={{ mb: 0.5 }}>
-                <Link href="#" underline="hover" color="inherit">
+        {Object.entries(quickLinks).map(([title, links], sectionIndex) => (
+          <Grid item xs={12} sm={6} md={2} key={sectionIndex}>
+            <Typography
+              variant="h6"
+              sx={{
+                borderBottom: "2px solid orange",
+                mb: 2,
+                pb: 1,
+                fontWeight: "600",
+                position: "relative",
+              }}
+            >
+              {title}
+            </Typography>
+            {links.map((text, index) => (
+              <Typography key={index} sx={{ mb: 1.5 }}>
+                <Link
+                  href="#"
+                  sx={{
+                    color: "text.secondary",
+                    textDecoration: "none",
+                    position: "relative",
+                    "&:hover": {
+                      color: "#FC8A06",
+                    },
+                  }}
+                >
                   {text}
                 </Link>
               </Typography>
-            )
-          )}
-        </Grid>
-        <Grid item sm={2}>
-          <Typography
-            variant="h6"
-            sx={{ borderBottom: "2px solid orange", mb: 1 }}
-          >
-            About
-          </Typography>
-          {["Top Rated", "Vendors", "subscription", "Contact"].map(
-            (text, index) => (
-              <Typography key={index} sx={{ mb: 0.5 }}>
-                <Link href="#" underline="hover" color="inherit">
-                  {text}
-                </Link>
-              </Typography>
-            )
-          )}
-        </Grid>
+            ))}
+          </Grid>
+        ))}
       </Grid>
-      <Divider sx={{ my: 4 }} />
+
+      <Divider
+        sx={{
+          my: 4,
+        }}
+      />
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           flexWrap: "wrap",
-          px: 2,
+          px: { xs: 2, sm: 4, md: 8, lg: 18 },
+          py: 3,
+          gap: 2,
         }}
       >
         <Typography variant="body2" sx={{ color: "grey" }}>
           © 2024 TiffinMate | All rights reserved
         </Typography>
-        <Box>
-          <Link href="#" sx={{ color: "grey", mx: 1 }}>
-            Facebook
-          </Link>
-          <Link href="#" sx={{ color: "grey", mx: 1 }}>
-            Instagram
-          </Link>
+        <Box sx={{ display: "flex", gap: 3 }}>
+          {["Facebook", "Instagram", "Twitter", "LinkedIn"].map((social) => (
+            <Link
+              href="#"
+              key={social}
+              sx={{
+                color: "grey",
+                textDecoration: "none",
+                "&:hover": {
+                  color: "#FC8A06",
+                },
+              }}
+            >
+              {social}
+            </Link>
+          ))}
         </Box>
       </Box>
     </Box>
