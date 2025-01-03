@@ -9,7 +9,7 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-function SignupComponent() {
+function SignupComponent({loading}:{loading:boolean}) {
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [confirmpasswordVisible, setconfirmPasswordVisible] =
     useState<boolean>(false);
@@ -148,7 +148,7 @@ function SignupComponent() {
               </Box>
 
               <StyledButton type="submit" variant="contained" sx={{ mt: 2 }}>
-                Submit
+              {loading ? "Submitting..." : "Submit"}
               </StyledButton>
               <Typography sx={{ textAlign: "center", mt: 1 }}>
                 Already have an account?{" "}
