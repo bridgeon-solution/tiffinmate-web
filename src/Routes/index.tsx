@@ -2,6 +2,8 @@ import { lazy, Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { CircularProgress, Box } from "@mui/material";
 import ProfileSidebar from "../Atoms/ProfileSideBar";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Order=lazy(()=>import("../Pages/Order"))
 import PlanContainer from "../Containers/CurrentPlanContainer";
 const Provider = lazy(() => import("../Pages/Provider"));
@@ -63,6 +65,7 @@ export const AppRoutes = () => {
           <Route path="/currentplan" element={<PlanContainer/>}/>
         </Routes>
       </Suspense>
+      <ToastContainer/>
       {!noNav.includes(location.pathname) && <Footer />}
     </>
   );
