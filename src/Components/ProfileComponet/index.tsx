@@ -17,7 +17,7 @@ function ProfileComponent({
 }: ProfileProps) {
   const inputFile = useRef<HTMLInputElement | null>(null);
   return (
-    <Box sx={{ padding: "2rem", backgroundColor: "white", minHeight: "100vh" }}>
+    <Box sx={{ padding: {md:"2rem",xs:0}, backgroundColor: "white", minHeight: "100vh" }}>
       <Grid container spacing={4} alignItems="center" mb={4}>
         <Grid
           item
@@ -29,13 +29,13 @@ function ProfileComponent({
           }}
         >
           <Typography
-            sx={{ fontSize: { xs: "18px", md: "20px" }, fontWeight: 600 }}
+            sx={{ fontSize: { xs: "16px", md: "20px" }, fontWeight: 600 }}
           >
-            Welcome, <span style={{ color: "#f98e2b" }}>{values.fullName}</span>
+            Welcome, <span style={{ color: "#f98e2b" }}>{values.fullName.split(' ')[0]}</span>
           </Typography>
-          <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: {md:"1rem",xs:0} }}>
             <IconButton>
-              <NotificationsIcon sx={{ color: "#666", fontSize: "24px" }} />
+              <NotificationsIcon sx={{ color: "#666", fontSize: {md:"24px",xs:"22px" }}} />
             </IconButton>
             <IconButton>
               {values.profileImage ? (
@@ -46,7 +46,7 @@ function ProfileComponent({
                 />
               ) : (
                 <Typography
-                  sx={{ fontSize: "24px", fontWeight: 600, color: "#666" }}
+                  sx={{ fontSize:  {md:"24px",xs:"22px" }, fontWeight: 600, color: "#666" }}
                 >
                   {values.fullName[0]}
                 </Typography>
@@ -68,7 +68,7 @@ function ProfileComponent({
           >
             <Box>
               <Typography
-                sx={{ fontSize: "14px", fontWeight: 400, color: "gray" }}
+                sx={{ fontSize: {md:"14px",xs:"12px"}, fontWeight: {md:400,xs:200}, color: "gray", p:"0px 15px" }}
               >
                 Welcome to your profile! Here you can update your personal
                 information
@@ -109,7 +109,7 @@ function ProfileComponent({
                   ) : (
                     <AccountCircle
                       sx={{
-                        fontSize: "40px",
+                        fontSize: "70px",
                         color: "#666",
                         marginRight: "1rem",
                       }}
@@ -139,12 +139,12 @@ function ProfileComponent({
                 </Box>
                 <Box>
                   <Typography
-                    sx={{ fontSize: "18px", fontWeight: 600, color: "#000" }}
+                    sx={{ fontSize: {md:"18px",xs:"16px"}, fontWeight: 600, color: "#000" }}
                   >
                     {values.fullName}
                   </Typography>
                   <Typography
-                    sx={{ fontSize: "14px", fontWeight: 400, color: "gray" }}
+                    sx={{ fontSize: {md:"14px",xs:"12px"}, fontWeight: 400, color: "gray" }}
                   >
                     {values.email}
                   </Typography>

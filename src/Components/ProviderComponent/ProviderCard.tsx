@@ -18,25 +18,30 @@ export const ProviderCard = ({ providers }: providerDetailsProp) => {
         sx={{ px: { xs: 2, md: 8 }, py: { xs: 2, md: 6 } }}
       >
         {providers.map((p) => (
-          <Grid item xs={6} sm={6} md={3} key={p.provider_id}>
+          <Grid item xs={12} sm={6} md={4} lg={3} key={p.provider_id}>
             <Link
               to={`/provider/${p.provider_id}`}
               style={{ textDecoration: "none" }}
             >
-              <Card sx={{ borderRadius: 4 }}>
+              <Card sx={{ borderRadius: 4,maxWidth: "100%"}}>
                 <CardMedia
                   component="img"
-                  sx={{ height: "210px" }}
+                  sx={{height: { xs: "180px", sm: "210px" },
+                  objectFit: "cover",
+                 }}
                   alt={p.resturent_name}
                   image={p.image}
                 />
-                <CardContent sx={{ padding: 2 }}>
+                <CardContent sx={{  padding: { xs: 2, md: 3 },
+  textAlign: "center", }}>
                   <Typography
                     variant="h5"
                     sx={{
                       textAlign: "center",
                       fontWeight: "bold",
                       color: "#333",
+                       whiteSpace: "nowrap",
+                      textOverflow: "ellipsis"
                     }}
                   >
                     {p.resturent_name}
