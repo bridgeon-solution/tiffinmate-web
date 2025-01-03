@@ -13,7 +13,7 @@ import BreakFast from "../../Assets/BreakFast.webp";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import SubscriptionPlanComponent from "../../Components/SubscriptionPlanComponent";
-import { PostOrder } from "../../Services/OrderService";
+import { PostOrder, PostSubscriptionOrder } from "../../Services/OrderService";
 import { CircularProgress, Box } from "@mui/material";
 
 function MenuDetailsContainer() {
@@ -66,6 +66,9 @@ function MenuDetailsContainer() {
       toast.warn("Please select a date.");
       return;
     }
+
+    // daily plan
+
     if(modalType==="daily"){
     try {
       const orderData: OrderProp = {
@@ -90,8 +93,34 @@ function MenuDetailsContainer() {
     } catch (error) {
       toast.error("error create order");
     }
+
+    // subscription plan
+
   }else if (modalType === "subscription") {
-    toast.info("Subscription payment process will be implemented here.");
+    try {
+      const orderData: OrderProp = {
+        date: selectedDate,
+        menu_id: menuid,
+        provider_id: providerId,
+        total_price: totalAmount,
+        user_id: userid,
+      };
+      const response = await PostSubscriptionOrder(orderData);
+
+      if (response.status == "success") {
+        handleClose(modalType);
+        navigate("subscription", {
+          state: {
+            orderId: response.result,
+            categories: selectedCategories,
+            date: selectedDate,
+           
+          },
+        });
+      }
+    } catch (error) {
+      toast.error("error create order");
+    }
   }
 }
 
