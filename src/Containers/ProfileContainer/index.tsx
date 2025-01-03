@@ -9,6 +9,8 @@ import {
 } from "../../Services/UserService";
 import ProfileComponent from "../../Components/ProfileComponet";
 import { ProfileValues } from "../../Components/ProfileComponet/type";
+import { toast } from "react-toastify";
+import { Box, CircularProgress } from "@mui/material";
 
 const validationSchema = Yup.object({
   fullName: Yup.string().required("Full name is required"),
@@ -29,14 +31,17 @@ const ProfileContainer = () => {
     city: "",
     profileImage: "",
   });
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true)
       const id = localStorage.getItem("id");
       if (!id) {
         navigate("/login");
         return;
       }
+      try{
       const response = await FetchProfileService(id);
       setInitialValues({
         fullName: response.data.result?.name || "",
@@ -46,7 +51,12 @@ const ProfileContainer = () => {
         city: response.data.result?.city || "",
         profileImage: response.data.result?.image,
       });
-    };
+    }catch (error) {
+      toast.error("Error fetching profile");
+    } finally {
+      setLoading(false);
+    }
+  };
 
     fetchData();
   }, [navigate]);
@@ -55,13 +65,20 @@ const ProfileContainer = () => {
     const image = e.target.files?.[0];
     const id = localStorage.getItem("id");
     if (!image || !id) return;
-    const formData = new FormData();
-    formData.append("image", image);
-    const response = await UploadProfileImage(formData, id);
-    setInitialValues((prev) => ({
-      ...prev,
-      profileImage: response.data.result,
-    }));
+    setLoading(true);
+    try{
+      const formData = new FormData();
+      formData.append("image", image);
+      const response = await UploadProfileImage(formData, id);
+      setInitialValues((prev) => ({
+        ...prev,
+        profileImage: response.data.result,
+      }));
+    } catch (error) {
+      toast.error("Error uploading image");
+    } finally {
+      setLoading(false);
+    }   
   };
 
   const handleSubmit = async (values: ProfileValues) => {
@@ -69,10 +86,27 @@ const ProfileContainer = () => {
     if (!id) {
       return;
     }
-    await UpdateProfileService(values, id);
+    setLoading(true)
+    try{
+      await UpdateProfileService(values, id);
+    }catch (error) {
+      console.error("Error updating profile");
+    } finally {
+      setLoading(false);
+    }   
   };
 
   return (
+    <>
+     {loading ? (
+         <Box
+         sx={{
+           display: "flex",
+           justifyContent: "center",
+           alignItems: "center",
+           height: "100vh",
+         }}> <CircularProgress/></Box>
+      ) :(
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
@@ -87,6 +121,8 @@ const ProfileContainer = () => {
         />
       )}
     </Formik>
+      )}
+    </>
   );
 };
 

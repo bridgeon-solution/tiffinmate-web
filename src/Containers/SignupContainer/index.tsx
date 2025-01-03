@@ -12,6 +12,7 @@ import {
   VerifyOtpService,
 } from "../../Services/AuthService";
 import { formData } from "../../Components/SignupComponent/type";
+import { toast } from "react-toast";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("Name is required"),
@@ -31,6 +32,7 @@ function SignupContainer() {
   const [modal, setModal] = useState<boolean>(false);
   const [OTP, setOTP] = useState("");
   const [phone, setPhone] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const initialValues: formData = {
     name: "",
     email: "",
@@ -40,10 +42,21 @@ function SignupContainer() {
   const navigate = useNavigate();
 
   const handleSubmit = async (values: formData) => {
-    const res = await SignupService(values);
-    setPhone(values.phone);
-    setModal(true);
-    return res.data;
+    setLoading(true);
+    try {
+      const res = await SignupService(values);
+      setPhone(values.phone);
+      if (res.data.status === "success") {
+        setModal(true);
+      } else {
+        toast.warn(res.data.error_message);
+      }
+      return res.data;
+    } catch (error) {
+      toast.error("something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleClose = () => {
@@ -74,7 +87,7 @@ function SignupContainer() {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {() => <SignupComponent />}
+        {() => <SignupComponent loading={loading} />}
       </Formik>
 
       <Modal open={modal} onClose={handleClose} sx={backdropStyle}>
@@ -119,17 +132,38 @@ function SignupContainer() {
                 textAlign: "center",
               }}
             />
-            <ResendOTP onResendClick={() => ResendOtpService(phone)} />
+            <ResendOTP
+              onResendClick={async () => {
+                setLoading(true);
+                try {
+                  await ResendOtpService(phone);
+                  toast.success("OTP send successfully!");
+                } catch (error) {
+                  toast.error("Failed to resend OTP");
+                } finally {
+                  setLoading(false);
+                }
+              }}
+            />
             <StyledButton
               type="submit"
               variant="contained"
               sx={{ mt: 2 }}
               onClick={async () => {
-                await VerifyOtpService({ phone, otp: OTP });
-                navigate("/login");
+                setLoading(true);
+                try {
+                  await VerifyOtpService({ phone, otp: OTP });
+                  toast.success("Phone number verified successfully!");
+                  handleClose();
+                } catch (error) {
+                  toast.error("OTP verification failed");
+                } finally {
+                  setLoading(false);
+                }
               }}
+              disabled={loading}
             >
-              verify
+              {loading ? "Verifying..." : "Verify"}
             </StyledButton>
           </Box>
         </Box>
