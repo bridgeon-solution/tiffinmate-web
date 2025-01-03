@@ -2,10 +2,9 @@ import { lazy, Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import ProfileSidebar from "../Atoms/ProfileSideBar";
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; 
+import 'react-toastify/dist/ReactToastify.css';
 const Order=lazy(()=>import("../Pages/Order"))
-
-
+import PlanContainer from "../Containers/CurrentPlanContainer";
 const Provider = lazy(() => import("../Pages/Provider"));
 const Navbar = lazy(() => import("../Common/Navbar"));
 const Footer = lazy(() => import("../Common/FooterComponent"));
@@ -53,6 +52,7 @@ export const AppRoutes = () => {
           <Route path="/provider/:id/menu" element={<Menu />} />
           <Route path="/provider/:id/menu/:menuId" element={<MenuDetails />} />
           <Route path="/provider/:id/menu/:menuId/order" element={<Order />} />
+          <Route path="/currentplan" element={<PlanContainer/>}/>
         </Routes>
       </Suspense>
       <ToastContainer/>
