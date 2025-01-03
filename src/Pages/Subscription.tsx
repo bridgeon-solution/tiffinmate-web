@@ -1,4 +1,3 @@
-import OrderContainer from '../Containers/OrderContainer'
 import SubscriptionContainer from '../Containers/SubscriptionContainer'
 
 const Subscription = () => {
