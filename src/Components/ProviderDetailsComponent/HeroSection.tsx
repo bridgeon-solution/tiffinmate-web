@@ -22,7 +22,7 @@ export const HeroSection = ({ provider }: ProviderHomeProps) => {
           textAlign: { xs: "center", sm: "left" },
         }}
       >
-        <Typography variant="h2" sx={{ fontWeight: "bold", mb: 2 }}>
+        <Typography variant="h2" sx={{ fontWeight: "bold", mb: 2,fontSize:{xs:"1.7rem",md:'3.7rem'}}}>
           {provider?.resturent_name}
         </Typography>
         <Typography variant="body2" sx={{ color: "gray", width: "400px" }}>

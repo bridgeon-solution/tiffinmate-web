@@ -40,8 +40,6 @@ export const ProviderCard = ({ providers }: providerDetailsProp) => {
                       textAlign: "center",
                       fontWeight: "bold",
                       color: "#333",
-                       whiteSpace: "nowrap",
-                      textOverflow: "ellipsis"
                     }}
                   >
                     {p.resturent_name}
