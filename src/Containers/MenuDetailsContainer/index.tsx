@@ -80,10 +80,8 @@ function MenuDetailsContainer() {
       handleClose(modalType);
       navigate("order",{state:{orderId:response.result,categories:selectedCategories,date:selectedDate}});
       }
-      
-
     }catch(error){
-      toast.error("error create order")
+      toast.error("error creating order")
     }
   };
 

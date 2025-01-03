@@ -12,7 +12,7 @@ import {
   VerifyOtpService,
 } from "../../Services/AuthService";
 import { formData } from "../../Components/SignupComponent/type";
-import { toast } from "react-toast";
+import { toast } from "react-toastify";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("Name is required"),
@@ -152,9 +152,12 @@ function SignupContainer() {
               onClick={async () => {
                 setLoading(true);
                 try {
-                  await VerifyOtpService({ phone, otp: OTP });
-                  toast.success("Phone number verified successfully!");
-                  handleClose();
+                  const res = await VerifyOtpService({ phone, otp: OTP });
+                  if (res.data.result === true) {
+                    toast.success("registered successfully!");
+                    handleClose();
+                    navigate("/login");
+                  }
                 } catch (error) {
                   toast.error("OTP verification failed");
                 } finally {

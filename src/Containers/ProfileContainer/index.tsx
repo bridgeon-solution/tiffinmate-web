@@ -32,31 +32,32 @@ const ProfileContainer = () => {
     profileImage: "",
   });
   const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true)
+      setLoading(true);
       const id = localStorage.getItem("id");
       if (!id) {
         navigate("/login");
         return;
       }
-      try{
-      const response = await FetchProfileService(id);
-      setInitialValues({
-        fullName: response.data.result?.name || "",
-        phoneNumber: response.data.result?.phone || "",
-        email: response.data.result?.email || "",
-        address: response.data.result?.address || "",
-        city: response.data.result?.city || "",
-        profileImage: response.data.result?.image,
-      });
-    }catch (error) {
-      toast.error("Error fetching profile");
-    } finally {
-      setLoading(false);
-    }
-  };
+      try {
+        const response = await FetchProfileService(id);
+        setInitialValues({
+          fullName: response.data.result?.name || "",
+          phoneNumber: response.data.result?.phone || "",
+          email: response.data.result?.email || "",
+          address: response.data.result?.address || "",
+          city: response.data.result?.city || "",
+          profileImage: response.data.result?.image,
+        });
+      } catch (error) {
+        toast.error("Error fetching profile");
+      } finally {
+        setLoading(false);
+      }
+    };
 
     fetchData();
   }, [navigate]);
@@ -66,7 +67,7 @@ const ProfileContainer = () => {
     const id = localStorage.getItem("id");
     if (!image || !id) return;
     setLoading(true);
-    try{
+    try {
       const formData = new FormData();
       formData.append("image", image);
       const response = await UploadProfileImage(formData, id);
@@ -78,7 +79,7 @@ const ProfileContainer = () => {
       toast.error("Error uploading image");
     } finally {
       setLoading(false);
-    }   
+    }
   };
 
   const handleSubmit = async (values: ProfileValues) => {
@@ -86,41 +87,47 @@ const ProfileContainer = () => {
     if (!id) {
       return;
     }
-    setLoading(true)
-    try{
+    setUpdating(true);
+    try {
       await UpdateProfileService(values, id);
-    }catch (error) {
-      console.error("Error updating profile");
+      toast.success("Profile updated successfully!");
+    } catch (error) {
+      toast.error("Error updating profile");
     } finally {
-      setLoading(false);
-    }   
+      setUpdating(false);
+    }
   };
 
   return (
     <>
-     {loading ? (
-         <Box
-         sx={{
-           display: "flex",
-           justifyContent: "center",
-           alignItems: "center",
-           height: "100vh",
-         }}> <CircularProgress/></Box>
-      ) :(
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-      enableReinitialize
-    >
-      {({ handleSubmit, values }) => (
-        <ProfileComponent
-          handleSubmit={handleSubmit}
-          values={values}
-          handleUploadImage={handleUploadImage}
-        />
-      )}
-    </Formik>
+      {loading ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          {" "}
+          <CircularProgress />
+        </Box>
+      ) : (
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+          enableReinitialize
+        >
+          {({ handleSubmit, values }) => (
+            <ProfileComponent
+              handleSubmit={handleSubmit}
+              values={values}
+              handleUploadImage={handleUploadImage}
+              loading={updating}
+            />
+          )}
+        </Formik>
       )}
     </>
   );
