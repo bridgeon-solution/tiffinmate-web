@@ -118,7 +118,7 @@ const OrderContainer: React.FC = () => {
 
               toast.success("order palced succesfully");
               setLoading(true);
-            } catch (error) {
+            } catch {
               toast.error("Payment failed.");
             } finally {
               setLoading(false);
@@ -135,7 +135,7 @@ const OrderContainer: React.FC = () => {
 
         const razorPay = new window.Razorpay(options);
         razorPay.open();
-      } catch (error) {
+      } catch  {
         toast.error("Failed to create order.");
       }
     },

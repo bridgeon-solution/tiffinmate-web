@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { OrderProp } from "../../Components/MenuDetailsComponent/type";
 import { OrderDtailsProps } from "../../Components/Order/type";
 import api from "../api";
@@ -15,8 +16,8 @@ export const PostOrder = async (orderData:OrderProp) => {
         return response.data;
       }
       return null;
-    } catch (error) {
-      throw error;
+    } catch  {
+      toast.error("somethng went wrong")
     }
   };
 
@@ -33,8 +34,8 @@ export const PostOrder = async (orderData:OrderProp) => {
         return response.data;
       }
       return null;
-    } catch (error) {
-      throw error;
+    } catch {
+      toast.error("somethng went wrong")
     }
   };
 
@@ -50,8 +51,8 @@ export const PostOrder = async (orderData:OrderProp) => {
         return response.data;
       }
       return null;
-    } catch (error) {
-      throw error;
+    } catch {
+      toast.error("somethng went wrong")
     }
   };
 
@@ -67,8 +68,8 @@ export const PostOrder = async (orderData:OrderProp) => {
         return response.data;
       }
       return null;
-    } catch (error) {
-      throw error;
+    } catch  {
+      toast.error("somethng went wrong")
     }
   };
 
