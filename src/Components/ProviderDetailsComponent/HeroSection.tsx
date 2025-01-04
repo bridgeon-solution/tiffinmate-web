@@ -22,10 +22,10 @@ export const HeroSection = ({ provider }: ProviderHomeProps) => {
           textAlign: { xs: "center", sm: "left" },
         }}
       >
-        <Typography variant="h2" sx={{ fontWeight: "bold", mb: 2 }}>
+        <Typography variant="h2" sx={{ fontWeight: "bold", mb: 2,fontSize:{xs:"1.7rem",md:'3.7rem'}}}>
           {provider?.resturent_name}
         </Typography>
-        <Typography variant="body2" sx={{ color: "gray", width: "400px" }}>
+        <Typography variant="body2" sx={{ color: "gray", width:{md:"400px", xs: "auto"} }}>
           {provider?.about}
         </Typography>
         <StyledMenuButton onClick={()=>navigate('menu')}>Menu</StyledMenuButton>
@@ -33,11 +33,11 @@ export const HeroSection = ({ provider }: ProviderHomeProps) => {
       <Box
         component="img"
         height="600px"
-        width="500px"
         sx={{
           borderRadius: "90px 20px 90px 20px",
           objectFit: "cover",
           transform: { xs: "scale(0.7)", sm: "none" },
+          width: {md:"500px", xs: "400px"}
         }}
         alt="The house from the offer."
         src={provider?.image}

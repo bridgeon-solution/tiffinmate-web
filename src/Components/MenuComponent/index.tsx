@@ -41,7 +41,10 @@ const MenuComponent: React.FC<MenuTypeComponentProps> = ({ categories }) => {
         <Grid container spacing={4} justifyContent="center" alignItems="center">
           {categories?.map((category, index) => (
             <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
-              <Card sx={{ borderRadius: 4, textAlign: "center" }}>
+              <Card sx={{ borderRadius: 4, textAlign: "center" , height: "400px", display:"flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                <CardContent sx={{display: 'flex', flexDirection: "column", justifyContent: "space-between", alignItems: "center", gap: "0.2rem", height: "100%"}}>
+
+                <Box sx={{display: "flex", flexDirection:"column", justifyContent: "center", alignItems: "center", gap: "0.5rem"}}>
                 <CardMedia
                   component="img"
                   height="200"
@@ -51,17 +54,18 @@ const MenuComponent: React.FC<MenuTypeComponentProps> = ({ categories }) => {
                     borderRadius: "50%",
                     width: 150,
                     height: 150,
-                    margin: "auto",
                     mt: 2,
                   }}
                 />
-                <CardContent>
-                  <Typography variant="h6" fontWeight="bold" gutterBottom>
+                <Typography variant="h6" fontWeight="bold" gutterBottom>
                     {category.name}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary" mb={2}>
+                  <Typography variant="body2" color="text.secondary">
                     {category.description}
                   </Typography>
+                </Box>
+
+                 
                   <Box
                     onClick={() => navigate(`${category.id}`)}
                     sx={{
@@ -81,6 +85,7 @@ const MenuComponent: React.FC<MenuTypeComponentProps> = ({ categories }) => {
                     </Typography>
                   </Box>
                 </CardContent>
+               
               </Card>
             </Grid>
           ))}
