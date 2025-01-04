@@ -14,7 +14,6 @@ const ProviderDetails = lazy(() => import("../Pages/ProviderDetails"));
 const MenuDetails = lazy(() => import("../Pages/MenuDetails"));
 const ForgotPasword = lazy(() => import("../Pages/ForgotPasword"));
 const ResetPassword = lazy(() => import("../Pages/ResetPassword"));
-const Profile = lazy(() => import("../Pages/Profile"));
 const Signup = lazy(() => import("../Pages/Signup"));
 const Menu = lazy(() => import("../Pages/Menu"));
 const Login = lazy(() => import("../Pages/Login"));
@@ -48,16 +47,7 @@ export const AppRoutes = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/forgotpassword" element={<ForgotPasword />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
-          <Route
-            path="/profile"
-            element={
-              <ProfileSidebar>
-                <Routes>
-                  <Route path="/" element={<Profile />} />
-                </Routes>
-              </ProfileSidebar>
-            }
-          />
+          <Route path="/profile" element={<ProfileSidebar/>}/>
           <Route path="/provider" element={<Provider />} />
           <Route path="/provider/:id" element={<ProviderDetails />} />
           <Route path="/provider/:id/menu" element={<Menu />} />
