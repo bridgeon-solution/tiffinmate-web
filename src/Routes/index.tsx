@@ -4,10 +4,8 @@ import { CircularProgress, Box } from "@mui/material";
 import ProfileSidebar from "../Atoms/ProfileSideBar";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import NotificationList from "../Components/NotificationComponent";
 const Subscription=lazy(()=>import("../Pages/Subscription"))
 const Order=lazy(()=>import("../Pages/Order"))
-const PlanContainer=lazy(()=>import("../Containers/CurrentPlanContainer"))
 const Provider = lazy(() => import("../Pages/Provider"));
 const Navbar = lazy(() => import("../Common/Navbar"));
 const Footer = lazy(() => import("../Common/FooterComponent"));
