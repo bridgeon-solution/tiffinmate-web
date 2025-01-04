@@ -74,5 +74,58 @@ export const PostOrder = async (orderData:OrderProp) => {
   };
 
 
+  // subscription
+
+  export const PostSubscriptionOrder = async (orderData:OrderProp) => {
+    try {
+      
+      const response = await api.post(
+        '/Subscription/',orderData
+      );
+      
+  
+      if (response && response.data && response.data.result) {
+        return response.data;
+      }
+      return null;
+    } catch  {
+      toast.error("somethng went wrong")
+    }
+  };
+
+
+  export const PostSubscriptionDetails = async (orderId:string|undefined,values:OrderDtailsProps) => {
+    try {
+      const response = await api.post(
+        `Subscription/details?subscriptionid=${orderId}`,values
+      );
+      
+      
+  
+      if (response && response.data && response.data.result) {
+        return response.data;
+      }
+      return null;
+    } catch {
+      toast.error("somethng went wrong")
+    }
+  };
+
+
+  export const GetSubscriptionId = async (orderId:string|undefined) => {
+    try {
+      const response = await api.get(
+        `/Subscription/${orderId}`
+      );
+      if (response && response.data && response.data.result) {
+        return response.data;
+      }
+      return null;
+    } catch {
+      toast.error("somethng went wrong")
+    }
+  };
+
+
 
  

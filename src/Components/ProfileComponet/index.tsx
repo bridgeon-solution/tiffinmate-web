@@ -2,8 +2,9 @@ import { Box, Grid, Typography, IconButton, TextField } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Field } from "formik";
 import { AccountCircle, Edit } from "@mui/icons-material";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { ProfileValues } from "./type";
+import NotificationContainer from "../../Containers/NotificationContainer";
 
 interface ProfileProps {
   handleSubmit: () => void;
@@ -17,7 +18,11 @@ function ProfileComponent({
   handleUploadImage,
   loading,
 }: ProfileProps) {
+  const [NotificationOpen, setNotificationOpen] = useState(false);
   const inputFile = useRef<HTMLInputElement | null>(null);
+  const handleNotificationClick = () => {
+    setNotificationOpen(!NotificationOpen);
+  };
   return (
     <Box sx={{ padding: {md:"2rem",xs:0}, backgroundColor: "white", minHeight: "100vh" }}>
       <Grid container spacing={4} alignItems="center" mb={4}>
@@ -35,9 +40,9 @@ function ProfileComponent({
           >
             Welcome, <span style={{ color: "#f98e2b" }}>{values.fullName.split(' ')[0]}</span>
           </Typography>
-          <Box sx={{ display: "flex", alignItems: "center", gap: {md:"1rem",xs:0} }}>
-            <IconButton>
-              <NotificationsIcon sx={{ color: "#666", fontSize: {md:"24px",xs:"22px" }}} />
+          <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <IconButton onClick={handleNotificationClick}>
+              <NotificationsIcon sx={{ color: "#666", fontSize: "24px" }} />
             </IconButton>
             <IconButton>
               {values.profileImage ? (
@@ -56,6 +61,7 @@ function ProfileComponent({
             </IconButton>
           </Box>
         </Grid>
+        
         <Grid item xs={12}>
           <Box
             sx={{
@@ -156,6 +162,20 @@ function ProfileComponent({
           </Box>
         </Grid>
       </Grid>
+      {NotificationOpen ? (
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            p: 3,
+            height: "100vh",
+            overflow: "auto",
+            position: "relative",
+          }}
+        >
+          <NotificationContainer />
+        </Box>
+      ) : (
       <Box
         sx={{
           paddingTop: 4,
@@ -312,6 +332,7 @@ function ProfileComponent({
           </form>
         </Grid>
       </Box>
+      )}
     </Box>
   );
 }
