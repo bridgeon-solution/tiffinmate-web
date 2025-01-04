@@ -4,7 +4,9 @@ import { CircularProgress, Box } from "@mui/material";
 import ProfileSidebar from "../Atoms/ProfileSideBar";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+const Subscription=lazy(()=>import("../Pages/Subscription"))
 const Order=lazy(()=>import("../Pages/Order"))
+const PlanContainer=lazy(()=>import("../Containers/CurrentPlanContainer"))
 const Provider = lazy(() => import("../Pages/Provider"));
 const Navbar = lazy(() => import("../Common/Navbar"));
 const Footer = lazy(() => import("../Common/FooterComponent"));
@@ -51,7 +53,9 @@ export const AppRoutes = () => {
           <Route path="/provider/:id/menu" element={<Menu />} />
           <Route path="/provider/:id/menu/:menuId" element={<MenuDetails />} />
           <Route path="/provider/:id/menu/:menuId/order" element={<Order />} />
-          </Routes>
+          <Route path="/provider/:id/menu/:menuId/subscription" element={<Subscription />} />
+          <Route path="/currentplan" element={<PlanContainer/>}/>
+        </Routes>
       </Suspense>
       <ToastContainer/>
       {!noNav.includes(location.pathname) && <Footer />}
