@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { styled, Theme, CSSObject } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
@@ -17,6 +17,9 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import DrawerHeader from "../Drawer";
 import Swal from "sweetalert2";
+import Profile from "../../Pages/Profile";
+import OrderHistoryContainer from "../../Containers/OrderHistoryContainer";
+import PlanContainer from "../../Containers/CurrentPlanContainer";
 
 const drawerWidth = 240;
 
@@ -88,28 +91,25 @@ const icons = [
 ];
 
 const menuItems = [
-  { name: "Profile", path: "/profile" },
-  { name: "Orders", path: "/orders" },
-  { name: "Current Plan", path: "/currentplan" },
-  { name: "Logout", path: "/logout" },
+  { name: "Profile", component: <Profile/> },
+  { name: "Orders", component:<OrderHistoryContainer/> },
+  { name: "Current Plan", component: <PlanContainer/> },
+  { name: "Logout", component:null },
 ];
 
-export default function ProfileSidebar({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function ProfileSidebar() {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const navigate = useNavigate();
+  const[activeComponent,setAcvtiveComponent]=useState(menuItems[0].component)
 
   const handleMenuItemClick = (index: number) => {
     setActiveIndex(index);
-    const path = menuItems[index].path;
-    if (path === "/logout") {
+    const selectedItem = menuItems[index];
+    if (selectedItem.name === "Logout") {
       handleLogout();
     } else {
-      navigate(path);
+      setAcvtiveComponent(selectedItem.component);
     }
   };
 
@@ -196,7 +196,7 @@ export default function ProfileSidebar({
           position: "relative",
         }}
       >
-        {children}
+       {activeComponent}
       </Box>
     </Box>
   );

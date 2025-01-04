@@ -36,13 +36,15 @@ const PlanComponent: React.FC<PlanComponentProps> = ({
   return (
     <Box
       sx={{
-        mt: 15,
         perspective: "1000px",
         width: "100%",
         maxWidth: "400px",
         p: 2,
       }}
     >
+      <Typography variant="h5" sx={{ mb: 3, fontWeight: 600 }}>
+        Your Subscriptions
+      </Typography>
       <Box
         sx={{
           position: "relative",
