@@ -29,6 +29,7 @@ export const ProviderComponent = ({ providers }: providerDetailsProp) => {
             fontFamily: "Poppins",
             position: "absolute",
             left: { xs: 80, md: 130 },
+            fontSize: {xs: 25, md: 40}
           }}
         >
           Providers
