@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Box, Typography, Card, CardMedia, CardContent } from "@mui/material";
 import { OrderHistory } from "./type";
-import OrderTrackingTimeline from "../TrackOrderComponent";
 import StyledButton from "../../Atoms/Button";
+import TrackOrderComponent from "../TrackOrderComponent";
 
 const OrderHistoryComponent = ({ orders }: { orders: OrderHistory[] }) => {
   const [selectedOrder, setSelectedOrder] = useState<OrderHistory | null>(null);
@@ -128,7 +128,7 @@ const OrderHistoryComponent = ({ orders }: { orders: OrderHistory[] }) => {
           >
             Back to Orders
           </StyledButton>
-          <OrderTrackingTimeline events={selectedOrder.trackingEvents} />
+          <TrackOrderComponent events={selectedOrder.trackingEvents} />
         </>
       )}
     </Box>
