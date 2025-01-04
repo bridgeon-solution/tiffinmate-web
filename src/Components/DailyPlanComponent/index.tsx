@@ -11,7 +11,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "90%", // Adjusted for responsiveness
+  width: "90%",
   maxWidth: "600px",
   bgcolor: "#fff",
   borderRadius: "8px",
@@ -29,6 +29,7 @@ interface DailyPlanComponentProps {
   selectedDate: string;
   handlePay: (modalType: "daily" | "subscription") => void;
   handleDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isCalculating: boolean;
 }
 
 const getDisabledCategories = (selectedDate: string) => {
@@ -57,6 +58,7 @@ const DailyPlanComponent: React.FC<DailyPlanComponentProps> = ({
   selectedDate,
   handlePay,
   handleDateChange,
+  isCalculating,
 }) => {
   const disabledCategories = getDisabledCategories(selectedDate);
 
@@ -108,7 +110,11 @@ const DailyPlanComponent: React.FC<DailyPlanComponentProps> = ({
         <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "1fr 1fr 1fr" },
+            gridTemplateColumns: {
+              xs: "1fr",
+              sm: "1fr 1fr",
+              md: "1fr 1fr 1fr",
+            },
             gap: 2,
             mb: 4,
           }}
@@ -188,6 +194,7 @@ const DailyPlanComponent: React.FC<DailyPlanComponentProps> = ({
           <StyledButton
             variant="contained"
             onClick={() => handlePay("daily")}
+            disabled={isCalculating || totalAmount === 0}
             sx={{
               width: { xs: "45%", sm: "auto" },
             }}

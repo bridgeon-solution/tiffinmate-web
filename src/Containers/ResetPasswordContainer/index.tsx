@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ResetPasswordComponent from "../../Components/ResetPasswordComponent";
 import { ResetPasswordService } from "../../Services/AuthService";
 import { toast } from "react-toast";
+import { useState } from "react";
 
 interface FormValues {
   password: string;
@@ -18,18 +19,22 @@ const validationSchema = Yup.object({
 });
 function ResetPasswordContainer() {
   const location = useLocation();
+  const [loading, setLoding] = useState<boolean>(false);
   const initialValues: FormValues = { password: "" };
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
   const email = params.get("email") as string;
   const handleSubmit = async (values: FormValues) => {
     const data = { email, ...values };
+    setLoding(true);
     try {
       await ResetPasswordService(data);
       toast.success("Password succesfully updated");
       navigate("/login");
     } catch {
       toast.error("Failed to update password");
+    } finally {
+      setLoding(false);
     }
   };
   return (
@@ -39,7 +44,7 @@ function ResetPasswordContainer() {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {() => <ResetPasswordComponent />}
+        {() => <ResetPasswordComponent loading={loading} />}
       </Formik>
     </>
   );

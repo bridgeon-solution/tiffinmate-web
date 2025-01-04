@@ -17,7 +17,7 @@ const SubscriptionContainer :React.FC= () => {
     const menuid = menuId || "";
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [orderId, setOrderId] = useState<string>();
-    const [_, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [date, setDate] = useState<string>();
     const [, setRazrPay] = useState<RazorpayResponse | null>(null);
     const [RazrPayLoad, setRazrPayLoad] = useState<boolean>(false);
@@ -53,7 +53,7 @@ const [paymentDetails] = useState({
         city: Yup.string().required("Current location is required"),
       }),
       onSubmit: async (values) => {
-
+setLoading(true)
             // RazorPay
             
             if (!RazrPayLoad) {
@@ -66,6 +66,7 @@ const [paymentDetails] = useState({
                 }
               } catch (error) {
                 toast.error("Error loading payment script.");
+                setLoading(false)
                 return;
               }
             }
@@ -75,6 +76,8 @@ const [paymentDetails] = useState({
             
                     if (!total) {
                       toast.error("Total amount is missing.");
+                      setLoading(false)
+                      return;
                     }
             
                     // RazorPay id creation
@@ -132,6 +135,7 @@ const [paymentDetails] = useState({
                     razorPay.open();
                   } catch (error) {
                     toast.error("Failed to create order.");
+                    setLoading(false)
                   }
                 },
               });
@@ -159,6 +163,7 @@ const [paymentDetails] = useState({
     setSelectedCategories={setSelectedCategories}
     setOrderId={setOrderId}
     setDate={setDate}
+    loading={loading}
   />
 
   )

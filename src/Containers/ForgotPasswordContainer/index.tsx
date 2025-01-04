@@ -12,6 +12,7 @@ import {
   VerifyEmailOtp,
 } from "../../Services/AuthService";
 import { EmailValue } from "./type";
+import { toast } from "react-toast";
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -22,13 +23,25 @@ function ForgotPasswordContainer() {
   const [modal, setModal] = useState<boolean>(false);
   const [otp, setOtp] = useState("");
   const [email, setEmail] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const initialValues: EmailValue = { email: "" };
   const navigate = useNavigate();
 
   const handleSubmit = async (values: EmailValue) => {
-    await ForgotPasswordService(values);
-    setEmail(values.email);
-    setModal(true);
+    setLoading(true);
+    try {
+      const res = await ForgotPasswordService(values);
+      if (res.data.status === "success") {
+        setEmail(values.email);
+        setModal(true);
+      } else {
+        toast.error(res.data.error_message);
+      }
+    } catch (error) {
+      toast.error("something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
   const handleClose = () => {
     setModal(false);
@@ -58,7 +71,7 @@ function ForgotPasswordContainer() {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {() => <ForgotPasswordComponent />}
+        {() => <ForgotPasswordComponent loading={loading} />}
       </Formik>
 
       <Modal open={modal} onClose={handleClose} sx={backdropStyle}>
@@ -110,13 +123,21 @@ function ForgotPasswordContainer() {
               variant="contained"
               sx={{ mt: 2 }}
               onClick={async () => {
-                const res = await VerifyEmailOtp({ email, otp: otp });
-                if (res?.data?.status == "success") {
-                  navigate(`/resetpassword?email=${email}`);
+                setLoading(true);
+                try {
+                  const res = await VerifyEmailOtp({ email, otp: otp });
+                  if (res?.data?.status == "success") {
+                    navigate(`/resetpassword?email=${email}`);
+                  }
+                } catch (error) {
+                  toast.error("Error in otp verification");
+                } finally {
+                  setLoading(false);
                 }
               }}
+              disabled={loading}
             >
-              verify
+              {loading ? "Verifying..." : "Verify"}
             </StyledButton>
           </Box>
         </Box>
