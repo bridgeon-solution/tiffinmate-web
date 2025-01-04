@@ -22,7 +22,7 @@ const OrderContainer: React.FC = () => {
   const menuid = menuId || "";
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [orderId, setOrderId] = useState<string>();
-  const [_, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [date, setDate] = useState<string>();
   const [, setRazrPay] = useState<RazorpayResponse | null>(null);
   const [RazrPayLoad, setRazrPayLoad] = useState<boolean>(false);
@@ -79,6 +79,8 @@ const OrderContainer: React.FC = () => {
 
         if (!total) {
           toast.error("Total amount is missing.");
+          setLoading(false);
+          return;
         }
 
         // RazorPay id creation
@@ -117,7 +119,6 @@ const OrderContainer: React.FC = () => {
               await PostOrderDetails(orderId, orderDetailsData);
 
               toast.success("order palced succesfully");
-              setLoading(true);
             } catch (error) {
               toast.error("Payment failed.");
             } finally {
@@ -137,6 +138,7 @@ const OrderContainer: React.FC = () => {
         razorPay.open();
       } catch (error) {
         toast.error("Failed to create order.");
+        setLoading(false);
       }
     },
   });
@@ -156,7 +158,7 @@ const OrderContainer: React.FC = () => {
   };
 
   return (
-    <div>
+    <>
       <OrderComponent
         formData={formik.values}
         handleSubmit={formik.handleSubmit}
@@ -165,8 +167,9 @@ const OrderContainer: React.FC = () => {
         setSelectedCategories={setSelectedCategories}
         setOrderId={setOrderId}
         setDate={setDate}
+        loading={loading}
       />
-    </div>
+    </>
   );
 };
 
