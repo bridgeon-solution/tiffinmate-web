@@ -12,7 +12,7 @@ import {
   VerifyEmailOtp,
 } from "../../Services/AuthService";
 import { EmailValue } from "./type";
-import { toast } from "react-toast";
+import { toast } from "react-toastify";
 
 const validationSchema = Yup.object({
   email: Yup.string()

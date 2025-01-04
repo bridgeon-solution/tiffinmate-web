@@ -3,7 +3,7 @@ import { useState } from "react";
 import feedbackImage from '../../Assets/feedback.webp'
 import { useParams } from "react-router-dom";
 import { provideReview } from "../../Services/ProviderService";
-import { toast } from "react-toast";
+import { toast } from "react-toastify";
 
 export const Feedback = () => {
   const userId = localStorage.getItem("id");

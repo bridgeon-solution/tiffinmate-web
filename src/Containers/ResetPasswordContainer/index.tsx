@@ -3,7 +3,7 @@ import { Formik } from "formik";
 import { useLocation, useNavigate } from "react-router-dom";
 import ResetPasswordComponent from "../../Components/ResetPasswordComponent";
 import { ResetPasswordService } from "../../Services/AuthService";
-import { toast } from "react-toast";
+import { toast } from "react-toastify";
 import { useState } from "react";
 
 interface FormValues {
