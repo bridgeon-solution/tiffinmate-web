@@ -6,11 +6,12 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 
 function TopProvidersContainer() {
   const [providers, setProviders] = useState<Provider[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchProviders = async () => {
+        setLoading(true)
       try {
         const response = await fetchApprovedProviderDetails();
         setProviders(response.result);
