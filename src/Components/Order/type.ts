@@ -6,7 +6,7 @@ export interface OrderDtailsProps{
   categories: string[]; 
   date: string|undefined; 
   provider_id: string; 
-  menu_id: string;
+  menu_id: string |undefined;
   order_string:string,
   transaction_string:string 
 }

@@ -23,9 +23,11 @@ function LoginContainer() {
     setLoading(true);
     try {
       const res = await LoginService(values);
+      console.log(res)
       if (res.data.status == "success") {
         localStorage.setItem("id", res.data.result.id);
         localStorage.setItem("token", res.data.result.token);
+        localStorage.setItem("user", res.data.result.name);
         toast.success("Login successful");
         navigate("/");
       } else {

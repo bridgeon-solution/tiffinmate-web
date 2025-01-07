@@ -4,6 +4,7 @@ import { CircularProgress, Box } from "@mui/material";
 import ProfileSidebar from "../Atoms/ProfileSideBar";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import InvoiceDailyOrder from "../Components/InvoiceComponent/Invoice";
 const Subscription=lazy(()=>import("../Pages/Subscription"))
 const Order=lazy(()=>import("../Pages/Order"))
 const PlanContainer=lazy(()=>import("../Containers/CurrentPlanContainer"))
@@ -64,6 +65,7 @@ export const AppRoutes = () => {
           <Route path="/provider/:id/menu/:menuId" element={<MenuDetails />} />
           <Route path="/provider/:id/menu/:menuId/order" element={<Order />} />
           <Route path="/provider/:id/menu/:menuId/subscription" element={<Subscription />} />
+          <Route path="/provider/:id/menu/:menuId/order/invoice" element={<InvoiceDailyOrder />} />
           <Route path="/currentplan" element={<PlanContainer/>}/>
         </Routes>
       </Suspense>
