@@ -28,7 +28,7 @@ export const UploadProfileImage = async (FormData: FormData, id: string) => {
       "Content-Type": "multipart/form-data",
     },
   });
-  return res;
+  return 
 };
 
 export const FetchMenuDetails = async (menuId: string, category_id: string) => {
