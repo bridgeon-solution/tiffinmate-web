@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, CircularProgress } from "@mui/material";
 import InputField from "../../Atoms/Input";
 import { useLocation } from "react-router-dom";
 
@@ -12,7 +12,7 @@ interface OrderFormData {
   };
   setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>;
   setOrderId: React.Dispatch<React.SetStateAction<string | undefined>>;
-  setDate:React.Dispatch<React.SetStateAction<string | undefined>>;
+  setDate: React.Dispatch<React.SetStateAction<string | undefined>>;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   errors: {
@@ -21,6 +21,7 @@ interface OrderFormData {
     ph_no: string;
     city: string;
   };
+  loading: boolean;
 }
 
 const OrderComponent: React.FC<OrderFormData> = ({
@@ -30,7 +31,8 @@ const OrderComponent: React.FC<OrderFormData> = ({
   errors,
   setSelectedCategories,
   setOrderId,
-  setDate
+  setDate,
+  loading,
 }) => {
   const { state } = useLocation();
   const { categories, orderId, date } = state || {};
@@ -44,7 +46,7 @@ const OrderComponent: React.FC<OrderFormData> = ({
       sx={{
         maxWidth: 600,
         mt: 10,
-        ml: "25%",
+        ml: { md: "25%", xs: 0 },
         padding: "20px",
         textAlign: "center",
         borderRadius: "8px",
@@ -95,7 +97,6 @@ const OrderComponent: React.FC<OrderFormData> = ({
           {errors.city}
         </Typography>
         <InputField
-          
           label="Phone Number"
           name="ph_no"
           value={formData.ph_no}
@@ -117,7 +118,11 @@ const OrderComponent: React.FC<OrderFormData> = ({
             "&:hover": { backgroundColor: "#f96c0a" },
           }}
         >
-          Submit Details
+          {loading ? (
+            <CircularProgress size={24} sx={{ color: "#fff" }} />
+          ) : (
+            "Submit Details"
+          )}
         </Button>
       </Box>
     </Box>

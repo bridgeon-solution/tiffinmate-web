@@ -13,7 +13,7 @@ import BreakFast from "../../Assets/BreakFast.webp";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import SubscriptionPlanComponent from "../../Components/SubscriptionPlanComponent";
-import { PostOrder, PostSubscriptionOrder } from "../../Services/OrderService";
+import { PostOrder } from "../../Services/OrderService";
 import { CircularProgress, Box } from "@mui/material";
 
 function MenuDetailsContainer() {
@@ -31,9 +31,10 @@ function MenuDetailsContainer() {
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
-  const userId=localStorage.getItem("id");
-  
-  const userid=userId||""
+  const [isCalculating, setIsCalculating] = useState<boolean>(false);
+  const userId = localStorage.getItem("id");
+
+  const userid = userId || "";
   const categories = [
     {
       id: "0193ce2c-ab58-7b6f-8470-7462704e8638",
@@ -66,10 +67,6 @@ function MenuDetailsContainer() {
       toast.warn("Please select a date.");
       return;
     }
-
-    // daily plan
-
-    if(modalType==="daily"){
     try {
       const orderData: OrderProp = {
         date: selectedDate,
@@ -91,38 +88,9 @@ function MenuDetailsContainer() {
         });
       }
     } catch (error) {
-      toast.error("error create order");
+      toast.error("error creating order");
     }
-
-    // subscription plan
-
-  }else if (modalType === "subscription") {
-    try {
-      const orderData: OrderProp = {
-        date: selectedDate,
-        menu_id: menuid,
-        provider_id: providerId,
-        total_price: totalAmount,
-        user_id: userid,
-      };
-      const response = await PostSubscriptionOrder(orderData);
-
-      if (response.status == "success") {
-        handleClose(modalType);
-        navigate("subscription", {
-          state: {
-            orderId: response.result,
-            categories: selectedCategories,
-            date: selectedDate,
-           
-          },
-        });
-      }
-    } catch (error) {
-      toast.error("error create order");
-    }
-  }
-}
+  };
 
   const handleClose = (modalType: "daily" | "subscription") => {
     if (modalType === "daily") {
@@ -136,26 +104,28 @@ function MenuDetailsContainer() {
   };
 
   useEffect(() => {
-    if (selectedDate && selectedCategories.length > 0) {
-      const is_subscription = dailyModal ? false : true;
-      CalculateTotal(selectedDate, selectedCategories, menuid, is_subscription)
-        .then((response) => {
-          if (response && response.data && response.data.result) {
-            if (response.data.result === 0) {
-              setTotalAmount(0);
-            } else {
-              setTotalAmount(response.data.result);
-            }
-          } else {
-            setTotalAmount(0);
-          }
-        })
-        .catch(() => {
+    const fetchTotalAmount = async () => {
+      if (selectedDate && selectedCategories.length > 0) {
+        setIsCalculating(true);
+        const is_subscription = dailyModal ? false : true;
+        try {
+          const response = await CalculateTotal(
+            selectedDate,
+            selectedCategories,
+            menuid,
+            is_subscription
+          );
+          setTotalAmount(response?.data?.result || 0);
+        } catch {
           setTotalAmount(0);
-        });
-    } else {
-      setTotalAmount(0);
-    }
+        } finally {
+          setIsCalculating(false);
+        }
+      } else {
+        setTotalAmount(0);
+      }
+    };
+    fetchTotalAmount();
   }, [selectedCategories, selectedDate, dailyModal, subscriptionModal]);
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -236,6 +206,7 @@ function MenuDetailsContainer() {
           selectedDate={selectedDate}
           handlePay={() => handlePay("daily")}
           handleDateChange={handleDateChange}
+          isCalculating={isCalculating}
         />
       )}
       {subscriptionModal && (
@@ -249,6 +220,7 @@ function MenuDetailsContainer() {
           handleDateChange={handleDateChange}
           totalAmount={totalAmount}
           handleCategorySelect={handleCategorySelect}
+          isCalculating={isCalculating}
         />
       )}
     </>

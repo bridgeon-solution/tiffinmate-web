@@ -3,7 +3,7 @@ import { useState } from "react";
 import feedbackImage from '../../Assets/feedback.webp'
 import { useParams } from "react-router-dom";
 import { provideReview } from "../../Services/ProviderService";
-import { toast } from "react-toast";
+import { toast } from "react-toastify";
 
 export const Feedback = () => {
   const userId = localStorage.getItem("id");
@@ -28,7 +28,7 @@ export const Feedback = () => {
     <Box
       sx={{
         position: "relative",
-        height: "400px",
+        height: { xs: "300px", sm: "350px", md: "400px" },
         px: { xs: 4, sm: 6, md: 20 },
         py: 2,
         mt: 4,

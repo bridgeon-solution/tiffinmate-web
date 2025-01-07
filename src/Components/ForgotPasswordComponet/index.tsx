@@ -5,7 +5,7 @@ import StyledButton from "../../Atoms/Button";
 import authImage from "../../Assets/authimage.webp";
 import { Link } from "react-router-dom";
 
-function ForgotPasswordComponent() {
+function ForgotPasswordComponent({ loading }: { loading: boolean }) {
   return (
     <Grid container>
       <Grid
@@ -51,8 +51,12 @@ function ForgotPasswordComponent() {
                 className="errormessage"
               />
 
-              <StyledButton type="submit" variant="contained">
-                submit
+              <StyledButton
+                type="submit"
+                variant="contained"
+                disabled={loading}
+              >
+                {loading ? "Submitting..." : "Submit"}
               </StyledButton>
 
               <Typography sx={{ textAlign: "center", mt: 1 }}>
