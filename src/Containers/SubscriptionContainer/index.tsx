@@ -1,15 +1,22 @@
-import React from 'react'
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { RazorpayResponse ,RazorpayOptions,OrderDtailsProps} from '../../Components/Order/type';
-import { useFormik } from 'formik';
+import React from "react";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import {
+  RazorpayResponse,
+  RazorpayOptions,
+  OrderDtailsProps,
+} from "../../Components/Order/type";
+import { useFormik } from "formik";
 import * as Yup from "yup";
-import { toast } from 'react-toastify';
-import { RazorPayOrder , GetSubscriptionId, PostSubscriptionDetails} from '../../Services/OrderService';
-import OrderComponent from '../../Components/Order';
+import { toast } from "react-toastify";
+import {
+  RazorPayOrder,
+  GetSubscriptionId,
+  PostSubscriptionDetails,
+} from "../../Services/OrderService";
+import OrderComponent from "../../Components/Order";
 
-
-const SubscriptionContainer :React.FC= () => {
+const SubscriptionContainer : React.FC = () => {
 
 
     const { id, menuId } = useParams();
@@ -23,16 +30,16 @@ const SubscriptionContainer :React.FC= () => {
     const [RazrPayLoad, setRazrPayLoad] = useState<boolean>(false);
 
 
-    const loadScript = (src: string) => {
-        return new Promise((resolve, reject) => {
-          const script = document.createElement("script");
-          script.src = src;
-          script.onload = () => resolve(true);
-          script.onerror = () => reject(false);
-          document.body.appendChild(script);
-        });
-      };
-const [paymentDetails] = useState({
+  const loadScript = (src: string) => {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => resolve(true);
+      script.onerror = () => reject(false);
+      document.body.appendChild(script);
+    });
+  };
+  const [paymentDetails] = useState({
     user_name: "",
     ph_no: "",
   });
@@ -53,7 +60,9 @@ const [paymentDetails] = useState({
         city: Yup.string().required("Current location is required"),
       }),
       onSubmit: async (values) => {
-setLoading(true)
+        setLoading(true)
+
+
             // RazorPay
             
             if (!RazrPayLoad) {
@@ -67,6 +76,7 @@ setLoading(true)
               } catch (error) {
                 toast.error("Error loading payment script.");
                 setLoading(false)
+
                 return;
               }
             }
@@ -77,7 +87,7 @@ setLoading(true)
                     if (!total) {
                       toast.error("Total amount is missing.");
                       setLoading(false)
-                      return;
+
                     }
             
                     // RazorPay id creation
@@ -135,7 +145,6 @@ setLoading(true)
                     razorPay.open();
                   } catch (error) {
                     toast.error("Failed to create order.");
-                    setLoading(false)
                   }
                 },
               });
@@ -164,9 +173,8 @@ setLoading(true)
     setOrderId={setOrderId}
     setDate={setDate}
     loading={loading}
+
   />
+  )}
 
-  )
-}
-
-export default SubscriptionContainer
+export default SubscriptionContainer;

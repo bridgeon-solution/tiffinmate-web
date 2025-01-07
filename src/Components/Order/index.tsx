@@ -39,6 +39,7 @@ const OrderComponent: React.FC<OrderFormData> = ({
   setSelectedCategories(categories);
   setOrderId(orderId);
   setDate(date);
+  const user=localStorage.getItem("user");
 
   return (
     <Box
@@ -65,15 +66,12 @@ const OrderComponent: React.FC<OrderFormData> = ({
         <InputField
           label="Full Name"
           name="user_name"
-          value={formData.user_name}
+          value={user}
           onChange={handleChange}
-          required
           variant="outlined"
           fullWidth
         />
-        <Typography variant="body2" color="error">
-          {errors.user_name}
-        </Typography>
+       
         <InputField
           label="Address"
           name="address"

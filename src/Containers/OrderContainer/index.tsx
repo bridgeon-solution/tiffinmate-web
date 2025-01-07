@@ -9,14 +9,16 @@ import {
   PostOrderDetails,
   RazorPayOrder,
 } from "../../Services/OrderService";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   OrderDtailsProps,
   RazorpayOptions,
   RazorpayResponse,
 } from "../../Components/Order/type";
+import OrderModal from "../../Atoms/Modal";
 
 const OrderContainer: React.FC = () => {
+  const navigate=useNavigate();
   const { id, menuId } = useParams();
   const providerId = id || "";
   const menuid = menuId || "";
@@ -26,6 +28,7 @@ const OrderContainer: React.FC = () => {
   const [date, setDate] = useState<string>();
   const [, setRazrPay] = useState<RazorpayResponse | null>(null);
   const [RazrPayLoad, setRazrPayLoad] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const loadScript = (src: string) => {
     return new Promise((resolve, reject) => {
@@ -50,7 +53,6 @@ const OrderContainer: React.FC = () => {
       ph_no: "",
     },
     validationSchema: Yup.object({
-      user_name: Yup.string().required("Name is required"),
       address: Yup.string().required("Address is required"),
       ph_no: Yup.string()
         .required("Phone number is required")
@@ -119,6 +121,9 @@ const OrderContainer: React.FC = () => {
               await PostOrderDetails(orderId, orderDetailsData);
 
               toast.success("order palced succesfully");
+              formik.resetForm();
+              setIsModalOpen(true);
+              setLoading(true);
             } catch (error) {
               toast.error("Payment failed.");
             } finally {
@@ -156,6 +161,13 @@ const OrderContainer: React.FC = () => {
     ph_no:
       formik.touched.ph_no && formik.errors.ph_no ? formik.errors.ph_no : "",
   };
+  const handleOpenInvoice  = () => {
+    if (orderId) {
+      navigate(`/provider/${providerId}/menu/${menuid}/order/invoice`, {
+        state: { orderId },
+      });
+    }
+  };
 
   return (
     <>
@@ -168,6 +180,11 @@ const OrderContainer: React.FC = () => {
         setOrderId={setOrderId}
         setDate={setDate}
         loading={loading}
+      />
+      <OrderModal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onOpenInvoice={handleOpenInvoice} 
       />
     </>
   );
