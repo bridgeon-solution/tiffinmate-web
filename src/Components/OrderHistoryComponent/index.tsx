@@ -33,7 +33,7 @@ const OrderHistoryComponent = ({ orders }: { orders: OrderHistory[] }) => {
                 border: "1px solid #E0E0E0",
               }}
             >
-              <CardMedia
+              {/* <CardMedia
                 component="img"
                 sx={{
                   width: 90,
@@ -43,7 +43,7 @@ const OrderHistoryComponent = ({ orders }: { orders: OrderHistory[] }) => {
                 }}
                 image={order.imageUrl}
                 alt={order.name}
-              />
+              /> */}
               <CardContent sx={{ flex: 1, pl: 2 }}>
                 <Box
                   sx={{
@@ -55,14 +55,22 @@ const OrderHistoryComponent = ({ orders }: { orders: OrderHistory[] }) => {
                 >
                   <Box>
                     <Typography
-                      sx={{
-                        color: "#4CAF50",
+                    //   sx={{
+                    //     color: "#4CAF50",
+                    //     fontSize: "14px",
+                    //     fontWeight: 500,
+                    //     mb: 1,
+                    //   }}
+                    // >
+                       sx={{
                         fontSize: "14px",
                         fontWeight: 500,
-                        mb: 1,
+                        color:
+                          order.status === "delivered" ? "#4CAF50" : "#FF5722",
+                          mb:1
                       }}
                     >
-                      {order.category}
+                      {order.status}
                     </Typography>
 
                     <Typography
@@ -73,7 +81,7 @@ const OrderHistoryComponent = ({ orders }: { orders: OrderHistory[] }) => {
                         mb: 0.5,
                       }}
                     >
-                      {order.name}
+                      {order.restaurant}
                     </Typography>
 
                     <Typography
@@ -82,17 +90,16 @@ const OrderHistoryComponent = ({ orders }: { orders: OrderHistory[] }) => {
                         color: "#666",
                       }}
                     >
-                      {order.restaurant}
+                      {order.category}
                     </Typography>
                     <Typography
-                      sx={{
-                        fontSize: "14px",
-                        fontWeight: 500,
-                        color:
-                          order.status === "delivered" ? "#4CAF50" : "#FF5722",
-                      }}
-                    >
-                      {order.status}
+                    sx={{
+                       fontSize: "13px",
+                       fontWeight: 500,
+                       color: "#4CAF50",
+                     }}
+                     >
+                      12-12-2024
                     </Typography>
                   </Box>
 
