@@ -11,7 +11,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "80%",
+  width: "90%",
   maxWidth: "600px",
   bgcolor: "#fff",
   borderRadius: "8px",
@@ -29,6 +29,7 @@ interface DailyPlanComponentProps {
   selectedDate: string;
   handlePay: (modalType: "daily" | "subscription") => void;
   handleDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isCalculating: boolean;
 }
 
 const getDisabledCategories = (selectedDate: string) => {
@@ -57,6 +58,7 @@ const DailyPlanComponent: React.FC<DailyPlanComponentProps> = ({
   selectedDate,
   handlePay,
   handleDateChange,
+  isCalculating,
 }) => {
   const disabledCategories = getDisabledCategories(selectedDate);
 
@@ -73,10 +75,11 @@ const DailyPlanComponent: React.FC<DailyPlanComponentProps> = ({
           variant="h5"
           component="h2"
           sx={{
-            textAlign: "center",
+            textAlign: { xs: "center", md: "left" },
             fontWeight: "bold",
             color: "#f68b1e",
             mb: 3,
+            fontSize: { xs: "20px", md: "24px" },
           }}
         >
           Select Your Plan
@@ -106,8 +109,13 @@ const DailyPlanComponent: React.FC<DailyPlanComponentProps> = ({
 
         <Box
           sx={{
-            display: { md: "flex", xs: "block" },
-            justifyContent: "space-between",
+            display: "grid",
+            gridTemplateColumns: {
+              xs: "1fr",
+              sm: "1fr 1fr",
+              md: "1fr 1fr 1fr",
+            },
+            gap: 2,
             mb: 4,
           }}
         >
@@ -160,10 +168,12 @@ const DailyPlanComponent: React.FC<DailyPlanComponentProps> = ({
                   src={category.image}
                   alt={category.name}
                   sx={{
-                    width: "150px",
-                    height: "100px",
+                    width: "100%",
+                    maxWidth: "150px",
+                    height: "auto",
                     borderRadius: "8px",
                     objectFit: "cover",
+                    mx: "auto",
                   }}
                 />
               </Box>
@@ -172,10 +182,23 @@ const DailyPlanComponent: React.FC<DailyPlanComponentProps> = ({
         </Box>
 
         <Box sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}>
-          <StyledButton variant="outlined" onClick={() => handleClose("daily")}>
+          <StyledButton
+            variant="outlined"
+            onClick={() => handleClose("daily")}
+            sx={{
+              width: { xs: "45%", sm: "auto" },
+            }}
+          >
             CANCEL
           </StyledButton>
-          <StyledButton variant="contained" onClick={() => handlePay("daily")}>
+          <StyledButton
+            variant="contained"
+            onClick={() => handlePay("daily")}
+            disabled={isCalculating || totalAmount === 0}
+            sx={{
+              width: { xs: "45%", sm: "auto" },
+            }}
+          >
             PAY ${totalAmount}.00
           </StyledButton>
         </Box>

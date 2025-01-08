@@ -12,4 +12,12 @@ export interface MenuItem {
     image:string;
     description:string
   }
+
+  export interface OrderProp{
+    date:string,
+    total_price:number
+    menu_id:string,
+    provider_id:string,
+    user_id:string
+  }
  

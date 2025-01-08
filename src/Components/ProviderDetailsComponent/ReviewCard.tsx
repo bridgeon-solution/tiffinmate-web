@@ -20,16 +20,16 @@ export const ReviewCard = () => {
   }, [id]);
 
   return (
-    <Box sx={{ textAlign: "center", py: 5 }}>
-      <Typography variant="h4" sx={{ fontWeight: "bold", mb: 4 }}>
+    <Box sx={{ textAlign: "center", py: { xs: 3, md: 5 }, px: { xs: 4, md: 8 }  }}>
+      <Typography variant="h4" sx={{ fontWeight: "bold",  mb: { xs: 3, sm: 4 }, fontSize: { xs: "1.8rem", sm: "2.2rem", md: "2.5rem" }}}>
         Why People Choose Us?
       </Typography>
-      <Grid container spacing={3} justifyContent="center" px={8}>
+      <Grid container spacing={3} justifyContent="center">
         {reviews.map((r) => (
           <Grid item xs={12} sm={6} md={4} key={r.username}>
             <Card
               sx={{
-                p: 4,
+                p: { xs: 3, sm: 4 },
                 boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
                 borderRadius: "16px",
                 height: "300px",
@@ -48,14 +48,14 @@ export const ReviewCard = () => {
               <CardContent sx={{ textAlign: "center" }}>
                 <Typography
                   variant="body1"
-                  sx={{ mb: 2, fontStyle: "italic", color: "text.secondary" }}
+                  sx={{ mb: 2, fontStyle: "italic", color: "text.secondary" ,fontSize: { xs: "1rem", sm: "1.1rem" }}}
                 >
                   “{r.review}”
                 </Typography>
 
                 <Typography
                   variant="h6"
-                  sx={{ fontWeight: "bold", color: "text.primary" }}
+                  sx={{ fontWeight: "bold", color: "text.primary",fontSize: { xs: "1.1rem", sm: "1.2rem" } }}
                 >
                   {r.username}
                 </Typography>

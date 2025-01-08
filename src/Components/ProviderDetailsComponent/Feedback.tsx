@@ -1,9 +1,9 @@
 import { Box, Input, Typography, Button } from "@mui/material";
 import { useState } from "react";
-
+import feedbackImage from '../../Assets/feedback.webp'
 import { useParams } from "react-router-dom";
 import { provideReview } from "../../Services/ProviderService";
-import { toast } from "react-toast";
+import { toast } from "react-toastify";
 
 export const Feedback = () => {
   const userId = localStorage.getItem("id");
@@ -28,7 +28,7 @@ export const Feedback = () => {
     <Box
       sx={{
         position: "relative",
-        height: "400px",
+        height: { xs: "300px", sm: "350px", md: "400px" },
         px: { xs: 4, sm: 6, md: 20 },
         py: 2,
         mt: 4,
@@ -36,7 +36,7 @@ export const Feedback = () => {
     >
       <Box
         component="img"
-        src="https://s3-alpha-sig.figma.com/img/30b6/4b68/ee0f677954218cf77e267b7b78c02625?Expires=1735516800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Tkksd3twfA8rXq6A7b2J0dokvIMUIzjWu~XLpX2SvGZ94Db1RkKYJd-9ecFuj0s~vx99D~DTJrCnXUzLv3b0dOCKh3gW-UfCuUm5eJyMGJ1w~QkjecYl5MPsa57k-93EWJHogNkaB3ByhdorJyvtHhF7sizuoQVV5LKt8snf7vFVJP1~IIXT8N8PlqCjGWD4BCWdkDt8hkU38aeHTRV26qUt3gpl0~hncnhlYsHDx5poqVQOBxHH3jx70NL0uGwpD0viT68PplGcwwe6I8~DYS0s-zzQaDPpZf6h2q0W4ovoVoulGmdxmbLt1w3~~hPn4Zolv2AvoI2MayfMUvBerA__"
+        src={feedbackImage}
         alt="feedback background"
         sx={{
           width: "100%",

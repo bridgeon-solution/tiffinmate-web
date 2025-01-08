@@ -25,6 +25,7 @@ interface SubscriptionPlanComponentProps {
   handleDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   totalAmount: number;
   handleCategorySelect: (id: string) => void;
+  isCalculating: boolean;
 }
 const SubscriptionPlanComponent: React.FC<SubscriptionPlanComponentProps> = ({
   open,
@@ -36,6 +37,7 @@ const SubscriptionPlanComponent: React.FC<SubscriptionPlanComponentProps> = ({
   handleDateChange,
   totalAmount,
   handleCategorySelect,
+  isCalculating,
 }) => {
   return (
     <Modal
@@ -146,6 +148,7 @@ const SubscriptionPlanComponent: React.FC<SubscriptionPlanComponentProps> = ({
           <StyledButton
             variant="contained"
             onClick={() => handlePay("subscription")}
+            disabled={isCalculating || totalAmount === 0}
           >
             PAY ${totalAmount}
           </StyledButton>
