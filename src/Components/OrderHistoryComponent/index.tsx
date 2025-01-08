@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Typography, Card, CardMedia, CardContent } from "@mui/material";
+import { Box, Typography, Card, CardContent } from "@mui/material";
 import { OrderHistory } from "./type";
 import StyledButton from "../../Atoms/Button";
 import TrackOrderComponent from "../TrackOrderComponent";
@@ -33,17 +33,6 @@ const OrderHistoryComponent = ({ orders }: { orders: OrderHistory[] }) => {
                 border: "1px solid #E0E0E0",
               }}
             >
-              {/* <CardMedia
-                component="img"
-                sx={{
-                  width: 90,
-                  height: 90,
-                  borderRadius: "50%",
-                  objectFit: "cover",
-                }}
-                image={order.imageUrl}
-                alt={order.name}
-              /> */}
               <CardContent sx={{ flex: 1, pl: 2 }}>
                 <Box
                   sx={{
@@ -55,13 +44,6 @@ const OrderHistoryComponent = ({ orders }: { orders: OrderHistory[] }) => {
                 >
                   <Box>
                     <Typography
-                    //   sx={{
-                    //     color: "#4CAF50",
-                    //     fontSize: "14px",
-                    //     fontWeight: 500,
-                    //     mb: 1,
-                    //   }}
-                    // >
                        sx={{
                         fontSize: "14px",
                         fontWeight: 500,
