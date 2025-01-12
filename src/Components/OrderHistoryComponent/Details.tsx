@@ -1,230 +1,187 @@
-// types.ts
+import Dinner from "../../Assets/Dinner.webp";
+import DownloadIcon from "@mui/icons-material/Download";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
+import {
+  Box,
+  Button,
+  Card,
+  Grid,
+  Grid2,
+  Step,
+  StepLabel,
+  Stepper,
+  Typography,
+} from "@mui/material";
+import StyledButton from "../../Atoms/Button";
+import { OrderItem } from "./type";
 
-  
-  // OrderDetailsComponent.tsx
-  import React from 'react';
-  import {
-    Box,
-    Paper,
-    Typography,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Chip,
-    Grid,
-    Divider,
-    useTheme,
-    styled,
-  } from '@mui/material';
-  import {
-    Restaurant,
-    Person,
-    LocationOn,
-    Payment,
-    ShoppingBasket,
-  } from '@mui/icons-material';
-import { OrderDetails } from './type';
+interface Address {
+  name: string;
+  address: string;
+  city: string;
+  phone: string;
+}
+interface Order {
+  id: string;
+  food: string;
+  category: string;
+  provider: string;
+  image: string;
+  price: number;
+  isDelivered: boolean;
+  deliveryDate: string;
+  address: Address;
+}
 
-  
-  const InfoSection = styled(Box)(({ theme }) => ({
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(3),
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[1],
-  }));
-  
-  const SectionTitle = styled(Typography)(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    gap: theme.spacing(1),
-    marginBottom: theme.spacing(2),
-    fontWeight: 600,
-  }));
-  
-  interface OrderDetailsComponentProps {
-    orderDetails: OrderDetails;
-  }
-  
-  const getStatusColor = (status: OrderDetails['status']): string => {
-    const statusColors = {
-      pending: '#ffa726',
-      confirmed: '#42a5f5',
-      preparing: '#7e57c2',
-      out_for_delivery: '#26a69a',
-      delivered: '#66bb6a',
-      cancelled: '#ef5350',
-    };
-    return statusColors[status];
-  };
-  
-  const OrderDetailsComponent: React.FC<OrderDetailsComponentProps> = ({ orderDetails }) => {
-    const theme = useTheme();
-  
-    return (
-      <Box sx={{ maxWidth: 1200, margin: '0 auto', padding: theme.spacing(3) ,mt:10 }}>
-        {/* Header Section */}
-        <Paper sx={{ padding: theme.spacing(3), marginBottom: theme.spacing(3) }}>
-          <Box display="flex" justifyContent="space-between" alignItems="flex-start">
+const OrderDetailsComponent: React.FC<{ order: Order }> = ({ order }) => {
+  const steps = ["Order Confirmed", "order processed", "order Delivered"];
+  const activeStep = order.isDelivered ? steps.length - 1 : steps.length - 2;
+  const otherItems = [
+    {
+      id: "1",
+      food: "Chicken Tikka",
+      provider: "Spicy Delights",
+      image: Dinner,
+      price: 450,
+      isDelivered: false,
+      deliveryDate: "Fri, 2nd Aug",
+    },
+    {
+      id: "2",
+      food: "Paneer Butter Masala",
+      provider: "Veggie Hub",
+      image: Dinner,
+      price: 350,
+      isDelivered: true,
+      deliveryDate: "Thu, 1st Aug",
+    },
+    {
+      id: "3",
+      food: "Garlic Naan",
+      provider: "North Indian Eats",
+      image: Dinner,
+      price: 150,
+      isDelivered: true,
+      deliveryDate: "Thu, 1st Aug",
+    },
+    {
+      id: "4",
+      food: "Chocolate Brownie",
+      provider: "Sweet Tooth",
+      image: Dinner,
+      price: 200,
+      isDelivered: true,
+      deliveryDate: "Thu, 1st Aug",
+    },
+  ];
+
+  return (
+    <Box sx={{ maxWidth: 1200, padding: 2, margin: "auto" }}>
+      <Card sx={{ width: "100%", padding: 2 }}>
+        <Grid container spacing={3} alignItems="center">
+          <Grid item xs={12} md={6}>
             <Box>
-              <Typography variant="h5" fontWeight={600} gutterBottom>
-                Order Details
+              <Typography variant="h6" fontWeight="bold">
+                Delivery Address
               </Typography>
-              <Typography color="textSecondary" gutterBottom>
-                Order ID: {orderDetails.id}
+              <Typography variant="body1" mt={2} fontWeight="bold">
+                {order.address.name}
               </Typography>
-              <Typography color="textSecondary">
-                Placed on: {new Date(orderDetails.orderDate).toLocaleString()}
+              <Typography variant="body2" color="text.secondary">
+                {order.address.address}
+                <br />
+                {order.address.city}
+              </Typography>
+              <Typography variant="body2" fontWeight="bold" mt={2}>
+                {order.address.phone}
               </Typography>
             </Box>
-            <Chip
-              label={orderDetails.status.replace('_', ' ').toUpperCase()}
-              sx={{
-                backgroundColor: getStatusColor(orderDetails.status),
-                color: 'white',
-                textTransform: 'capitalize',
-              }}
-            />
-          </Box>
-        </Paper>
-  
-        <Grid container spacing={3}>
-          {/* Restaurant Info */}
-          <Grid item xs={12} md={6}>
-            <InfoSection>
-              <SectionTitle variant="h6">
-                <Restaurant /> Restaurant Information
-              </SectionTitle>
-              <Typography variant="body1" fontWeight={500}>
-                {orderDetails.restaurant}
+          </Grid>
+          <Grid item xs={12} md={6} sx={{ textAlign: "right" }}>
+            <Box>
+              <Typography variant="h6" fontWeight="bold">
+                More actions
               </Typography>
-            </InfoSection>
-          </Grid>
-  
-          {/* Customer Info */}
-          <Grid item xs={12} md={6}>
-            <InfoSection>
-              <SectionTitle variant="h6">
-                <Person /> Customer Information
-              </SectionTitle>
-              <Box sx={{ marginBottom: 2 }}>
-                <Typography variant="body1" fontWeight={500}>
-                  {orderDetails.customer.name}
-                </Typography>
-                <Typography color="textSecondary">
-                  {orderDetails.customer.email}
-                </Typography>
-                <Typography color="textSecondary">
-                  {orderDetails.customer.phone}
-                </Typography>
+              <Box
+                display="flex"
+                justifyContent="flex-end"
+                alignItems="center"
+                mt={2}
+              >
+                <Typography>Download Invoice</Typography>
+                <StyledButton variant="outlined" sx={{ ml: 2 }}>
+                  Download
+                </StyledButton>
               </Box>
-              <Box display="flex" alignItems="flex-start" gap={1}>
-                <LocationOn color="action" />
-                <Typography variant="body2" color="textSecondary">
-                  {orderDetails.customer.address}
-                </Typography>
-              </Box>
-            </InfoSection>
-          </Grid>
-  
-          {/* Order Items */}
-          <Grid item xs={12}>
-            <InfoSection>
-              <SectionTitle variant="h6">
-                <ShoppingBasket /> Order Summary
-              </SectionTitle>
-              <TableContainer>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Item</TableCell>
-                      <TableCell align="right">Quantity</TableCell>
-                      <TableCell align="right">Price</TableCell>
-                      <TableCell align="right">Total</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {orderDetails.items.map((item) => (
-                      <TableRow key={item.id}>
-                        <TableCell>{item.name}</TableCell>
-                        <TableCell align="right">{item.quantity}</TableCell>
-                        <TableCell align="right">${item.price.toFixed(2)}</TableCell>
-                        <TableCell align="right">${item.totalPrice.toFixed(2)}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-  
-              <Box sx={{ marginTop: 3, padding: theme.spacing(2) }}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6} md={8} />
-                  <Grid item xs={12} sm={6} md={4}>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                      <Typography>Subtotal:</Typography>
-                      <Typography>${orderDetails.payment.subtotal.toFixed(2)}</Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                      <Typography>Delivery Fee:</Typography>
-                      <Typography>${orderDetails.payment.deliveryFee.toFixed(2)}</Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                      <Typography>Tax:</Typography>
-                      <Typography>${orderDetails.payment.tax.toFixed(2)}</Typography>
-                    </Box>
-                    <Divider sx={{ my: 1 }} />
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <Typography fontWeight={600}>Total:</Typography>
-                      <Typography fontWeight={600}>
-                        ${orderDetails.payment.total.toFixed(2)}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Box>
-            </InfoSection>
-          </Grid>
-  
-          {/* Payment Info */}
-          <Grid item xs={12}>
-            <InfoSection>
-              <SectionTitle variant="h6">
-                <Payment /> Payment Information
-              </SectionTitle>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="body2" color="textSecondary">
-                    Payment Method
-                  </Typography>
-                  <Typography variant="body1" fontWeight={500}>
-                    {orderDetails.payment.method}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="body2" color="textSecondary">
-                    Payment Status
-                  </Typography>
-                  <Chip
-                    label={orderDetails.payment.status}
-                    color={
-                      orderDetails.payment.status === 'completed'
-                        ? 'success'
-                        : orderDetails.payment.status === 'pending'
-                        ? 'warning'
-                        : 'error'
-                    }
-                    size="small"
-                  />
-                </Grid>
-              </Grid>
-            </InfoSection>
+            </Box>
           </Grid>
         </Grid>
-      </Box>
-    );
-  };
-  
-  export default OrderDetailsComponent;
+      </Card>
+      <Card sx={{ width: "100%", padding: 2, mt: 3 }}>
+        <Grid container spacing={3} alignItems="center">
+          <Grid item xs={12} md={6}>
+            <Box display="flex" alignItems="center">
+              <img
+                src={order.image}
+                alt="Order"
+                style={{ width: 80, height: 80, marginRight: 16 }}
+              />
+              <Box>
+                <Typography variant="body1">{order.food}</Typography>
+                <Typography variant="body2" color="text.secondary" mt={1}>
+                  provider: {order.provider}
+                </Typography>
+                <Typography variant="body1" fontWeight="bold" mt={1}>
+                  ₹{order.price}
+                </Typography>
+              </Box>
+            </Box>
+          </Grid>
+          <Grid xs={12}>
+            <Stepper activeStep={activeStep} alternativeLabel sx={{ mt: 3 }}>
+              {steps.map((label, index) => (
+                <Step key={label} completed={index <= activeStep}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          </Grid>
+        </Grid>
+      </Card>
+      <Typography fontWeight="bold" mt={4}>
+        Other items in this order
+      </Typography>
+      {otherItems.map((item, id) => (
+        <Card key={id} sx={{ width: "100%", padding: 2, mt: 3 }}>
+          <Grid container spacing={3} alignItems="center" key={item.id}>
+            <Grid item xs={12} md={6}>
+              <Box display="flex" alignItems="center">
+                <img
+                  src={item.image}
+                  alt={item.food}
+                  style={{ width: 80, height: 80, marginRight: 16 }}
+                />
+                <Box>
+                  <Typography variant="body1">{item.food}</Typography>
+                  <Typography variant="body2" color="text.secondary" mt={1}>
+                    Provider: {item.provider}
+                  </Typography>
+                  <Typography variant="body1" fontWeight="bold" mt={1}>
+                    ₹{item.price}
+                  </Typography>
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={6} sx={{ textAlign: "right" }}>
+              <Typography>
+                {item.isDelivered ? "Delivered" : "Pending"}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Card>
+      ))}
+    </Box>
+  );
+};
+
+export default OrderDetailsComponent;
