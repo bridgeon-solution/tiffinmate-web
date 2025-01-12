@@ -1,19 +1,14 @@
 import Dinner from "../../Assets/Dinner.webp";
-import DownloadIcon from "@mui/icons-material/Download";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
 import {
   Box,
-  Button,
   Card,
   Grid,
-  Grid2,
   Step,
   StepLabel,
   Stepper,
   Typography,
 } from "@mui/material";
 import StyledButton from "../../Atoms/Button";
-import { OrderItem } from "./type";
 
 interface Address {
   name: string;

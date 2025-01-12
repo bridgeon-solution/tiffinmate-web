@@ -158,6 +158,7 @@ function MenuDetailsContainer() {
   const fetchMenu = async () => {
     setLoading(true);
     try {
+  
       const res = await FetchMenuDetails(menuid, selectedCategory);
       if (res && res.data && res.data.result) {
         setMenu(res?.data?.result);

@@ -26,6 +26,7 @@ function LoginContainer() {
       if (res.data.status == "success") {
         localStorage.setItem("id", res.data.result.id);
         localStorage.setItem("token", res.data.result.token);
+        localStorage.setItem("user", res.data.result.name);
         toast.success("Login successful");
         navigate("/");
       } else {
