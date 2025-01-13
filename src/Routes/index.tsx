@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import InvoiceDailyOrder from "../Components/InvoiceComponent/Invoice";
 import PlanContainer from "../Containers/CurrentPlanContainer";
+import RegisterVendor from "../Components/RegisterVendor";
 const Subscription=lazy(()=>import("../Pages/Subscription"))
 const Order=lazy(()=>import("../Pages/Order"))
 const Provider = lazy(() => import("../Pages/Provider"));
@@ -58,6 +59,7 @@ export const AppRoutes = () => {
           <Route path="/provider/:id/menu/:menuId/order/invoice" element={<InvoiceDailyOrder />} />
 
           <Route path="/currentplan" element={<PlanContainer/>}/>
+          <Route path="/register" element={<RegisterVendor/>}/>
         </Routes>
       </Suspense>
       <ToastContainer/>
