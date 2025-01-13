@@ -63,39 +63,57 @@ const MenuDetailsComponent: React.FC<MenuComponentProps> = ({
           </Grid>
         ))}
       </Grid>
-
       <Grid container spacing={4} mt={6} p={1}>
-        {menu.map((item, index) => (
-          <Grid item xs={12} md={6} key={index}>
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              borderBottom="1px solid #ddd"
-              pb={2}
-              mb={2}
-            >
-              <Box>
-                <Typography
-                  variant="subtitle1"
-                  fontWeight="bold"
-                  color="#e6852c"
+        {menu.length === 0 ? (
+          <Box
+            sx={{
+              textAlign: "center",
+              fontSize: "1.2rem",
+              margin: "16px auto",
+            }}
+          >
+            <Typography variant="h6" color="#888" fontWeight="bold">
+              No Items Found
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              Sorry, there are currently no items available in this category.
+            </Typography>
+          </Box>
+        ) : (
+          <>
+            {menu.map((item, index) => (
+              <Grid item xs={12} md={6} key={index}>
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  borderBottom="1px solid #ddd"
+                  pb={2}
+                  mb={2}
                 >
-                  {item.day}
-                </Typography>
-                <Typography variant="body1" fontWeight="bold">
-                  {item.food_name}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  {item.description}
-                </Typography>
-              </Box>
-              <Typography variant="h6" fontWeight="bold" color="#e6852c">
-                ${item.price}.00
-              </Typography>
-            </Box>
-          </Grid>
-        ))}
+                  <Box>
+                    <Typography
+                      variant="subtitle1"
+                      fontWeight="bold"
+                      color="#e6852c"
+                    >
+                      {item.day}
+                    </Typography>
+                    <Typography variant="body1" fontWeight="bold">
+                      {item.food_name}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {item.description}
+                    </Typography>
+                  </Box>
+                  <Typography variant="h6" fontWeight="bold" color="#e6852c">
+                    ${item.price}.00
+                  </Typography>
+                </Box>
+              </Grid>
+            ))}
+          </>
+        )}
       </Grid>
       <Box mt={6} textAlign="end">
         <StyledButton

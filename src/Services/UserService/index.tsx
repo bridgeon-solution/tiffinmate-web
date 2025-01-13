@@ -42,3 +42,10 @@ export const FetchMenu = async (providerId: string) => {
   const res = await api.get(`/FoodItem/menu?providerId=${providerId}`);
   return res;
 };
+
+export const FetchOrdersByUser = async (userId: string) => {
+  const res = await api.get(`/Order?pageSize=120&userId=${userId}`);
+  return res;
+};
+
+
