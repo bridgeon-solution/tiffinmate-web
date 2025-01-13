@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import OrderHistoryComponent from "../../Components/OrderHistoryComponent";
 import { Order } from "../../Components/OrderHistoryComponent/type";
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { FetchOrdersByUser } from "../../Services/UserService";
 
 const OrderHistoryContainer: React.FC = () => {
@@ -9,10 +9,12 @@ const OrderHistoryContainer: React.FC = () => {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [otherItems, setOtherItems] = useState<Order[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const user = localStorage.getItem("id");
 
   useEffect(() => {
     const fetchOrders = async () => {
+      setLoading(true);
       try {
         const userId = user ?? "";
         const response = await FetchOrdersByUser(userId);
@@ -40,9 +42,10 @@ const OrderHistoryContainer: React.FC = () => {
             }))
         );
         setOrders(fetchedOrders);
-        console.log(response.data.result.allDetails);
       } catch (error) {
         setError("Error fetching orders. Please try again later.");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -60,7 +63,20 @@ const OrderHistoryContainer: React.FC = () => {
       setOtherItems(otherItems);
     }
   }, [selectedOrder, orders]);
-
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
   return (
     <>
       {error && <Box className="errormessage">{error}</Box>}
