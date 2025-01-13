@@ -1,4 +1,3 @@
-import Dinner from "../../Assets/Dinner.webp";
 import {
   Box,
   Card,
@@ -8,68 +7,17 @@ import {
   Stepper,
   Typography,
 } from "@mui/material";
-import StyledButton from "../../Atoms/Button";
-
-interface Address {
-  name: string;
-  address: string;
-  city: string;
-  phone: string;
+import { Order } from "./type";
+interface OrderDetailsComponentProps {
+  order: Order;
+  otherItems: Order[];
 }
-interface Order {
-  id: string;
-  food: string;
-  category: string;
-  provider: string;
-  image: string;
-  price: number;
-  isDelivered: boolean;
-  deliveryDate: string;
-  address: Address;
-}
-
-const OrderDetailsComponent: React.FC<{ order: Order }> = ({ order }) => {
+const OrderDetailsComponent: React.FC<OrderDetailsComponentProps> = ({
+  order,
+  otherItems,
+}) => {
   const steps = ["Order Confirmed", "order processed", "order Delivered"];
-  const activeStep = order.isDelivered ? steps.length - 1 : steps.length - 2;
-  const otherItems = [
-    {
-      id: "1",
-      food: "Chicken Tikka",
-      provider: "Spicy Delights",
-      image: Dinner,
-      price: 450,
-      isDelivered: false,
-      deliveryDate: "Fri, 2nd Aug",
-    },
-    {
-      id: "2",
-      food: "Paneer Butter Masala",
-      provider: "Veggie Hub",
-      image: Dinner,
-      price: 350,
-      isDelivered: true,
-      deliveryDate: "Thu, 1st Aug",
-    },
-    {
-      id: "3",
-      food: "Garlic Naan",
-      provider: "North Indian Eats",
-      image: Dinner,
-      price: 150,
-      isDelivered: true,
-      deliveryDate: "Thu, 1st Aug",
-    },
-    {
-      id: "4",
-      food: "Chocolate Brownie",
-      provider: "Sweet Tooth",
-      image: Dinner,
-      price: 200,
-      isDelivered: true,
-      deliveryDate: "Thu, 1st Aug",
-    },
-  ];
-
+  const activeStep = order.payment_status ? steps.length - 1 : steps.length - 2;
   return (
     <Box sx={{ maxWidth: 1200, padding: 2, margin: "auto" }}>
       <Card sx={{ width: "100%", padding: 2 }}>
@@ -80,7 +28,7 @@ const OrderDetailsComponent: React.FC<{ order: Order }> = ({ order }) => {
                 Delivery Address
               </Typography>
               <Typography variant="body1" mt={2} fontWeight="bold">
-                {order.address.name}
+                {order.address.userName}
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 {order.address.address}
@@ -88,26 +36,8 @@ const OrderDetailsComponent: React.FC<{ order: Order }> = ({ order }) => {
                 {order.address.city}
               </Typography>
               <Typography variant="body2" fontWeight="bold" mt={2}>
-                {order.address.phone}
+                {order.address.ph_no}
               </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={6} sx={{ textAlign: "right" }}>
-            <Box>
-              <Typography variant="h6" fontWeight="bold">
-                More actions
-              </Typography>
-              <Box
-                display="flex"
-                justifyContent="flex-end"
-                alignItems="center"
-                mt={2}
-              >
-                <Typography>Download Invoice</Typography>
-                <StyledButton variant="outlined" sx={{ ml: 2 }}>
-                  Download
-                </StyledButton>
-              </Box>
             </Box>
           </Grid>
         </Grid>
@@ -117,17 +47,17 @@ const OrderDetailsComponent: React.FC<{ order: Order }> = ({ order }) => {
           <Grid item xs={12} md={6}>
             <Box display="flex" alignItems="center">
               <img
-                src={order.image}
+                src={order.foodItemImage}
                 alt="Order"
                 style={{ width: 80, height: 80, marginRight: 16 }}
               />
               <Box>
-                <Typography variant="body1">{order.food}</Typography>
+                <Typography variant="body1">{order.foodItemName}</Typography>
                 <Typography variant="body2" color="text.secondary" mt={1}>
                   provider: {order.provider}
                 </Typography>
                 <Typography variant="body1" fontWeight="bold" mt={1}>
-                  ₹{order.price}
+                  ₹{order.total_price}
                 </Typography>
               </Box>
             </Box>
@@ -143,38 +73,49 @@ const OrderDetailsComponent: React.FC<{ order: Order }> = ({ order }) => {
           </Grid>
         </Grid>
       </Card>
-      <Typography fontWeight="bold" mt={4}>
-        Other items in this order
-      </Typography>
-      {otherItems.map((item, id) => (
-        <Card key={id} sx={{ width: "100%", padding: 2, mt: 3 }}>
-          <Grid container spacing={3} alignItems="center" key={item.id}>
-            <Grid item xs={12} md={6}>
-              <Box display="flex" alignItems="center">
-                <img
-                  src={item.image}
-                  alt={item.food}
-                  style={{ width: 80, height: 80, marginRight: 16 }}
-                />
-                <Box>
-                  <Typography variant="body1">{item.food}</Typography>
-                  <Typography variant="body2" color="text.secondary" mt={1}>
-                    Provider: {item.provider}
+      {otherItems && otherItems.length > 0 && (
+        <>
+          <Typography fontWeight="bold" mt={4}>
+            Other items in this order
+          </Typography>
+          {otherItems?.map((item, id) => (
+            <Card key={id} sx={{ width: "100%", padding: 2, mt: 3 }}>
+              <Grid
+                container
+                spacing={3}
+                alignItems="center"
+                key={item.order_id}
+              >
+                <Grid item xs={12} md={6}>
+                  <Box display="flex" alignItems="center">
+                    <img
+                      src={item.foodItemImage}
+                      alt={item.foodItemName}
+                      style={{ width: 80, height: 80, marginRight: 16 }}
+                    />
+                    <Box>
+                      <Typography variant="body1">
+                        {item.foodItemName}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary" mt={1}>
+                        Provider: {item.provider}
+                      </Typography>
+                      <Typography variant="body1" fontWeight="bold" mt={1}>
+                        ₹{item.total_price}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={6} sx={{ textAlign: "right" }}>
+                  <Typography>
+                    {item.payment_status ? "Delivered" : "Pending"}
                   </Typography>
-                  <Typography variant="body1" fontWeight="bold" mt={1}>
-                    ₹{item.price}
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={6} sx={{ textAlign: "right" }}>
-              <Typography>
-                {item.isDelivered ? "Delivered" : "Pending"}
-              </Typography>
-            </Grid>
-          </Grid>
-        </Card>
-      ))}
+                </Grid>
+              </Grid>
+            </Card>
+          ))}
+        </>
+      )}
     </Box>
   );
 };

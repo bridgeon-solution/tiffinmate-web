@@ -1,37 +1,22 @@
-import React, { useState } from "react";
-import {
-  Box,
-  Card,
-  CardContent,
-  Grid,
-  Typography,
-} from "@mui/material";
+import React from "react";
+import { Box, Card, CardContent, Grid, Typography } from "@mui/material";
 import OrderDetailsComponent from "./Details";
 import StyledButton from "../../Atoms/Button";
+import { Order } from "./type";
 
-interface Address {
-  name: string;
-  address: string;
-  city: string;
-  phone: string;
-}
-interface Order {
-  id: string;
-  food: string;
-  category: string;
-  provider: string;
-  image: string;
-  price: number;
-  isDelivered: boolean;
-  deliveryDate: string;
-  address: Address;
-}
 interface OrderHistoryProps {
   orders: Order[];
+  setSelectedOrder: (Order: Order | null) => void;
+  selectedOrder: Order | null;
+  otherItems: Order[];
 }
 
-const OrderHistoryComponent: React.FC<OrderHistoryProps> = ({ orders }) => {
-  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+const OrderHistoryComponent: React.FC<OrderHistoryProps> = ({
+  orders,
+  setSelectedOrder,
+  selectedOrder,
+  otherItems,
+}) => {
   if (selectedOrder) {
     return (
       <Box sx={{ padding: "24px", maxWidth: "1000px", margin: "0 auto" }}>
@@ -42,11 +27,11 @@ const OrderHistoryComponent: React.FC<OrderHistoryProps> = ({ orders }) => {
         >
           Back
         </StyledButton>
-        <OrderDetailsComponent order={selectedOrder} />
+        <OrderDetailsComponent order={selectedOrder} otherItems={otherItems} />
       </Box>
     );
   }
-  if (!orders.length) {
+  if (orders?.length === 0) {
     return (
       <Box sx={{ maxWidth: "800px", margin: "0 auto", padding: "24px" }}>
         <Typography variant="body1" color="text.secondary" align="center">
@@ -63,21 +48,21 @@ const OrderHistoryComponent: React.FC<OrderHistoryProps> = ({ orders }) => {
       </Typography>
       {orders.map((order) => (
         <Box onClick={() => setSelectedOrder(order)} sx={{ cursor: "pointer" }}>
-          <Card key={order.id} sx={{ marginBottom: "16px" }}>
+          <Card key={order.order_id} sx={{ marginBottom: "16px" }}>
             <CardContent>
               <Grid container spacing={3} alignItems="center">
                 <Grid item>
                   <img
                     width="100px"
                     height="100px"
-                    src={order.image}
-                    alt={`Image of ${order.food}`}
+                    src={order.foodItemImage}
+                    alt={`Image of ${order.foodItemName}`}
                   />
                 </Grid>
 
                 <Grid item sx={{ flex: 1 }}>
                   <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
-                    {order.food}
+                    {order.foodItemName}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                     {order.category}
@@ -88,7 +73,7 @@ const OrderHistoryComponent: React.FC<OrderHistoryProps> = ({ orders }) => {
                     color="#e6852c"
                     sx={{ mt: 1 }}
                   >
-                    ₹{order.price}
+                    ₹{order.total_price}
                   </Typography>
                 </Grid>
 
@@ -97,11 +82,11 @@ const OrderHistoryComponent: React.FC<OrderHistoryProps> = ({ orders }) => {
                     <Typography
                       variant="body2"
                       sx={{
-                        color: order.isDelivered ? "green" : "red",
+                        color: order.payment_status ? "green" : "red",
                         fontWeight: 500,
                       }}
                     >
-                      {order.isDelivered ? "Delivered" : "Pending"}
+                      {order.payment_status ? "Delivered" : "Pending"}
                     </Typography>
                   </Box>
                 </Grid>

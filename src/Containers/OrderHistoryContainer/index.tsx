@@ -1,67 +1,77 @@
 import React, { useEffect, useState } from "react";
 import OrderHistoryComponent from "../../Components/OrderHistoryComponent";
-import BreakFast from "../../Assets/BreakFast.webp";
-import axios from "axios";
-
-interface Address {
-  name: string;
-  address: string;
-  city: string;
-  phone: string;
-}
-
-interface Order {
-  id: string;
-  food: string;
-  category: string;
-  provider: string;
-  image: string;
-  price: number;
-  isDelivered: boolean;
-  deliveryDate: string;
-  address: Address;
-}
+import { Order } from "../../Components/OrderHistoryComponent/type";
+import { Box } from "@mui/material";
+import { FetchOrdersByUser } from "../../Services/UserService";
 
 const OrderHistoryContainer: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
-  const userId = localStorage.getItem("id");
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [otherItems, setOtherItems] = useState<Order[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const user = localStorage.getItem("id");
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get(
-          `https://localhost:7009/api/v1/Order?pageSize=120&userId=${userId}`
-        );
-        const fetchedOrders = response.data.result.allDetails.map(
-          (order: any) => ({
-            id: order.order_id,
-            food: order.details[0]?.foodItemName || "Unknown",
-            category: order.details[0]?.category || "Unknown",
-            provider: order.provider,
-            image: order.details[0]?.foodItemImage || BreakFast,
-            price: order.total_price,
-            isDelivered: order.payment_status,
-            deliveryDate: new Date(order.date).toLocaleDateString(),
-            address: {
-              name: order.details[0]?.userName || "Unknown",
-              address: order.details[0]?.address || "Unknown",
-              city: order.details[0]?.city || "Unknown",
-              phone: "Not Provided",
-            },
-          })
+        const userId = user ?? "";
+        const response = await FetchOrdersByUser(userId);
+        const fetchedOrders = response.data.result.allDetails.flatMap(
+          (order: any) =>
+            order.details.map((item: any) => ({
+              order_id: order.order_id,
+              menu_id: order.menu_id,
+              provider: order.provider,
+              user_id: order.user_id,
+              user: order.user,
+              total_price: order.total_price,
+              payment_status: order.payment_status,
+              cancelled_at: order.cancelled_at,
+              date: new Date(order.date).toLocaleDateString(),
+              foodItemName: item.foodItemName,
+              foodItemImage: item.foodItemImage,
+              category: item.category,
+              address: {
+                userName: item.userName,
+                address: item.address,
+                city: item.city,
+                ph_no: item.ph_no,
+              },
+            }))
         );
         setOrders(fetchedOrders);
+        console.log(response.data.result.allDetails);
       } catch (error) {
-        console.error("Error fetching orders:", error);
+        setError("Error fetching orders. Please try again later.");
       }
     };
 
-    if (userId) {
+    if (user) {
       fetchOrders();
     }
-  }, [userId]);
+  }, [user]);
+  useEffect(() => {
+    if (selectedOrder) {
+      const otherItems = orders.filter(
+        (order) =>
+          order.order_id === selectedOrder.order_id &&
+          order.foodItemName !== selectedOrder.foodItemName
+      );
+      setOtherItems(otherItems);
+    }
+  }, [selectedOrder, orders]);
 
-  return <OrderHistoryComponent orders={orders} />;
+  return (
+    <>
+      {error && <Box className="errormessage">{error}</Box>}
+      <OrderHistoryComponent
+        orders={orders}
+        setSelectedOrder={setSelectedOrder}
+        selectedOrder={selectedOrder}
+        otherItems={otherItems}
+      />
+    </>
+  );
 };
 
 export default OrderHistoryContainer;
