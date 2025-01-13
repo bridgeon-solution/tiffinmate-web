@@ -1,15 +1,18 @@
-export interface OrderTrack {
-    status: string;
-    time: string;
-    location?: string;
+ export interface Address {
+    userName: string;
+    address: string;
+    city: string;
+    ph_no: string;
   }
   
- export interface OrderHistory {
-    id: string;
-    name: string;
+  export interface Order {
+    order_id: string;
+    foodItemName: string;
     category: string;
-    restaurant: string;
-    status: string;
-    imageUrl: string;
-    trackingEvents: OrderTrack[];
+    provider: string;
+    foodItemImage: string;
+    total_price: number;
+    payment_status: boolean;
+    date: string;
+    address: Address;
   }
