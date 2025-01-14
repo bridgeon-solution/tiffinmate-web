@@ -11,6 +11,7 @@ interface OrderFormData {
     city: string;
   };
   setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>;
+  
   setOrderId: React.Dispatch<React.SetStateAction<string | undefined>>;
   setDate: React.Dispatch<React.SetStateAction<string | undefined>>;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
