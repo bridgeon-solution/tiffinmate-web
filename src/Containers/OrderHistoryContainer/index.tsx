@@ -1,39 +1,93 @@
-import { OrderHistory } from "../../Components/OrderHistoryComponent/type";
+import React, { useEffect, useState } from "react";
 import OrderHistoryComponent from "../../Components/OrderHistoryComponent";
-import Dinner from "../../Assets/Dinner.webp";
-import BreakFast from "../../Assets/BreakFast.webp";
+import { Order } from "../../Components/OrderHistoryComponent/type";
+import { Box, CircularProgress } from "@mui/material";
+import { FetchOrdersByUser } from "../../Services/UserService";
 
-const OrderHistoryContainer = () => {
-  const orders: OrderHistory[] = [
-    {
-      id: "1",
-      status: "delivered",
-      category: "Breakfast",
-      name: "Fish and Veggie",
-      restaurant: "Champaran Restaurant",
-      imageUrl: BreakFast,
-      trackingEvents: [
-        { status: "Order Placed", time: "7:00 AM" },
-        { status: "Order Processed", time: "7:30 AM" },
-        { status: "Out for Delivery", time: "7:45 AM" },
-        { status: "Order Delivered", time: "8:00 AM" },
-      ],
-    },
-    {
-      id: "2",
-      status: "processing",
-      category: "Dinner",
-      name: "Chicken Curry",
-      restaurant: "Champaran Restaurant",
-      imageUrl: Dinner,
-      trackingEvents: [
-        { status: "Order Placed", time: "6:00 PM" },
-        { status: "Order Processed", time: "6:30 PM" },
-      ],
-    },
-  ];
+const OrderHistoryContainer: React.FC = () => {
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [otherItems, setOtherItems] = useState<Order[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const user = localStorage.getItem("id");
 
-  return <OrderHistoryComponent orders={orders} />;
+  useEffect(() => {
+    const fetchOrders = async () => {
+      setLoading(true);
+      try {
+        const userId = user ?? "";
+        const response = await FetchOrdersByUser(userId);
+        const fetchedOrders = response.data.result.allDetails.flatMap(
+          (order: any) =>
+            order.details.map((item: any) => ({
+              order_id: order.order_id,
+              menu_id: order.menu_id,
+              provider: order.provider,
+              user_id: order.user_id,
+              user: order.user,
+              total_price: order.total_price,
+              payment_status: order.payment_status,
+              cancelled_at: order.cancelled_at,
+              date: new Date(order.date).toLocaleDateString(),
+              foodItemName: item.foodItemName,
+              foodItemImage: item.foodItemImage,
+              category: item.category,
+              address: {
+                userName: item.userName,
+                address: item.address,
+                city: item.city,
+                ph_no: item.ph_no,
+              },
+            }))
+        );
+        setOrders(fetchedOrders);
+      } catch (error) {
+        setError("Error fetching orders. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (user) {
+      fetchOrders();
+    }
+  }, [user]);
+  useEffect(() => {
+    if (selectedOrder) {
+      const otherItems = orders.filter(
+        (order) =>
+          order.order_id === selectedOrder.order_id &&
+          order.foodItemName !== selectedOrder.foodItemName
+      );
+      setOtherItems(otherItems);
+    }
+  }, [selectedOrder, orders]);
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+  return (
+    <>
+      {error && <Box className="errormessage">{error}</Box>}
+      <OrderHistoryComponent
+        orders={orders}
+        setSelectedOrder={setSelectedOrder}
+        selectedOrder={selectedOrder}
+        otherItems={otherItems}
+      />
+    </>
+  );
 };
 
 export default OrderHistoryContainer;

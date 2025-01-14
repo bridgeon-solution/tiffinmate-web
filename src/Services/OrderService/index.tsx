@@ -17,7 +17,7 @@ export const PostOrder = async (orderData:OrderProp) => {
       }
       return null;
     } catch  {
-      toast.error("somethng went wrong")
+      toast.error("something went wrong")
     }
   };
 
@@ -35,7 +35,7 @@ export const PostOrder = async (orderData:OrderProp) => {
       }
       return null;
     } catch {
-      toast.error("somethng went wrong")
+      toast.error("something went wrong")
     }
   };
 
@@ -52,7 +52,7 @@ export const PostOrder = async (orderData:OrderProp) => {
       }
       return null;
     } catch {
-      toast.error("somethng went wrong")
+      toast.error("something went wrong")
     }
   };
 
@@ -69,7 +69,7 @@ export const PostOrder = async (orderData:OrderProp) => {
       }
       return null;
     } catch  {
-      toast.error("somethng went wrong")
+      toast.error("something went wrong")
     }
   };
 
@@ -89,7 +89,7 @@ export const PostOrder = async (orderData:OrderProp) => {
       }
       return null;
     } catch  {
-      toast.error("somethng went wrong")
+      toast.error("something went wrong")
     }
   };
 
@@ -107,7 +107,7 @@ export const PostOrder = async (orderData:OrderProp) => {
       }
       return null;
     } catch {
-      toast.error("somethng went wrong")
+      toast.error("something went wrong")
     }
   };
 
@@ -122,9 +122,11 @@ export const PostOrder = async (orderData:OrderProp) => {
       }
       return null;
     } catch {
-      toast.error("somethng went wrong")
+      toast.error("something went wrong")
     }
   };
+
+
 
 
 
