@@ -9,15 +9,18 @@ import {
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import {
   RazorPayOrder,
   GetSubscriptionId,
   PostSubscriptionDetails,
 } from "../../Services/OrderService";
 import OrderComponent from "../../Components/Order";
+import OrderModal from "../../Atoms/Modal";
 
 const SubscriptionContainer : React.FC = () => {
 
+   const navigate=useNavigate();
 
     const { id, menuId } = useParams();
     const providerId = id || "";
@@ -28,6 +31,8 @@ const SubscriptionContainer : React.FC = () => {
     const [date, setDate] = useState<string>();
     const [, setRazrPay] = useState<RazorpayResponse | null>(null);
     const [RazrPayLoad, setRazrPayLoad] = useState<boolean>(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    
 
 
   const loadScript = (src: string) => {
@@ -162,8 +167,16 @@ const SubscriptionContainer : React.FC = () => {
                 ph_no:
                   formik.touched.ph_no && formik.errors.ph_no ? formik.errors.ph_no : "",
               };
+              const handleOpenInvoice  = () => {
+                if (orderId) {
+                  navigate(`/provider/${providerId}/menu/${menuid}/order/invoice`, {
+                    state: { orderId },
+                  });
+                }
+              };
 
   return (
+    <>
     <OrderComponent
     formData={formik.values}
     handleSubmit={formik.handleSubmit}
@@ -175,6 +188,17 @@ const SubscriptionContainer : React.FC = () => {
     loading={loading}
 
   />
-  )}
+        <OrderModal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onOpenInvoice={handleOpenInvoice} 
+      />
+
+</>
+
+  
+  )
+}
+  
 
 export default SubscriptionContainer;
