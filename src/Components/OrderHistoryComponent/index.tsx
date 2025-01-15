@@ -1,5 +1,13 @@
 import React from "react";
-import { Box, Card, CardContent, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from "@mui/material";
 import OrderDetailsComponent from "./Details";
 import StyledButton from "../../Atoms/Button";
 import { Order } from "./type";
@@ -9,6 +17,8 @@ interface OrderHistoryProps {
   setSelectedOrder: (Order: Order | null) => void;
   selectedOrder: Order | null;
   otherItems: Order[];
+  setFilter: (filter: string) => void;
+  filter: string;
 }
 
 const OrderHistoryComponent: React.FC<OrderHistoryProps> = ({
@@ -16,6 +26,8 @@ const OrderHistoryComponent: React.FC<OrderHistoryProps> = ({
   setSelectedOrder,
   selectedOrder,
   otherItems,
+  setFilter,
+  filter,
 }) => {
   if (selectedOrder) {
     return (
@@ -41,11 +53,43 @@ const OrderHistoryComponent: React.FC<OrderHistoryProps> = ({
     );
   }
 
+  const handleChange = (newFilter: string) => {
+    setFilter(newFilter);
+  };
+
   return (
     <Box sx={{ maxWidth: "1000px", margin: "0 auto", padding: "24px" }}>
       <Typography variant="h5" sx={{ mb: 3, fontWeight: 600 }}>
         Your Orders
       </Typography>
+      <Box sx={{ mb: 3, display: "flex", justifyContent: "flex-end" }}>
+        <ToggleButtonGroup
+          color="primary"
+          value={filter}
+          exclusive
+          onChange={(event, newFilter) => handleChange(newFilter)}
+          aria-label="Filter orders"
+          sx={{
+            "& .MuiToggleButton-root": {
+              border: "1px solid rgba(230, 133, 44, 0.2)",
+              color: "#666",
+              textTransform: "capitalize",
+              px: 3,
+              py: 1,
+              fontSize: "0.875rem",
+              fontWeight: 500,
+              "&.Mui-selected": {
+                backgroundColor: "rgba(230, 133, 44, 0.08)",
+                color: "#e6852c",
+                fontWeight: 600,
+              },
+            },
+          }}
+        >
+          <ToggleButton value="newest">newest</ToggleButton>
+          <ToggleButton value="oldest">oldest</ToggleButton>
+        </ToggleButtonGroup>
+      </Box>
       {orders.map((order) => (
         <Box onClick={() => setSelectedOrder(order)} sx={{ cursor: "pointer" }}>
           <Card key={order.order_id} sx={{ marginBottom: "16px" }}>
@@ -73,7 +117,7 @@ const OrderHistoryComponent: React.FC<OrderHistoryProps> = ({
                     color="#e6852c"
                     sx={{ mt: 1 }}
                   >
-                    ₹{order.total_price}
+                    ₹{order.foodItemPrice}
                   </Typography>
                 </Grid>
 
@@ -82,11 +126,18 @@ const OrderHistoryComponent: React.FC<OrderHistoryProps> = ({
                     <Typography
                       variant="body2"
                       sx={{
-                        color: order.payment_status ? "green" : "red",
+                        color:
+                          order.order_status === "Pending"
+                            ? "gray"
+                            : order.order_status === "Confirmed"
+                            ? "#e6852c"
+                            : order.order_status === "Delivered"
+                            ? "green"
+                            : "red",
                         fontWeight: 500,
                       }}
                     >
-                      {order.payment_status ? "Delivered" : "Pending"}
+                      {order.order_status}
                     </Typography>
                   </Box>
                 </Grid>

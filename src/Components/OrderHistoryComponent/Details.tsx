@@ -16,8 +16,15 @@ const OrderDetailsComponent: React.FC<OrderDetailsComponentProps> = ({
   order,
   otherItems,
 }) => {
-  const steps = ["Order Confirmed", "order processed", "order Delivered"];
-  const activeStep = order.payment_status ? steps.length - 1 : steps.length - 2;
+  const steps = ["Pending", "Confirmed", "Delivered", "Cancelled"];
+  let activeStep = 0;
+  if (order.order_status === "Confirmed") {
+    activeStep = 1;
+  } else if (order.order_status === "Delivered") {
+    activeStep = 2;
+  } else if (order.order_status === "Cancelled") {
+    activeStep = 3;
+  }
   return (
     <Box sx={{ maxWidth: 1200, padding: 2, margin: "auto" }}>
       <Card sx={{ width: "100%", padding: 2 }}>
@@ -57,7 +64,7 @@ const OrderDetailsComponent: React.FC<OrderDetailsComponentProps> = ({
                   provider: {order.provider}
                 </Typography>
                 <Typography variant="body1" fontWeight="bold" mt={1}>
-                  ₹{order.total_price}
+                  ₹{order.foodItemPrice}
                 </Typography>
               </Box>
             </Box>
@@ -101,15 +108,29 @@ const OrderDetailsComponent: React.FC<OrderDetailsComponentProps> = ({
                         Provider: {item.provider}
                       </Typography>
                       <Typography variant="body1" fontWeight="bold" mt={1}>
-                        ₹{item.total_price}
+                        ₹{item.foodItemPrice}
                       </Typography>
                     </Box>
                   </Box>
                 </Grid>
-                <Grid item xs={12} md={6} sx={{ textAlign: "right" }}>
-                  <Typography>
-                    {item.payment_status ? "Delivered" : "Pending"}
-                  </Typography>
+                <Grid
+                  item
+                  xs={12}
+                  md={6}
+                  sx={{
+                    textAlign: "right",
+                    color:
+                      order.order_status === "Pending"
+                        ? "gray"
+                        : order.order_status === "Confirmed"
+                        ? "#e6852c"
+                        : order.order_status === "Delivered"
+                        ? "green"
+                        : "red",
+                    fontWeight: 500,
+                  }}
+                >
+                  <Typography>{item.order_status}</Typography>
                 </Grid>
               </Grid>
             </Card>
