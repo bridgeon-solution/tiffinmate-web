@@ -43,9 +43,9 @@ export const FetchMenu = async (providerId: string) => {
   return res;
 };
 
-export const FetchOrdersByUser = async (userId: string) => {
-  const res = await api.get(`/Order?pageSize=120&userId=${userId}`);
+export const FetchOrdersByUser = async (userId: string, filter: string) => {
+  const res = await api.get(
+    `/Order?pageSize=120&filter=${filter}&userId=${userId}`
+  );
   return res;
 };
-
-
