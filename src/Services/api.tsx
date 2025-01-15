@@ -1,5 +1,4 @@
 import axios from "axios";
-import { toast } from "react-toastify";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -24,20 +23,20 @@ api.interceptors.response.use(
   },
   (error) => {
     if (error.response) {
-      const status = error.response.status;
-      switch (status) {
-        case 400:
-          toast.error("Bad Request");
-          break;
-        case 401:
-          toast.error("Unauthorized: Please log in to continue.");
-          break;
-        case 500:
-          toast.error("Internal Server Error");
-          break;
-        default:
-          toast.error(`Error: ${status}`);
-      }
+      // const status = error.response.status;
+      // switch (status) {
+      //   case 400:
+      //     toast.error("Bad Request");
+      //     break;
+      //   case 401:
+      //     toast.error("Unauthorized: Please log in to continue.");
+      //     break;
+      //   case 500:
+      //     toast.error("Internal Server Error");
+      //     break;
+      //   default:
+      //     toast.error(`Error: ${status}`);
+      // }
     }
     return Promise.reject(error);
   }

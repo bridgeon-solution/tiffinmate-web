@@ -15,10 +15,16 @@
     order_id: string;
     foodItemName: string;
     category: string;
+    provider_id:string;
     provider: string;
     foodItemImage: string;
     foodItemPrice: number;
     order_status:string,
     date: string;
     address: Address;
+  }
+  export interface RatingValues{
+    providerId:string;
+    userId:string;
+    rating:number;
   }
