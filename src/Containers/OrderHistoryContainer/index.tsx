@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import OrderHistoryComponent from "../../Components/OrderHistoryComponent";
-import { Order } from "../../Components/OrderHistoryComponent/type";
+import {
+  Order,
+  OrderStatus,
+} from "../../Components/OrderHistoryComponent/type";
 import { Box, CircularProgress } from "@mui/material";
 import { FetchOrdersByUser } from "../../Services/UserService";
 
 const OrderHistoryContainer: React.FC = () => {
+  const [filter, setFilter] = React.useState("newest");
   const [orders, setOrders] = useState<Order[]>([]);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [otherItems, setOtherItems] = useState<Order[]>([]);
@@ -17,7 +21,7 @@ const OrderHistoryContainer: React.FC = () => {
       setLoading(true);
       try {
         const userId = user ?? "";
-        const response = await FetchOrdersByUser(userId);
+        const response = await FetchOrdersByUser(userId, filter);
         const fetchedOrders = response.data.result.allDetails.flatMap(
           (order: any) =>
             order.details.map((item: any) => ({
@@ -26,12 +30,12 @@ const OrderHistoryContainer: React.FC = () => {
               provider: order.provider,
               user_id: order.user_id,
               user: order.user,
-              total_price: order.total_price,
-              payment_status: order.payment_status,
+              order_status: OrderStatus[order.order_status],
               cancelled_at: order.cancelled_at,
               date: new Date(order.date).toLocaleDateString(),
               foodItemName: item.foodItemName,
               foodItemImage: item.foodItemImage,
+              foodItemPrice: item.foodItemPrice,
               category: item.category,
               address: {
                 userName: item.userName,
@@ -52,7 +56,7 @@ const OrderHistoryContainer: React.FC = () => {
     if (user) {
       fetchOrders();
     }
-  }, [user]);
+  }, [user, filter]);
   useEffect(() => {
     if (selectedOrder) {
       const otherItems = orders.filter(
@@ -85,6 +89,8 @@ const OrderHistoryContainer: React.FC = () => {
         setSelectedOrder={setSelectedOrder}
         selectedOrder={selectedOrder}
         otherItems={otherItems}
+        setFilter={setFilter}
+        filter={filter}
       />
     </>
   );
