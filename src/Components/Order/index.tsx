@@ -148,7 +148,7 @@ const OrderComponent: React.FC<OrderFormData> = ({
         <InputField
           label="Full Name"
           name="user_name"
-          value={user}
+          value={formData.user_name || ""} 
           onChange={handleChange}
           variant="outlined"
           fullWidth
