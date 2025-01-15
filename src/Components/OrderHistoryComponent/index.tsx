@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Card,
@@ -11,6 +11,7 @@ import {
 import OrderDetailsComponent from "./Details";
 import StyledButton from "../../Atoms/Button";
 import { Order } from "./type";
+import RatingModal from "../RateProviderComponent";
 
 interface OrderHistoryProps {
   orders: Order[];
@@ -29,6 +30,12 @@ const OrderHistoryComponent: React.FC<OrderHistoryProps> = ({
   setFilter,
   filter,
 }) => {
+  const [ratingModalOpen, setRatingModalOpen] = useState(false);
+  const [selectedProvider, setSelectedProvider] = useState({
+    provider:"",
+    provider_id:""
+  });
+
   if (selectedOrder) {
     return (
       <Box sx={{ padding: "24px", maxWidth: "1000px", margin: "0 auto" }}>
@@ -67,7 +74,7 @@ const OrderHistoryComponent: React.FC<OrderHistoryProps> = ({
           color="primary"
           value={filter}
           exclusive
-          onChange={(event, newFilter) => handleChange(newFilter)}
+          onChange={(_, newFilter) => handleChange(newFilter)}
           aria-label="Filter orders"
           sx={{
             "& .MuiToggleButton-root": {
@@ -152,18 +159,29 @@ const OrderHistoryComponent: React.FC<OrderHistoryProps> = ({
                         cursor: "pointer",
                       }}
                     >
-                      <Typography
-                        variant="subtitle2"
-                        color="#e6852c"
-                        fontWeight="bold"
+                      <Box
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedProvider({provider:order.provider,provider_id:order.provider_id});
+                          setRatingModalOpen(true);
+                        }}
                         sx={{
                           cursor: "pointer",
-                          "&:hover": { textDecoration: "underline" },
                         }}
                       >
-                        {<span style={{ fontSize: "1.2em" }}>★</span>}
-                        Rate Provider
-                      </Typography>
+                        <Typography
+                          variant="subtitle2"
+                          color="#e6852c"
+                          fontWeight="bold"
+                          sx={{
+                            cursor: "pointer",
+                            "&:hover": { textDecoration: "underline" },
+                          }}
+                        >
+                          {<span style={{ fontSize: "1.2em" }}>★</span>}
+                          Rate Provider
+                        </Typography>
+                      </Box>
                     </Box>
                   </Box>
                 </Grid>
@@ -172,6 +190,11 @@ const OrderHistoryComponent: React.FC<OrderHistoryProps> = ({
           </Card>
         </Box>
       ))}
+      <RatingModal
+        open={ratingModalOpen}
+        onClose={() => setRatingModalOpen(false)}
+        provider={selectedProvider}
+      />
     </Box>
   );
 };

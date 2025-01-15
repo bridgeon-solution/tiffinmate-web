@@ -27,6 +27,7 @@ const OrderHistoryContainer: React.FC = () => {
             order.details.map((item: any) => ({
               order_id: order.order_id,
               menu_id: order.menu_id,
+              provider_id: order.provider_id,
               provider: order.provider,
               user_id: order.user_id,
               user: order.user,
