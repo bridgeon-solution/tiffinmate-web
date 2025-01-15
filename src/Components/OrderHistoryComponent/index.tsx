@@ -67,7 +67,7 @@ const OrderHistoryComponent: React.FC<OrderHistoryProps> = ({
           color="primary"
           value={filter}
           exclusive
-          onChange={(event, newFilter) => handleChange(newFilter)}
+          onChange={(_,newFilter) => handleChange(newFilter)}
           aria-label="Filter orders"
           sx={{
             "& .MuiToggleButton-root": {
