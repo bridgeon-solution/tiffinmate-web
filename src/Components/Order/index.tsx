@@ -14,6 +14,7 @@ import InputField from "../../Atoms/Input";
 
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
+import { toast } from "react-toastify";
 
 const DefaultIcon = L.icon({
   iconUrl: markerIcon,
@@ -55,7 +56,6 @@ const OrderComponent: React.FC<OrderFormData> = ({
   const [selectedCity, setSelectedCity] = useState(formData.city || "");
   const [mapPosition, setMapPosition] = useState<[number, number] | null>(null);
   
-  const user = localStorage.getItem("user");
   const { state } = useLocation();
   const { categories, orderId, date } = state || {};
   setSelectedCategories(categories);
@@ -88,12 +88,11 @@ const OrderComponent: React.FC<OrderFormData> = ({
               }
             });
         },
-        (error) => {
-          console.error("Error getting location: ", error);
-        }
+        
+        
       );
     } else {
-      alert("Geolocation is not supported by this browser.");
+    toast.warning("Geolocation is not supported by this browser.");
     }
   };
 
