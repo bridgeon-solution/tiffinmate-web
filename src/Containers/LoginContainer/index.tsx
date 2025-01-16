@@ -22,10 +22,12 @@ function LoginContainer() {
   const handleSubmit = async (values: loginValues) => {
     setLoading(true);
     try {
+      console.log('on try')
       const res = await LoginService(values);
       if (res.data.status == "success") {
         localStorage.setItem("id", res.data.result.id);
         localStorage.setItem("token", res.data.result.token);
+        localStorage.setItem("refresh_token",res.data.result.refresh_token)
         localStorage.setItem("user", res.data.result.name);
         toast.success("Login successful");
         navigate("/");
@@ -33,6 +35,7 @@ function LoginContainer() {
         toast.warn(res.data.error_message);
       }
     } catch (error) {
+      console.log(error, 'error')
       toast.error("An error occurred. Please try again.");
     } finally {
       setLoading(false);
