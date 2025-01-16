@@ -130,7 +130,6 @@ const OrderContainer: React.FC = () => {
                 order_string: paymentData.razorpay_order_id,
                 transaction_string: paymentData.razorpay_payment_id,
               };
-              console.log(values)
               await PostOrderDetails(orderId, orderDetailsData);
 
               toast.success("order palced succesfully");
