@@ -13,7 +13,7 @@ import BreakFast from "../../Assets/BreakFast.webp";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import SubscriptionPlanComponent from "../../Components/SubscriptionPlanComponent";
-import { PostOrder } from "../../Services/OrderService";
+import { PostOrder, PostSubscriptionOrder } from "../../Services/OrderService";
 import { CircularProgress, Box } from "@mui/material";
 
 function MenuDetailsContainer() {
@@ -32,9 +32,9 @@ function MenuDetailsContainer() {
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [isCalculating, setIsCalculating] = useState<boolean>(false);
-  const userId = localStorage.getItem("id");
-
-  const userid = userId || "";
+  const userId=localStorage.getItem("id");
+  
+  const userid=userId||""
   const categories = [
     {
       id: "0193ce2c-ab58-7b6f-8470-7462704e8638",
@@ -67,6 +67,10 @@ function MenuDetailsContainer() {
       toast.warn("Please select a date.");
       return;
     }
+
+    // daily plan
+
+    if(modalType==="daily"){
     try {
       const orderData: OrderProp = {
         date: selectedDate,
@@ -88,9 +92,38 @@ function MenuDetailsContainer() {
         });
       }
     } catch (error) {
-      toast.error("error creating order");
+      toast.error("error create order");
     }
-  };
+
+    // subscription plan
+
+  }else if (modalType === "subscription") {
+    try {
+      const orderData: OrderProp = {
+        date: selectedDate,
+        menu_id: menuid,
+        provider_id: providerId,
+        total_price: totalAmount,
+        user_id: userid,
+      };
+      const response = await PostSubscriptionOrder(orderData);
+
+      if (response.status == "success") {
+        handleClose(modalType);
+        navigate("subscription", {
+          state: {
+            orderId: response.result,
+            categories: selectedCategories,
+            date: selectedDate,
+           
+          },
+        });
+      }
+    } catch (error) {
+      toast.error("error create order");
+    }
+  }
+}
 
   const handleClose = (modalType: "daily" | "subscription") => {
     if (modalType === "daily") {
@@ -158,7 +191,6 @@ function MenuDetailsContainer() {
   const fetchMenu = async () => {
     setLoading(true);
     try {
-  
       const res = await FetchMenuDetails(menuid, selectedCategory);
       if (res && res.data && res.data.result) {
         setMenu(res?.data?.result);

@@ -52,11 +52,11 @@ const OrderContainer: React.FC = () => {
     ph_no: "",
   });
   useEffect(() => {
-    const user = localStorage.getItem("user_name");  // Get from localStorage
+    const user = localStorage.getItem("user_name");  
     if (user) {
       setInitialValues((prevValues) => ({
         ...prevValues,
-        user_name: user,  // Set user_name to localStorage value if available
+        user_name: user,  
       }));
     }
   }, []);
@@ -72,7 +72,9 @@ const OrderContainer: React.FC = () => {
       city: Yup.string().required("Current location is required"),
     }),
     onSubmit: async (values) => {
+
       // RazorPay
+      
       if (!RazrPayLoad) {
         try {
           const scriptLoad = await loadScript(
@@ -88,6 +90,7 @@ const OrderContainer: React.FC = () => {
       }
 
       try {
+        
         const response = await GetOrderById(orderId);
         const total = response.result.total_price;
 

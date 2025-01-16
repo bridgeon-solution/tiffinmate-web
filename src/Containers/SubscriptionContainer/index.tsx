@@ -1,26 +1,17 @@
-import React from "react";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import {
-  RazorpayResponse,
-  RazorpayOptions,
-  OrderDtailsProps,
-} from "../../Components/Order/type";
-import { useFormik } from "formik";
+import React from 'react'
+import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { RazorpayResponse ,RazorpayOptions,OrderDtailsProps} from '../../Components/Order/type';
+import { useFormik } from 'formik';
 import * as Yup from "yup";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import {
-  RazorPayOrder,
-  GetSubscriptionId,
-  PostSubscriptionDetails,
-} from "../../Services/OrderService";
-import OrderComponent from "../../Components/Order";
-import OrderModal from "../../Atoms/Modal";
+import { toast } from 'react-toastify';
+import { RazorPayOrder , GetSubscriptionId, PostSubscriptionDetails} from '../../Services/OrderService';
+import OrderComponent from '../../Components/Order';
+import OrderModal from '../../Atoms/Modal';
 
-const SubscriptionContainer : React.FC = () => {
 
-   const navigate=useNavigate();
+const SubscriptionContainer :React.FC= () => {
+
 
     const { id, menuId } = useParams();
     const providerId = id || "";
@@ -34,17 +25,17 @@ const SubscriptionContainer : React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     
 
-
-  const loadScript = (src: string) => {
-    return new Promise((resolve, reject) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.onload = () => resolve(true);
-      script.onerror = () => reject(false);
-      document.body.appendChild(script);
-    });
-  };
-  const [paymentDetails] = useState({
+  const navigate=useNavigate();
+    const loadScript = (src: string) => {
+        return new Promise((resolve, reject) => {
+          const script = document.createElement("script");
+          script.src = src;
+          script.onload = () => resolve(true);
+          script.onerror = () => reject(false);
+          document.body.appendChild(script);
+        });
+      };
+const [paymentDetails] = useState({
     user_name: "",
     ph_no: "",
   });
@@ -65,8 +56,6 @@ const SubscriptionContainer : React.FC = () => {
         city: Yup.string().required("Current location is required"),
       }),
       onSubmit: async (values) => {
-        setLoading(true)
-
 
             // RazorPay
             
@@ -80,8 +69,6 @@ const SubscriptionContainer : React.FC = () => {
                 }
               } catch (error) {
                 toast.error("Error loading payment script.");
-                setLoading(false)
-
                 return;
               }
             }
@@ -91,8 +78,6 @@ const SubscriptionContainer : React.FC = () => {
             
                     if (!total) {
                       toast.error("Total amount is missing.");
-                      setLoading(false)
-
                     }
             
                     // RazorPay id creation
@@ -131,6 +116,8 @@ const SubscriptionContainer : React.FC = () => {
                           await PostSubscriptionDetails(orderId, orderDetailsData);
                           toast.success("order palced succesfully");
                           setLoading(true);
+                          formik.resetForm();
+              setIsModalOpen(true);
                         } catch (error) {
                           toast.error("Payment failed.");
                         } finally {
@@ -167,10 +154,14 @@ const SubscriptionContainer : React.FC = () => {
                 ph_no:
                   formik.touched.ph_no && formik.errors.ph_no ? formik.errors.ph_no : "",
               };
+
               const handleOpenInvoice  = () => {
                 if (orderId) {
-                  navigate(`/provider/${providerId}/menu/${menuid}/order/invoice`, {
-                    state: { orderId },
+                  navigate(`/provider/${providerId}/menu/${menuid}/order/subscriptioninvoice`, {
+                    state: { 
+                      menuid,
+                      categories:selectedCategories
+                     },
                   });
                 }
               };
@@ -186,19 +177,15 @@ const SubscriptionContainer : React.FC = () => {
     setOrderId={setOrderId}
     setDate={setDate}
     loading={loading}
-
   />
-        <OrderModal
+  <OrderModal
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onOpenInvoice={handleOpenInvoice} 
       />
+  </>
 
-</>
-
-  
   )
 }
-  
 
-export default SubscriptionContainer;
+export default SubscriptionContainer

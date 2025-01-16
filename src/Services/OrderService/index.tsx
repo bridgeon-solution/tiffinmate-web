@@ -100,8 +100,6 @@ export const PostOrder = async (orderData:OrderProp) => {
         `Subscription/details?subscriptionid=${orderId}`,values
       );
       
-      
-  
       if (response && response.data && response.data.result) {
         return response.data;
       }
@@ -115,8 +113,24 @@ export const PostOrder = async (orderData:OrderProp) => {
   export const GetSubscriptionId = async (orderId:string|undefined) => {
     try {
       const response = await api.get(
-        `/Subscription/${orderId}`
+        `Subscription/id?subscriptionid=${orderId}`
       );
+      if (response && response.data && response.data.result) {
+        return response.data;
+      }
+      return null;
+    } catch {
+      toast.error("something went wrong")
+    }
+  };
+
+
+  export const GetAllFoodItems = async (menuId:string,categories:string) => {
+    try {
+      const response = await api.post(
+        `FoodItem/menu-category?menuId=${menuId}`,categories
+      );
+      
       if (response && response.data && response.data.result) {
         return response.data;
       }
