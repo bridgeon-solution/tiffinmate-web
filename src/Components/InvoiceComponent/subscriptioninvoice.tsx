@@ -45,7 +45,6 @@ const Subscriptioninvoice: React.FC = () => {
     fetchData();
   }, [menuid, categories]);
 
-  console.log(foodData)
   const organizeData = () => {
     const daysOfWeek = [
       "Sunday",
