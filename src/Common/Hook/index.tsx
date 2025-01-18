@@ -1,14 +1,21 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { RazorpayOptions, RazorpayResponse } from "../../Components/Order/type";
-import { RazorPayOrder, UpdatePaymentHistory } from "../../Services/OrderService"; // Import your API service
+import {
+  RazorPayOrder,
+} from "../../Services/OrderService";
 
-export const useRazorpayPayment = (payment_id: string, totalAmount: number) => {
-  const [razorpayResponse, setRazorpayResponse] = useState<RazorpayResponse | null>(null);
-interface UpdateSubscription{
-    payment_id:string,
-    action:string
-}
+export const useRazorpayPayment = (
+  totalAmount: number,
+  userDetails: { name: string; phone: string },
+  UpdateSubscription:()=>void
+) => {
+  const [razorpayResponse, setRazorpayResponse] =
+    useState<RazorpayResponse | null>(null);
+  interface UpdateSubscription {
+    payment_id: string;
+    action: string;
+  }
   const loadScript = async (src: string): Promise<boolean> => {
     return new Promise((resolve, reject) => {
       const script = document.createElement("script");
@@ -26,18 +33,17 @@ interface UpdateSubscription{
     }
 
     try {
-      // Load Razorpay script
-      const scriptLoad = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
+      const scriptLoad = await loadScript(
+        "https://checkout.razorpay.com/v1/checkout.js"
+      );
       if (!scriptLoad) {
         toast.error("Failed to load payment script.");
         return;
       }
 
-      // Create Razorpay order ID
       const response = await RazorPayOrder(totalAmount);
       const RazororderId = response.result;
 
-      // Configure Razorpay options
       const options: RazorpayOptions = {
         amount: totalAmount,
         currency: "INR",
@@ -48,20 +54,11 @@ interface UpdateSubscription{
           setRazorpayResponse(response);
           toast.success("Payment Successful!");
 
-          try {
-            // Call API to update payment history
-            const action='renew'
-            const values:UpdateSubscription={payment_id,action}
-            await UpdatePaymentHistory(values); // Pass paymentId and the payment status
-            toast.success("Payment history updated successfully.");
-          } catch (apiError) {
-            console.error("Error updating payment history:", apiError);
-            toast.error("Failed to update payment history.");
-          }
+          UpdateSubscription()
         },
         prefill: {
-          name: "suhaila",
-          contact: "9645877112",
+          name: userDetails.name,
+          contact: userDetails.phone,
         },
         theme: {
           color: "#3399cc",
@@ -71,7 +68,6 @@ interface UpdateSubscription{
       const razorPay = new (window as any).Razorpay(options);
       razorPay.open();
     } catch (error) {
-      console.error("Error during payment:", error);
       toast.error("Payment failed.");
     }
   };
