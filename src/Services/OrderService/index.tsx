@@ -126,6 +126,40 @@ export const PostOrder = async (orderData:OrderProp) => {
     }
   };
 
+  export const GetPaymentHistoryById = async (payment_id:string|undefined) => {
+    try {
+      const response = await api.get(
+        `/Subscription/payment-history?id=${payment_id}`
+      );
+      if (response && response.data && response.data.result) {
+        return response.data;
+      }
+      return null;
+    } catch {
+      toast.error("something went wrong")
+    }
+  };
+
+  interface UpdateSubscription{
+    payment_id:string,
+    action:string
+}
+  export const UpdatePaymentHistory = async (values:UpdateSubscription) => {
+    try {
+      
+      const response = await api.put(
+        '/Subscription',values
+      );      
+  
+      if (response && response.data && response.data.result) {
+        return response.data;
+      }
+      return null;
+    } catch  {
+      toast.error("something went wrong")
+    }
+  };
+
 
 
 
