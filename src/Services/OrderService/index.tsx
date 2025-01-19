@@ -4,18 +4,20 @@ import { OrderDtailsProps } from "../../Components/Order/type";
 import api from "../api";
 import { UpdateSubscription } from "../../Components/MonthlyBillComponent/type";
 
-export const PostOrder = async (orderData: OrderProp) => {
-  try {
-    const response = await api.post("/Order", orderData);
-
-    if (response && response.data && response.data.result) {
-      return response.data;
-    }
-    return null;
-  } catch {
-    toast.error("something went wrong");
-  }
-};
+export const PostOrder = async (orderData:OrderProp) => {
+    
+      
+      const response = await api.post(
+        "/Order",orderData
+      );
+      
+  
+      if (response && response.data && response.data.result) {
+        return response.data;
+      }
+      return null;
+    
+  };
 
 export const PostOrderDetails = async (
   orderId: string | undefined,

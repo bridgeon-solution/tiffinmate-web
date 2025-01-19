@@ -1,10 +1,13 @@
-import { Box, Typography } from "@mui/material";
+import { Box,  Typography } from "@mui/material";
 import { ProviderCard } from "./ProviderCard";
 import { providerDetailsProp } from "../../Containers/ProviderDetailsContainer/type";
+import { BackButton } from "../../Atoms/Button";
 
 export const ProviderComponent = ({ providers }: providerDetailsProp) => {
+   
   return (
     <>
+    <BackButton/>
       <Box
         sx={{
           mt: 10,

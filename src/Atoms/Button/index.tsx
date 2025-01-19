@@ -1,5 +1,8 @@
 import { Button } from "@mui/material";
 import styled from "styled-components";
+import { Box, IconButton } from "@mui/material";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { useNavigate } from "react-router-dom";
 
 const StyledButton = styled(Button)`
   &.MuiButton-contained {
@@ -50,3 +53,30 @@ export const StyledMenuButton = styled(Button)`
     }
   }
 `;
+
+
+
+export const BackButton = () => {
+  const navigate = useNavigate(); 
+
+  const handleBackClick = () => {
+    navigate(-1); 
+  };return (
+    <Box
+      sx={{
+        position: "absolute",
+        top: 16,
+        left: 16,
+        zIndex: 1000,
+        mt:10,
+        
+        
+      }}
+    >
+      <IconButton onClick={handleBackClick} sx={{color:"black"}}>
+        <ArrowBackIosIcon />
+      </IconButton>
+    </Box>
+  );
+};
+
