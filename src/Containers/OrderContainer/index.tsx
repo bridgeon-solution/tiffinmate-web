@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 import OrderComponent from "../../Components/Order";
 import {
@@ -20,6 +21,12 @@ import OrderModal from "../../Atoms/Modal";
 const OrderContainer: React.FC = () => {
   const navigate=useNavigate();
   const { id, menuId } = useParams();
+  const [initialValues, setInitialValues] = useState({
+    user_name: "",
+    address: "",
+    city: "",
+    ph_no: "",
+  });
   const providerId = id || "";
   const menuid = menuId || "";
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -44,14 +51,19 @@ const OrderContainer: React.FC = () => {
     user_name: "",
     ph_no: "",
   });
+  useEffect(() => {
+    const user = localStorage.getItem("user_name");  
+    if (user) {
+      setInitialValues((prevValues) => ({
+        ...prevValues,
+        user_name: user,  
+      }));
+    }
+  }, []);
 
   const formik = useFormik({
-    initialValues: {
-      user_name: "",
-      address: "",
-      city: "",
-      ph_no: "",
-    },
+    initialValues
+    ,
     validationSchema: Yup.object({
       address: Yup.string().required("Address is required"),
       ph_no: Yup.string()
@@ -60,7 +72,9 @@ const OrderContainer: React.FC = () => {
       city: Yup.string().required("Current location is required"),
     }),
     onSubmit: async (values) => {
+
       // RazorPay
+      
       if (!RazrPayLoad) {
         try {
           const scriptLoad = await loadScript(
@@ -76,6 +90,7 @@ const OrderContainer: React.FC = () => {
       }
 
       try {
+        
         const response = await GetOrderById(orderId);
         const total = response.result.total_price;
 

@@ -2,12 +2,14 @@ import { lazy, Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { CircularProgress, Box } from "@mui/material";
 import ProfileSidebar from "../Atoms/ProfileSideBar";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import InvoiceDailyOrder from "../Components/InvoiceComponent/Invoice";
 import PlanContainer from "../Containers/CurrentPlanContainer";
-const Subscription=lazy(()=>import("../Pages/Subscription"))
-const Order=lazy(()=>import("../Pages/Order"))
+import RegisterVendor from "../Components/RegisterVendor";
+import Subscriptioninvoice from "../Components/InvoiceComponent/subscriptioninvoice";
+const Subscription = lazy(() => import("../Pages/Subscription"));
+const Order = lazy(() => import("../Pages/Order"));
 const Provider = lazy(() => import("../Pages/Provider"));
 const Navbar = lazy(() => import("../Common/Navbar"));
 const Footer = lazy(() => import("../Common/FooterComponent"));
@@ -32,7 +34,9 @@ export const AppRoutes = () => {
   return (
     <>
       {!noNav.includes(location.pathname) && <Navbar />}
-      <Suspense fallback={<Box
+      <Suspense
+        fallback={
+          <Box
             sx={{
               display: "flex",
               justifyContent: "center",
@@ -41,26 +45,38 @@ export const AppRoutes = () => {
             }}
           >
             <CircularProgress />
-          </Box>}>
+          </Box>
+        }
+      >
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgotpassword" element={<ForgotPasword />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
-          <Route path="/profile" element={<ProfileSidebar/>}/>
+          <Route path="/profile" element={<ProfileSidebar />} />
           <Route path="/provider" element={<Provider />} />
           <Route path="/provider/:id" element={<ProviderDetails />} />
           <Route path="/provider/:id/menu" element={<Menu />} />
           <Route path="/provider/:id/menu/:menuId" element={<MenuDetails />} />
           <Route path="/provider/:id/menu/:menuId/order" element={<Order />} />
-          <Route path="/provider/:id/menu/:menuId/subscription" element={<Subscription />} />
-          <Route path="/provider/:id/menu/:menuId/order/invoice" element={<InvoiceDailyOrder />} />
-
-          <Route path="/currentplan" element={<PlanContainer/>}/>
+          <Route
+            path="/provider/:id/menu/:menuId/subscription"
+            element={<Subscription />}
+          />
+          <Route
+            path="/provider/:id/menu/:menuId/order/invoice"
+            element={<InvoiceDailyOrder />}
+          />
+           <Route
+            path="/provider/:id/menu/:menuId/order/subscriptioninvoice"
+            element={<Subscriptioninvoice />}
+          />
+          <Route path="/currentplan" element={<PlanContainer />} />
+          <Route path="/registervendor" element={<RegisterVendor />} />
         </Routes>
       </Suspense>
-      <ToastContainer/>
+      <ToastContainer />
       {!noNav.includes(location.pathname) && <Footer />}
     </>
   );

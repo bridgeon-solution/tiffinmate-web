@@ -23,7 +23,7 @@ const drawerWidth = 240;
 const navItems = [
   { name: "Home", path: "/" },
   { name: "Restaurants", path: "/provider" },
-  { name: "Register vendor", path: "/register" },
+  { name: "Register vendor", path: "/registervendor" },
 ];
 
 export default function Navbar(props: Props) {

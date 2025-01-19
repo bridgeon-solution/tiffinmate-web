@@ -1,3 +1,4 @@
+import { RatingValues } from "../../Components/OrderHistoryComponent/type";
 import api from "../api";
 
 export const fetchProvider = async () => {
@@ -39,4 +40,9 @@ export const CalculateTotal = async (
     { date, menuId, categories }
   );
   return res;
+};
+
+export const AddRating = async (values:RatingValues) => {
+  const res = await api.post(`/Provider/rating`,values);
+  return res.data;
 };
