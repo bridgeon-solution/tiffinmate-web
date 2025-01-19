@@ -15,6 +15,7 @@ import InputField from "../../Atoms/Input";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { toast } from "react-toastify";
+import { BackButton } from "../../Atoms/Button";
 
 const DefaultIcon = L.icon({
   iconUrl: markerIcon,
@@ -123,6 +124,8 @@ const OrderComponent: React.FC<OrderFormData> = ({
   };
 
   return (
+    <>
+    <BackButton/>
     <Box
       sx={{
         maxWidth: 600,
@@ -243,6 +246,7 @@ const OrderComponent: React.FC<OrderFormData> = ({
         </Button>
       </Box>
     </Box>
+    </>
   );
 };
 

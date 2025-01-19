@@ -92,7 +92,7 @@ function MenuDetailsContainer() {
         });
       }
     } catch (error) {
-      toast.error("error create order");
+      toast.warn("Please login")
     }
 
     // subscription plan

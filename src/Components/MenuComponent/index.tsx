@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { MenuCard } from "./type";
 import { useNavigate } from "react-router-dom";
+import { BackButton } from "../../Atoms/Button";
 
 interface MenuTypeComponentProps {
   categories: MenuCard[];
@@ -16,6 +17,8 @@ interface MenuTypeComponentProps {
 const MenuComponent: React.FC<MenuTypeComponentProps> = ({ categories }) => {
   const navigate = useNavigate();
   return (
+    <>
+    <BackButton/>
     <Box mt={6}>
       <Box sx={{ background: "black" }}>
         <Box
@@ -92,6 +95,7 @@ const MenuComponent: React.FC<MenuTypeComponentProps> = ({ categories }) => {
         </Grid>
       </Box>
     </Box>
+    </>
   );
 };
 

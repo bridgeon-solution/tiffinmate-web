@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Typography, Grid } from "@mui/material";
-import StyledButton from "../../Atoms/Button";
+import StyledButton, { BackButton } from "../../Atoms/Button";
 import { category, MenuItem } from "./type";
 interface MenuComponentProps {
   categories: category[];
@@ -17,6 +17,8 @@ const MenuDetailsComponent: React.FC<MenuComponentProps> = ({
   setSubscriptionModal,
 }) => {
   return (
+    <>
+    <BackButton/>
     <Box p={4} mt={5}>
       <Typography
         variant="subtitle1"
@@ -132,6 +134,7 @@ const MenuDetailsComponent: React.FC<MenuComponentProps> = ({
         </StyledButton>
       </Box>
     </Box>
+    </>
   );
 };
 

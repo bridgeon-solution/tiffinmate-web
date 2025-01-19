@@ -1,11 +1,13 @@
 import { Box, Typography } from "@mui/material";
-import { StyledMenuButton } from "../../Atoms/Button";
+import { BackButton, StyledMenuButton } from "../../Atoms/Button";
 import {  ProviderHomeProps } from "../../Containers/ProviderDetailsContainer/type";
 import { useNavigate } from "react-router-dom";
 
 export const HeroSection = ({ provider }: ProviderHomeProps) => {
   const navigate=useNavigate()
   return (
+    <>
+    <BackButton/>
     <Box
       sx={{
         mt: 10,
@@ -43,5 +45,6 @@ export const HeroSection = ({ provider }: ProviderHomeProps) => {
         src={provider?.image}
       />
     </Box>
+    </>
   );
 };
