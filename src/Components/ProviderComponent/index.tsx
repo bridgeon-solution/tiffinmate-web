@@ -1,10 +1,19 @@
-import { Box, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import { ProviderCard } from "./ProviderCard";
 import { providerDetailsProp } from "../../Containers/ProviderDetailsContainer/type";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { useNavigate } from "react-router-dom";
+import { BackButton } from "../../Atoms/Button";
 
 export const ProviderComponent = ({ providers }: providerDetailsProp) => {
+  const navigat=useNavigate();
+  const handleBackClick = () => {
+    
+    navigat(-1)
+  };
   return (
     <>
+    <BackButton/>
       <Box
         sx={{
           mt: 10,

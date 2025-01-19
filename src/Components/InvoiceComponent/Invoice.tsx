@@ -14,6 +14,7 @@ import { useLocation } from "react-router-dom";
 import html2pdf from "html2pdf.js";
 import { useRef } from "react";
 import { toast } from "react-toastify";
+import { BackButton } from "../../Atoms/Button";
 interface details {
   foodItemName: string;
   foodItemImage: string;
@@ -58,6 +59,7 @@ const InvoiceDailyOrder: React.FC = () => {
 
   return (
     <>
+    <BackButton/>
     <Box display='flex' justifyContent='center' alignItems='center' >
     <Box 
         sx={{

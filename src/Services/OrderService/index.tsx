@@ -5,7 +5,7 @@ import api from "../api";
 
 
 export const PostOrder = async (orderData:OrderProp) => {
-    try {
+    
       
       const response = await api.post(
         '/Order',orderData
@@ -16,9 +16,7 @@ export const PostOrder = async (orderData:OrderProp) => {
         return response.data;
       }
       return null;
-    } catch  {
-      toast.error("something went wrong")
-    }
+   
   };
 
 
