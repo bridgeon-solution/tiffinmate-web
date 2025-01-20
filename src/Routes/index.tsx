@@ -5,7 +5,7 @@ import ProfileSidebar from "../Atoms/ProfileSideBar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import InvoiceDailyOrder from "../Components/InvoiceComponent/Invoice";
-import PlanContainer from "../Containers/CurrentPlanContainer";
+import PlanContainer from "../Containers/PlanContainer";
 import RegisterVendor from "../Components/RegisterVendor";
 import Subscriptioninvoice from "../Components/InvoiceComponent/subscriptioninvoice";
 const Subscription = lazy(() => import("../Pages/Subscription"));

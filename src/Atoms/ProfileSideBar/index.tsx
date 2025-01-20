@@ -19,7 +19,7 @@ import DrawerHeader from "../Drawer";
 import Swal from "sweetalert2";
 import Profile from "../../Pages/Profile";
 import OrderHistoryContainer from "../../Containers/OrderHistoryContainer";
-import PlanContainer from "../../Containers/CurrentPlanContainer";
+import PlanContainer from "../../Containers/PlanContainer";
 
 const drawerWidth = 240;
 
