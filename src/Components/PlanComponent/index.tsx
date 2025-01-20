@@ -82,7 +82,6 @@ const PlanComponent: React.FC<PlanComponentProps> = ({
                   </Typography>
                   {[
                     { label: "Vendor", value: item.providerName },
-                    { label: "Menu", value: "veg" },
                     { label: "Categories", value: item.categories },
                     {
                       label: "Amount Per Month",
