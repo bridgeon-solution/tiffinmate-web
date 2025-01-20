@@ -14,7 +14,7 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import StyledButton from "../../Atoms/Button";
+import StyledButton, { BackButton } from "../../Atoms/Button";
 import { categories, MenuDay, UserSubscription } from "./type";
 
 interface PlanComponentProps {
@@ -34,6 +34,8 @@ const PlanComponent: React.FC<PlanComponentProps> = ({
   categories,
 }) => {
   return (
+    <>
+    <BackButton/>
     <Box
       sx={{
         perspective: "1000px",
@@ -179,6 +181,7 @@ const PlanComponent: React.FC<PlanComponentProps> = ({
         </Card>
       </Box>
     </Box>
+    </>
   );
 };
 
