@@ -4,7 +4,6 @@ import MenuComponent from "../../Components/MenuComponent";
 import { useParams } from "react-router-dom";
 import { MenuCard } from "../../Components/MenuComponent/type";
 import { CircularProgress, Box, Typography } from "@mui/material";
-import { toast } from "react-toastify";
 
 const MenuContainer: React.FC = () => {
   const { id } = useParams();

@@ -3,7 +3,6 @@ import { ProviderDetailsComponent } from "../../Components/ProviderDetailsCompon
 import { useEffect, useState } from "react";
 import { fetchProviderDetails } from "../../Services/ProviderService";
 import { ProviderDetails } from "./type";
-import { toast } from "react-toastify";
 import { Box, CircularProgress, Typography } from "@mui/material";
 
 export const ProviderDetailsContainer = () => {

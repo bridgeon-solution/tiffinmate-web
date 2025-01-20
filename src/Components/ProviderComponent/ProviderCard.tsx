@@ -5,7 +5,6 @@ import {
   CardMedia,
   Grid,
   TextField,
-  Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { providerDetailsProp } from "../../Containers/ProviderDetailsContainer/type";

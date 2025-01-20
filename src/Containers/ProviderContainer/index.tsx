@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { fetchApprovedProviderDetails } from "../../Services/ProviderService";
 import { ProviderComponent } from "../../Components/ProviderComponent";
 import { provider } from "../ProviderDetailsContainer/type";
-import { toast } from "react-toastify";
 import { CircularProgress, Box, Typography } from "@mui/material";
 
 const ProviderContainer = () => {
