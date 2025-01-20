@@ -42,13 +42,11 @@ function TopProvidersContainer() {
 
   const userId = localStorage.getItem("id");
   const fetchUser = async () => {
-    try {
-      const res = await FetchProfileService(userId);
-      const { name, phone } = res.data.result;
-      setUserDetails({ name, phone });
-    } catch (error) {
-      toast.error("Failed to fetch user details.");
-    }
+      if(userId){
+        const res = await FetchProfileService(userId);
+        const { name, phone } = res.data.result;
+        setUserDetails({ name, phone });
+      }     
   };
   useEffect(() => {
     fetchUser();
@@ -69,7 +67,7 @@ function TopProvidersContainer() {
         const response = await fetchApprovedProviderDetails();
         setProviders(response.result);
       } catch (err) {
-        setError("Failed to fetch providers");
+        setError("Unable to fetch top providers at the moment. Please try again later");
       } finally {
         setLoading(false);
       }
