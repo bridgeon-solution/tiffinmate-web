@@ -151,3 +151,17 @@ export const GetAllFoodItems = async (menuId: string, categories: string) => {
     toast.error("something went wrong");
   }
 };
+
+export const GetSubscriptionByUser = async (userId:string) => {
+  try {
+    const response = await api.get(
+      `/Subscription/user?userId=${userId}`
+    );
+    if (response && response.data && response.data.result) {
+      return response.data;
+    }
+    return null;
+  } catch {
+    toast.error("something went wrong");
+  }
+};

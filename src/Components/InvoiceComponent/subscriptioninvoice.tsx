@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-
+import { GetAllFoodItems } from "../../Services/OrderService";
 import { useLocation } from "react-router-dom";
 import { Box, Button, Table, TableCell, TableHead, TableRow, Typography } from "@mui/material";
 import html2pdf from "html2pdf.js";
-import { BackButton } from "../../Atoms/Button";
-import { GetAllFoodItems } from "../../Services/OrderService";
 
 
 interface orderData{
@@ -80,8 +78,6 @@ const Subscriptioninvoice: React.FC = () => {
   const { groupedData, daysOfWeek } = organizeData();
 
   return (
-    <>
-    <BackButton/>
     <Box display='flex' justifyContent='center' alignItems='center'>
       <Box  sx={{
           height:{md:600,sx:"auto"},
@@ -178,7 +174,6 @@ const Subscriptioninvoice: React.FC = () => {
     {!loading && foodData.length === 0 && <p>No data available</p>}
   </Box>
   </Box>
-  </>
   );
 };
 
