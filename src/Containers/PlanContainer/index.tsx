@@ -6,6 +6,7 @@ import {
   Subscription,
   UserSubscription,
 } from "../../Components/PlanComponent/type";
+import { toast } from "react-toastify";
 
 function PlanContainer() {
   const [userSubscription, setUserSubscription] = useState<UserSubscription[]>(
@@ -69,7 +70,7 @@ function PlanContainer() {
         setUserSubscription(SubscrptionData.userSubscription);
         setMenuItems(SubscrptionData.menuItems);
       } catch (error) {
-        console.error("Error fetching subscription data:", error);
+        toast.error("Error fetching subscription data");
       }
     };
 
