@@ -105,7 +105,7 @@ function SignupContainer() {
             sx={{ mb: 3, textAlign: "center" }}
           >
             We've sent an SMS with an activation code to your phone{" "}
-            <strong>+231675831475</strong>.
+            <strong>{phone}</strong>
           </Typography>
 
           <Box

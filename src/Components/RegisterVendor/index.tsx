@@ -3,8 +3,9 @@ import React from "react";
 import { Box, Typography, Grid } from "@mui/material";
 import image from "../../Assets/registerVendor.webp";
 import StyledButton from "../../Atoms/Button";
+const RegisterVendor: React.FC = () => { 
+  const baseUrl=import.meta.env.VITE_PROVIDER_URL
 
-const RegisterVendor: React.FC = () => {
   return (
     <Box mt={6}>
       <Box sx={{ background: "black" }}>
@@ -30,12 +31,13 @@ const RegisterVendor: React.FC = () => {
             Join the revolution in home-style food delivery and grow your
             business! Get 0% commission for the first month in selected cities.
           </Typography>
-          <a href="https://betaprovider.tiffinmate.online/">
+          <a href={baseUrl}>
             <StyledButton variant="contained">Join TiffinMate Now</StyledButton>
           </a>
         </Box>
       </Box>
-      <Box
+      <Box display='flex' justifyContent='center' alignItems='center'>
+      <Box 
         sx={{
           background: "#fff",
           padding: 5,
@@ -44,7 +46,6 @@ const RegisterVendor: React.FC = () => {
           boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
           maxWidth: 760,
           textAlign: "center",
-          ml: {md:"25%",xs:0},
         }}
       >
         <Typography variant="h5" sx={{ fontWeight: "bold", marginBottom: 2 }}>
@@ -56,7 +57,6 @@ const RegisterVendor: React.FC = () => {
         <Grid
           container
           spacing={2}
-          justifyContent="center"
           sx={{ marginTop: 2 }}
         >
           <Grid item xs={12} sm={4}>
@@ -84,6 +84,7 @@ const RegisterVendor: React.FC = () => {
             </Typography>
           </Grid>
         </Grid>
+        </Box>
       </Box>
     </Box>
   );

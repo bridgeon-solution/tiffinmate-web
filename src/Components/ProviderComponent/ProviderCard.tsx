@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { providerDetailsProp } from "../../Containers/ProviderDetailsContainer/type";
+import { StyledLogo } from "../TopRatedProviders";
 
 export const ProviderCard = ({ providers }: providerDetailsProp) => {
   return (
@@ -23,28 +24,22 @@ export const ProviderCard = ({ providers }: providerDetailsProp) => {
               to={`/provider/${p.provider_id}`}
               style={{ textDecoration: "none" }}
             >
-              <Card sx={{ borderRadius: 4,maxWidth: "100%"}}>
+              <Card sx={{ borderRadius: 4, maxWidth: "100%" }}>
                 <CardMedia
                   component="img"
-                  sx={{height: { xs: "180px", sm: "210px" },
-                  objectFit: "cover",
-                 }}
+                  sx={{
+                    height: { xs: "180px", sm: "210px" },
+                    objectFit: "cover",
+                  }}
                   alt={p.resturent_name}
                   image={p.image}
                 />
-                <CardContent sx={{  padding: { xs: 2, md: 3 },
-  textAlign: "center", }}>
-                  <Typography
-                    variant="h5"
-                    sx={{
-                      textAlign: "center",
-                      fontWeight: "bold",
-                      color: "#333",
-                      fontSize: {sm: "1.2rem", lg: "1.5rem"}
-                    }}
-                  >
-                    {p.resturent_name}
-                  </Typography>
+                <CardContent
+                  sx={{ padding: { xs: 2, md: 3 }, textAlign: "center" }}
+                >
+                  <StyledLogo>
+                    <Box className="mainText">{p.resturent_name}</Box>
+                  </StyledLogo>
                   <Box
                     sx={{
                       display: "flex",

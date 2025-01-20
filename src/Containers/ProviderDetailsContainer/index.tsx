@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 import { fetchProviderDetails } from "../../Services/ProviderService";
 import { ProviderDetails } from "./type";
 import { toast } from "react-toastify";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
 export const ProviderDetailsContainer = () => {
   const { id } = useParams();
   const [provider, setProvider] = useState<ProviderDetails>();
   const [loading, setLoading] = useState<boolean>(true);
+  const [error,setError]=useState<string>("")
 
   useEffect(() => {
     const fetchProvider = async (id: string) => {
@@ -19,7 +20,7 @@ export const ProviderDetailsContainer = () => {
           setProvider(res.result);
         }
       } catch{
-        toast.error("Error fetching provider details");
+        setError("Unable to retrieve provider details at this time. Please try again later");
       } finally {
         setLoading(false);
       }
@@ -29,6 +30,20 @@ export const ProviderDetailsContainer = () => {
       fetchProvider(id);
     }
   }, [id]);
+  if (error) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Typography color="error">{error}</Typography>
+      </Box>
+    );
+  }
   if (loading) {
     return (
       <Box
