@@ -8,8 +8,9 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material";
 import { provider } from "../../Containers/ProviderDetailsContainer/type";
+import { Link } from "react-router-dom";
 
-const StyledLogo = styled(Box)(({ theme }) => ({
+export const StyledLogo = styled(Box)(({ theme }) => ({
   textAlign: "center",
   ".mainText": {
     fontFamily: "serif",
@@ -36,6 +37,10 @@ const TopProvidersComponent = ({ providers }: { providers: provider[] }) => {
       <Grid container spacing={4} justifyContent="center">
         {providers?.map((provider) => (
           <Grid item xs={12} sm={6} md={3} key={provider.provider_id}>
+             <Link
+              to={`/provider/${provider.provider_id}`}
+              style={{ textDecoration: "none" }}
+            >
             <Card
               sx={{
                 height: "100%",
@@ -60,6 +65,7 @@ const TopProvidersComponent = ({ providers }: { providers: provider[] }) => {
                 </StyledLogo>
               </CardContent>
             </Card>
+            </Link>
           </Grid>
         ))}
       </Grid>

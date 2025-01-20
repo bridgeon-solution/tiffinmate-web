@@ -89,7 +89,7 @@ function ForgotPasswordContainer() {
             sx={{ mb: 3, textAlign: "center" }}
           >
             We've sent an email with an activation code to your email{" "}
-            <strong>example@gmail.com</strong>.
+            <strong>{email}</strong>
           </Typography>
 
           <Box

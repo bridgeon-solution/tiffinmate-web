@@ -31,7 +31,7 @@ export const PostOrderDetails = async (
     }
     return null;
   } catch {
-    toast.error("something went wrong");
+    toast.warning("something went wrong");
   }
 };
 
@@ -46,7 +46,7 @@ export const RazorPayOrder = async (totalAmount: number | undefined) => {
     }
     return null;
   } catch {
-    toast.error("something went wrong");
+    toast.error("ghj");
   }
 };
 
@@ -59,23 +59,21 @@ export const GetOrderById = async (orderId: string | undefined) => {
     }
     return null;
   } catch {
-    toast.error("something went wrong");
+    toast.warning("Please login");
   }
 };
 
 // subscription
 
 export const PostSubscriptionOrder = async (orderData: OrderProp) => {
-  try {
+  
     const response = await api.post("/Subscription/", orderData);
 
     if (response && response.data && response.data.result) {
       return response.data;
     }
     return null;
-  } catch {
-    toast.error("something went wrong");
-  }
+ 
 };
 
 export const PostSubscriptionDetails = async (
@@ -143,6 +141,20 @@ export const GetAllFoodItems = async (menuId: string, categories: string) => {
       categories
     );
 
+    if (response && response.data && response.data.result) {
+      return response.data;
+    }
+    return null;
+  } catch {
+    toast.error("something went wrong");
+  }
+};
+
+export const GetSubscriptionByUser = async (userId:string) => {
+  try {
+    const response = await api.get(
+      `/Subscription/user?userId=${userId}`
+    );
     if (response && response.data && response.data.result) {
       return response.data;
     }

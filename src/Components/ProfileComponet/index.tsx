@@ -5,6 +5,7 @@ import { AccountCircle, Edit } from "@mui/icons-material";
 import { useRef, useState } from "react";
 import { ProfileValues } from "./type";
 import NotificationContainer from "../../Containers/NotificationContainer";
+import { BackButton } from "../../Atoms/Button";
 
 interface ProfileProps {
   handleSubmit: () => void;
@@ -24,6 +25,8 @@ function ProfileComponent({
     setNotificationOpen(!NotificationOpen);
   };
   return (
+    <>
+    <BackButton/>
     <Box sx={{ padding: {md:"2rem",xs:0}, backgroundColor: "white", minHeight: "100vh" }}>
       <Grid container spacing={4} alignItems="center" mb={4}>
         <Grid
@@ -334,6 +337,7 @@ function ProfileComponent({
       </Box>
       )}
     </Box>
+    </>
   );
 }
 

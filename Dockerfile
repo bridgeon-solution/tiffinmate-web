@@ -7,6 +7,8 @@ WORKDIR /app
 #set env's
 ARG VITE_BASE_URL
 ENV VITE_BASE_URL=${VITE_BASE_URL}
+ARG VITE_PROVIDER_URL
+ENV VITE_PROVIDER_URL=${VITE_PROVIDER_URL}
 
 # Install dependencies
 COPY package*.json ./

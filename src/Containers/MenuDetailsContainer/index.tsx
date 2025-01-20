@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import SubscriptionPlanComponent from "../../Components/SubscriptionPlanComponent";
 import { PostOrder, PostSubscriptionOrder } from "../../Services/OrderService";
-import { CircularProgress, Box } from "@mui/material";
+import { CircularProgress, Box, Typography } from "@mui/material";
 
 function MenuDetailsContainer() {
   const { id, menuId } = useParams();
@@ -32,6 +32,7 @@ function MenuDetailsContainer() {
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [isCalculating, setIsCalculating] = useState<boolean>(false);
+  const[error,setError]=useState<string>("")
   const userId=localStorage.getItem("id");
   
   const userid=userId||""
@@ -120,7 +121,7 @@ function MenuDetailsContainer() {
         });
       }
     } catch (error) {
-      toast.error("error create order");
+      toast.warning("Please login");
     }
   }
 }
@@ -196,7 +197,7 @@ function MenuDetailsContainer() {
         setMenu(res?.data?.result);
       }
     } catch (error) {
-      toast.error("Failed to fetch menu details");
+      setError("Failed to fetch menu details. try again later!");
     } finally {
       setLoading(false);
     }
@@ -204,6 +205,20 @@ function MenuDetailsContainer() {
   useEffect(() => {
     fetchMenu();
   }, [selectedCategory]);
+  if (error) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Typography color="error">{error}</Typography>
+      </Box>
+    );
+  }
   if (loading) {
     return (
       <Box
