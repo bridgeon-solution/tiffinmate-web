@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import OrderDetailsComponent from "./Details";
-import StyledButton from "../../Atoms/Button";
+import StyledButton, { BackButton } from "../../Atoms/Button";
 import { Order } from "./type";
 import RatingModal from "../RateProviderComponent";
 
@@ -38,6 +38,7 @@ const OrderHistoryComponent: React.FC<OrderHistoryProps> = ({
 
   if (selectedOrder) {
     return (
+      
       <Box sx={{ padding: "24px", maxWidth: "1000px", margin: "0 auto" }}>
         <StyledButton
           variant="contained"
@@ -65,6 +66,8 @@ const OrderHistoryComponent: React.FC<OrderHistoryProps> = ({
   };
 
   return (
+    <>
+    <BackButton/>
     <Box sx={{ maxWidth: "1000px", margin: "0 auto", padding: "24px" }}>
       <Typography variant="h5" sx={{ mb: 3, fontWeight: 600 }}>
         Your Orders
@@ -189,6 +192,7 @@ const OrderHistoryComponent: React.FC<OrderHistoryProps> = ({
             </CardContent>
           </Card>
         </Box>
+      
       ))}
       <RatingModal
         open={ratingModalOpen}
@@ -196,6 +200,7 @@ const OrderHistoryComponent: React.FC<OrderHistoryProps> = ({
         provider={selectedProvider}
       />
     </Box>
+    </>
   );
 };
 

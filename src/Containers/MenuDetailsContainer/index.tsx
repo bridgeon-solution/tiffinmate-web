@@ -120,7 +120,7 @@ function MenuDetailsContainer() {
         });
       }
     } catch (error) {
-      toast.error("error create order");
+      toast.warning("Please login");
     }
   }
 }
