@@ -53,7 +53,7 @@ const ProfileContainer = () => {
           profileImage: response.data.result?.image,
         });
       } catch (error) {
-        toast.error("Error fetching profile");
+        toast.warning("Please login");
       } finally {
         setLoading(false);
       }
