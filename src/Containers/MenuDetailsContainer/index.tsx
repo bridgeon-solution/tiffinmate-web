@@ -22,7 +22,7 @@ function MenuDetailsContainer() {
   const menuid = menuId || "";
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<string>(
-    "0193ce2c-ab58-7b6f-8470-7462704e8638"
+    "019522f2-8a7c-783e-99dc-ef52f5260586"
   );
   const [menu, setMenu] = useState<MenuItem[]>([]);
   const [dailyModal, setDailyModal] = useState<boolean>(false);
@@ -38,21 +38,21 @@ function MenuDetailsContainer() {
   const userid=userId||""
   const categories = [
     {
-      id: "0193ce2c-ab58-7b6f-8470-7462704e8638",
+      id: "019522f2-8a7c-783e-99dc-ef52f5260586",
       name: "Breakfast",
       image: BreakFast,
       description:
         "Morning Glory: A Feast to Jumpstart Your Day,A Feast to Jumpstart Your Day",
     },
     {
-      id: "0193ce2d-5a2b-7a4c-b75a-aeaa23f3e6b2",
+      id: "019522f2-a971-7fb3-ab86-88e064149bb1",
       name: "Lunch",
       image: Lunch,
       description:
         "Midday Marvels: Lunchtime Delights Await,A Feast to Jumpstart Your Day",
     },
     {
-      id: "0193ce2d-862c-7c4f-b3c2-7ee4c8e7113e",
+      id: "019522f2-d11d-7f90-b354-a5a60f817a47",
       name: "Dinner",
       image: Dinner,
       description:
