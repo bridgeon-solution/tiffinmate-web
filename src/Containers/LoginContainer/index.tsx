@@ -31,7 +31,11 @@ function LoginContainer() {
         toast.success("Login successful");
         navigate("/");
       } else {
-        toast.warn(res.data.error_message);
+        if(res.data.error_message==="Your account has been blocked. Please contact support"){
+          toast.error(res.data.error_message)
+        }else{
+          toast.warn(res.data.error_message);
+        }        
       }
     } catch (error) {
       toast.error("An error occurred. Please try again.");
