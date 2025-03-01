@@ -17,6 +17,7 @@ import {
   RazorpayResponse,
 } from "../../Components/Order/type";
 import OrderModal from "../../Atoms/Modal";
+import { Box, CircularProgress } from "@mui/material";
 
 const OrderContainer: React.FC = () => {
   const navigate=useNavigate();
@@ -36,7 +37,7 @@ const OrderContainer: React.FC = () => {
   const [, setRazrPay] = useState<RazorpayResponse | null>(null);
   const [RazrPayLoad, setRazrPayLoad] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [postPaymentLoading, setPostPaymentLoading] = useState(false);
   const loadScript = (src: string) => {
     return new Promise((resolve, reject) => {
       const script = document.createElement("script");
@@ -46,7 +47,6 @@ const OrderContainer: React.FC = () => {
       document.body.appendChild(script);
     });
   };
-
   const [paymentDetails] = useState({
     user_name: "",
     ph_no: "",
@@ -114,6 +114,8 @@ const OrderContainer: React.FC = () => {
           order_id: RazororderId,
 
           handler: async (response: RazorpayResponse) => {
+            setLoading(true);
+              setPostPaymentLoading(true);
             const paymentData = {
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_order_id: response.razorpay_order_id,
@@ -137,12 +139,17 @@ const OrderContainer: React.FC = () => {
 
               toast.success("order palced succesfully");
               formik.resetForm();
-              setIsModalOpen(true);
-              setLoading(true);
+              setTimeout(() => {
+                setIsModalOpen(true);
+                setLoading(false);
+                setPostPaymentLoading(false);
+              }, 2000);
+              
             } catch (error) {
               toast.error("Payment failed.");
             } finally {
               setLoading(false);
+              setPostPaymentLoading(false)
             }
           },
           prefill: {
@@ -184,6 +191,20 @@ const OrderContainer: React.FC = () => {
     }
   };
 
+  if (postPaymentLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
   return (
     <>
       <OrderComponent

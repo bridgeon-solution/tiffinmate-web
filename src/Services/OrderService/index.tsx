@@ -55,7 +55,7 @@ export const GetOrderById = async (orderId: string | undefined) => {
     const response = await api.get(`/Order/${orderId}`);
 
     if (response && response.data && response.data.result) {
-      return response.data;
+      return response.data; 
     }
     return null;
   } catch {
