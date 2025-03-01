@@ -19,6 +19,8 @@ function LoginContainer() {
   const initialValues: loginValues = { email: "", password: "" };
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
+  const queryParams = new URLSearchParams(location.search);
+  const returnUrl = queryParams.get("returnUrl");
   const handleSubmit = async (values: loginValues) => {
     setLoading(true);
     try {
@@ -29,7 +31,7 @@ function LoginContainer() {
         localStorage.setItem("refresh_token",res.data.result.refresh_token)
         localStorage.setItem("user", res.data.result.name);
         toast.success("Login successful");
-        navigate("/");
+        navigate(returnUrl || "/");
       } else {
         if(res.data.error_message==="Your account has been blocked. Please contact support"){
           toast.error(res.data.error_message)

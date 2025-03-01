@@ -60,6 +60,11 @@ function MenuDetailsContainer() {
     },
   ];
   const handlePay = async (modalType: "daily" | "subscription") => {
+    if (!userid) {
+      toast.warn("Please login to continue");
+      navigate(`/login?returnUrl=${encodeURIComponent(window.location.pathname + window.location.search)}`);
+      return;
+    }
     if (selectedCategories.length === 0) {
       toast.warn("Please select at least one category.");
       return;
@@ -91,9 +96,11 @@ function MenuDetailsContainer() {
             date: selectedDate,
           },
         });
+      }else{ 
+        toast.error(response.error_message || "Failed to place order.");
       }
     } catch (error) {
-      toast.warn("Please login")
+      toast.error("Something went wrong. Please try again later.")
     }
 
     // subscription plan
@@ -119,9 +126,11 @@ function MenuDetailsContainer() {
            
           },
         });
+      }else{
+        toast.error(response.error_message || "Failed to place order.");
       }
     } catch (error) {
-      toast.warning("Please login");
+      toast.warning("Something went wrong. Please try again later.");
     }
   }
 }

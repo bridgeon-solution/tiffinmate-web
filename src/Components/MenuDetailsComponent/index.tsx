@@ -34,18 +34,15 @@ const MenuDetailsComponent: React.FC<MenuComponentProps> = ({
       <Grid container spacing={6} justifyContent="center" mb={4} mt={2}>
         {categories.map((category, index) => (
           <Grid item xs={12} md={4} key={index}>
-            <Box sx={{ width: "100%" }}>
+            <Box
+                sx={{ width: "100%", cursor: "pointer" }}
+                onClick={() => handleCategory(category.id)}
+              >
               <Box
                 component="img"
                 src={category.image}
                 sx={{ width: "100%", height: "200px", objectFit: "cover" }}
               />
-              <Box
-                onClick={() => handleCategory(category.id)}
-                sx={{
-                  cursor: "pointer",
-                }}
-              >
                 <Typography
                   variant="subtitle2"
                   color="#e6852c"
@@ -61,7 +58,6 @@ const MenuDetailsComponent: React.FC<MenuComponentProps> = ({
                   {category.description}
                 </Typography>
               </Box>
-            </Box>
           </Grid>
         ))}
       </Grid>
