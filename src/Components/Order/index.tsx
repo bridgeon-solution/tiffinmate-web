@@ -11,7 +11,6 @@ import { OpenStreetMapProvider } from "leaflet-geosearch";
 import { useLocation } from "react-router-dom";
 import L from "leaflet";
 import InputField from "../../Atoms/Input";
-
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { toast } from "react-toastify";
@@ -56,7 +55,6 @@ const OrderComponent: React.FC<OrderFormData> = ({
 }) => {
   const [selectedCity, setSelectedCity] = useState(formData.city || "");
   const [mapPosition, setMapPosition] = useState<[number, number] | null>(null);
-  
   const { state } = useLocation();
   const { categories, orderId, date } = state || {};
   setSelectedCategories(categories);
