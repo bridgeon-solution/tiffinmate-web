@@ -60,8 +60,32 @@ const OrderContainer: React.FC = () => {
       }));
     }
   }, []);
+  useEffect(() => {
+    const fetchOrderData = async () => {
+      if (orderId) {
+        try {
+          const response = await GetOrderById(orderId);
+          if (response && response.result) {
+            const { user, address, ph_no, city } = response.result;
+            setInitialValues(prevValues => ({
+              ...prevValues,
+              user_name: user || prevValues.user_name,
+              address: address || "",
+              city: city || "",
+              ph_no: ph_no || "",
+            }));
+          }
+        } catch (error) {
+          toast.error("Failed to fetch order details");
+        }
+      }
+    };
+
+    fetchOrderData();
+  }, [orderId]);
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues
     ,
     validationSchema: Yup.object({
@@ -93,6 +117,11 @@ const OrderContainer: React.FC = () => {
         
         const response = await GetOrderById(orderId);
         const total = response.result.total_price;
+        const user_name=response.result.user
+        setInitialValues((prev)=>({
+          ...prev,
+          user_name
+        }));
 
         if (!total) {
           toast.error("Total amount is missing.");
@@ -153,8 +182,8 @@ const OrderContainer: React.FC = () => {
             }
           },
           prefill: {
-            name: paymentDetails.user_name,
-            contact: paymentDetails.ph_no,
+            name: paymentDetails.user_name|| values.user_name,
+            contact: paymentDetails.ph_no || values.ph_no,
           },
           theme: {
             color: "#3399cc",
